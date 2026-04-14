@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 
 namespace PostgreSQL_Editor.Models
 {

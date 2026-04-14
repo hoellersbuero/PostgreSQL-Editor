@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace PostgreSQL_Editor
+namespace PostgreSQL_Editor.Global
 {
     public static class GlobalExtensions
     {

@@ -1,16 +1,15 @@
 ﻿using Npgsql;
+using PostgreSQL_Editor.DBUtils;
+using PostgreSQL_Editor.Global;
 using PostgreSQL_Editor.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PostgreSQL_Editor.EditRules
@@ -18,7 +17,7 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editSTFT_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private List<system_type_frame_type_rule> frameTypeRules = new List<system_type_frame_type_rule>();
+        private BindingList<system_type_frame_type_rule> frameTypeRules = new BindingList<system_type_frame_type_rule>();
         private List<system_type_frame_type_rule> newFrameTypeRules = new List<system_type_frame_type_rule>();
         private List<system_type_frame_type_rule> changedFrameTypeRules = new List<system_type_frame_type_rule>();
         private DgvChangeDetector _dgvChangeDetector;
@@ -47,7 +46,7 @@ namespace PostgreSQL_Editor.EditRules
             cbFrameType.DataSource = standardLists.frameTypes;
             cbFrameType.DisplayMember = "name";
             cbFrameType.SelectedIndex = 0;
-            frameTypeRules = standardLists.systemTypeFrameTypeRules;
+            frameTypeRules = new BindingList<system_type_frame_type_rule>(standardLists.systemTypeFrameTypeRules);
             dgv.DataSource = frameTypeRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
@@ -79,8 +78,6 @@ namespace PostgreSQL_Editor.EditRules
             frameTypeRules.Add(systemTypeRule);
             newFrameTypeRules.Add(systemTypeRule);
             updateLbInfo();
-            dgv.DataSource = null;
-            dgv.DataSource = frameTypeRules;
             _dgvChangeDetector.TakeSnapshot();
             btnCreateSQL.Enabled = newFrameTypeRules.Count > 0 || changedFrameTypeRules.Count > 0;
         }

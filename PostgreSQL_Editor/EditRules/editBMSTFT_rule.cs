@@ -2,19 +2,22 @@
 using PostgreSQL_Editor.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Windows.Forms;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 
 namespace PostgreSQL_Editor.EditRules
 {
     public partial class editBMSTFT_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private List<frame_type_rule> frameTypeRules = new List<frame_type_rule>();
+        private BindingList<frame_type_rule> frameTypeRules = new BindingList<frame_type_rule>();
         private List<frame_type_rule> newFrameTypeRules = new List<frame_type_rule>();
         private List<frame_type_rule> changedFrameTypeRules = new List<frame_type_rule>();
         private List<system_type> filteredSystemTypes = new List<system_type>();
@@ -51,8 +54,7 @@ namespace PostgreSQL_Editor.EditRules
             cbFrameType.DataSource = standardLists.frameTypes;
             cbFrameType.DisplayMember = "name";
             cbFrameType.SelectedIndex = 0;
-            frameTypeRules = standardLists.frameTypeRules;
-            dgv.DataSource = null;
+            frameTypeRules = new BindingList<frame_type_rule>(standardLists.frameTypeRules);
             dgv.DataSource = frameTypeRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
@@ -193,8 +195,6 @@ namespace PostgreSQL_Editor.EditRules
             frameTypeRules.Add(frameTypeRule);
             updateLbInfo();
             newFrameTypeRules.Add(frameTypeRule);
-            dgv.DataSource = null;
-            dgv.DataSource = frameTypeRules;
             _dgvChangeDetector.TakeSnapshot();
             btnCreateSQL.Enabled = newFrameTypeRules.Count > 0 || changedFrameTypeRules.Count > 0;
         }

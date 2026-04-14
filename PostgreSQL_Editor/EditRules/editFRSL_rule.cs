@@ -1,7 +1,10 @@
 ﻿using Npgsql;
 using PostgreSQL_Editor.Utilities;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -14,12 +17,13 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editFRSL_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private List<frame_sleeve_rule> frameSleeveRules = new List<frame_sleeve_rule>();
+        private BindingList<frame_sleeve_rule> frameSleeveRules = new BindingList<frame_sleeve_rule>();
         private List<frame_sleeve_rule> newFrameSleeveRules = new List<frame_sleeve_rule>();
         private List<frame_sleeve_rule> changedFrameSleeveRules = new List<frame_sleeve_rule>();
         private List<system_type> filteredSystemTypes = new List<system_type>();
         private List<frame_type> filteredFrameTypes = new List<frame_type>();
         private DgvChangeDetector _dgvChangeDetector;
+        private BindingSource _bindingSource = new BindingSource();
 
         public editFRSL_rule()
         {
@@ -52,8 +56,26 @@ namespace PostgreSQL_Editor.EditRules
             cbSleeve.DataSource = standardLists.sleeveTypes;
             cbSleeve.DisplayMember = "name";
             cbSleeve.SelectedIndex = 0;
-            frameSleeveRules = standardLists.frameSleeveRules;
-            dgv.DataSource = frameSleeveRules;
+            var initial = standardLists.frameSleeveRules.Select(x => new frame_sleeve_rule()
+            {
+                check = x.check,
+                id = x.id,
+                base_material_id = x.base_material_id,
+                base_material = x.base_material,
+                system_type_id = x.system_type_id,
+                system_type = x.system_type,
+                frame_id = x.frame_id,
+                frame = x.frame,
+                sleeve_type_id = x.sleeve_type_id,
+                sleeve_type = x.sleeve_type,
+                rule_version = x.rule_version,
+                is_active = x.is_active,
+                is_mandatory = standardLists.entityMetaData
+                    .FirstOrDefault(m => m.entity_id == x.id && m.entity_type == "frame" && m.metadata_key == "sleeve_is_mandatory")?.bool_value == true
+            }).ToList();
+            frameSleeveRules = new BindingList<frame_sleeve_rule>(initial);
+            _bindingSource.DataSource = frameSleeveRules;
+            dgv.DataSource = _bindingSource; 
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
         }
@@ -90,8 +112,6 @@ namespace PostgreSQL_Editor.EditRules
             frameSleeveRules.Add(frameSleeveRule);
             newFrameSleeveRules.Add(frameSleeveRule);
             updateLbInfo();
-            dgv.DataSource = null;
-            dgv.DataSource = frameSleeveRules;
             _dgvChangeDetector.TakeSnapshot();
             btnCreateSQL.Enabled = newFrameSleeveRules.Count > 0 || changedFrameSleeveRules.Count > 0;
         }
@@ -136,7 +156,7 @@ namespace PostgreSQL_Editor.EditRules
                 {
                     // INSERT-Logik für neue Regeln
                     string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
-                    string sql = "('" + rule.id.ToString() + "'::uuid,'" + rule.base_material_id.ToString() + "'::uuid,'" + rule.system_type_id.ToString() + 
+                    string sql = "('" + rule.id.ToString() + "'::uuid,'" + rule.base_material_id.ToString() + "'::uuid,'" + rule.system_type_id.ToString() +
                                  "'::uuid,'" + rule.frame_id.ToString() + "'::uuid,'" + rule.sleeve_type_id.ToString() +
                                  "'::uuid, " + rule.rule_version.ToString() + "," + rule.is_active.ToString().ToLower() + ",'" + s + "','pg_editor','" + s + "','pg_editor')";
                     sqllist.Add(sqlinsert + sql + ";");
@@ -171,15 +191,19 @@ namespace PostgreSQL_Editor.EditRules
             _dgvChangeDetector = new Utilities.DgvChangeDetector(dgv);
             _dgvChangeDetector.RowChanged += (s, changedRow) =>
             {
-                // direkt bei Änderung: changedRow enthält die veränderte DataGridViewRow
-                // Beispiel: markiere die Zeile visuell
+                // Schutz: Nur wenn Row gültig und gebunden
+                if (changedRow == null) return;
+                if (changedRow.Index < 0) return;
+                if (changedRow.DataBoundItem == null) return;
+
                 changedRow.DefaultCellStyle.BackColor = System.Drawing.Color.LightYellow;
                 frame_sleeve_rule changedRule = changedRow.DataBoundItem as frame_sleeve_rule;
+                if (changedRule == null) return;
                 string jsonNew = JsonSerializer.Serialize(changedRule);
                 var x = from rule in changedFrameSleeveRules where JsonSerializer.Serialize(rule) == jsonNew select rule;
-                if (x.Count() == 0)
+                if (!x.Any())
                 {
-                    changedFrameSleeveRules.Add(changedRow.DataBoundItem as frame_sleeve_rule);
+                    changedFrameSleeveRules.Add(changedRule);
                     updateLbInfo();
                 }
                 Action updateButton = () =>

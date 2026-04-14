@@ -1,7 +1,10 @@
 ﻿using Npgsql;
 using PostgreSQL_Editor.Utilities;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -14,7 +17,7 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editBMST_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private List<system_type_rule> systemTypeRules = new List<system_type_rule>();
+        private BindingList<system_type_rule> systemTypeRules = new BindingList<system_type_rule>();
         private List<system_type_rule> newSystemTypeRules = new List<system_type_rule>();
         private List<system_type_rule> changedSystemTypeRules = new List<system_type_rule>();
         private List<system_type> filteredSystemTypes = new List<system_type>();
@@ -44,7 +47,7 @@ namespace PostgreSQL_Editor.EditRules
             cbSystemType.DataSource = standardLists.systemTypes;
             cbSystemType.DisplayMember = "name";
             cbSystemType.SelectedIndex = 0;
-            systemTypeRules = standardLists.baseMaterialSystemTypeRules;
+            systemTypeRules = new BindingList<system_type_rule>(standardLists.baseMaterialSystemTypeRules);
             dgv.DataSource = systemTypeRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
@@ -76,8 +79,6 @@ namespace PostgreSQL_Editor.EditRules
             systemTypeRules.Add(systemTypeRule);
             newSystemTypeRules.Add(systemTypeRule);
             updateLbInfo();
-            dgv.DataSource = null;
-            dgv.DataSource = systemTypeRules;
             _dgvChangeDetector.TakeSnapshot();
             btnCreateSQL.Enabled=newSystemTypeRules.Count > 0 || changedSystemTypeRules.Count > 0;
         }

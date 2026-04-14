@@ -49,9 +49,11 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbForeignKeys = new System.Windows.Forms.ToolStripButton();
             this.tsbCreateFKeys = new System.Windows.Forms.ToolStripButton();
+            this.tsbShowDataTree = new System.Windows.Forms.ToolStripButton();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tbQuery = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lbError = new System.Windows.Forms.Label();
             this.lbSQL = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView = new System.Windows.Forms.TreeView();
@@ -98,10 +100,11 @@
             this.editEntityMetadata = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.functionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiShowTableColumnTree = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiGetModuleFromID = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiGetFrameFromID = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.tsmiGetFrameFromID = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -196,6 +199,7 @@
             this.tsbSaveSQL,
             this.toolStripSeparator1,
             this.tsbExportExcel,
+            this.tsbShowDataTree,
             this.toolStripSeparator3,
             this.tsbForeignKeys,
             this.tsbCreateFKeys});
@@ -328,6 +332,17 @@
             this.tsbCreateFKeys.Text = "Create foreign keys with on delete cascade";
             this.tsbCreateFKeys.Click += new System.EventHandler(this.tsbCreateFKeys_Click);
             // 
+            // tsbShowDataTree
+            // 
+            this.tsbShowDataTree.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbShowDataTree.Image = global::PostgreSQL_Editor.Properties.Resources.TreeView;
+            this.tsbShowDataTree.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbShowDataTree.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbShowDataTree.Name = "tsbShowDataTree";
+            this.tsbShowDataTree.Size = new System.Drawing.Size(28, 28);
+            this.tsbShowDataTree.Text = "Show Tables and Columns";
+            this.tsbShowDataTree.Click += new System.EventHandler(this.tsbShowDataTree_Click);
+            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -365,6 +380,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.lbError);
             this.panel1.Controls.Add(this.lbSQL);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 90);
@@ -372,13 +388,28 @@
             this.panel1.Size = new System.Drawing.Size(800, 20);
             this.panel1.TabIndex = 10;
             // 
+            // lbError
+            // 
+            this.lbError.AutoSize = true;
+            this.lbError.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lbError.Location = new System.Drawing.Point(689, 0);
+            this.lbError.Name = "lbError";
+            this.lbError.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lbError.Size = new System.Drawing.Size(109, 15);
+            this.lbError.TabIndex = 2;
+            this.lbError.Text = "kdlkdlfgfgdfsdfsdsfsdf";
+            this.lbError.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // lbSQL
             // 
-            this.lbSQL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbSQL.AutoSize = true;
+            this.lbSQL.Dock = System.Windows.Forms.DockStyle.Left;
             this.lbSQL.Location = new System.Drawing.Point(0, 0);
             this.lbSQL.Name = "lbSQL";
-            this.lbSQL.Size = new System.Drawing.Size(798, 18);
+            this.lbSQL.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lbSQL.Size = new System.Drawing.Size(59, 15);
             this.lbSQL.TabIndex = 1;
+            this.lbSQL.Text = "sddsfssfsdf";
             this.lbSQL.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // splitContainer1
@@ -457,6 +488,7 @@
             this.dgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgv.Size = new System.Drawing.Size(569, 255);
             this.dgv.TabIndex = 3;
+            this.dgv.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv_DataBindingComplete);
             this.dgv.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dgv_KeyDown);
             // 
             // cms
@@ -867,18 +899,33 @@
             // functionsToolStripMenuItem
             // 
             this.functionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiShowTableColumnTree,
             this.tsmiGetModuleFromID,
             this.tsmiGetFrameFromID});
             this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
             this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.functionsToolStripMenuItem.Text = "Functions";
             // 
+            // tsmiShowTableColumnTree
+            // 
+            this.tsmiShowTableColumnTree.Name = "tsmiShowTableColumnTree";
+            this.tsmiShowTableColumnTree.Size = new System.Drawing.Size(203, 22);
+            this.tsmiShowTableColumnTree.Text = "Show Table Column Tree";
+            this.tsmiShowTableColumnTree.Click += new System.EventHandler(this.tsmiShowTableColumnTree_Click);
+            // 
             // tsmiGetModuleFromID
             // 
             this.tsmiGetModuleFromID.Name = "tsmiGetModuleFromID";
-            this.tsmiGetModuleFromID.Size = new System.Drawing.Size(180, 22);
+            this.tsmiGetModuleFromID.Size = new System.Drawing.Size(203, 22);
             this.tsmiGetModuleFromID.Text = "Get Module from ID";
             this.tsmiGetModuleFromID.Click += new System.EventHandler(this.getModuleFromID_Click);
+            // 
+            // tsmiGetFrameFromID
+            // 
+            this.tsmiGetFrameFromID.Name = "tsmiGetFrameFromID";
+            this.tsmiGetFrameFromID.Size = new System.Drawing.Size(203, 22);
+            this.tsmiGetFrameFromID.Text = "Get Frame from ID";
+            this.tsmiGetFrameFromID.Click += new System.EventHandler(this.tsmiGetFrameFromID_Click);
             // 
             // label1
             // 
@@ -888,13 +935,6 @@
             this.label1.Size = new System.Drawing.Size(49, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
-            // 
-            // tsmiGetFrameFromID
-            // 
-            this.tsmiGetFrameFromID.Name = "tsmiGetFrameFromID";
-            this.tsmiGetFrameFromID.Size = new System.Drawing.Size(180, 22);
-            this.tsmiGetFrameFromID.Text = "Get Frame from ID";
-            this.tsmiGetFrameFromID.Click += new System.EventHandler(this.tsmiGetFrameFromID_Click);
             // 
             // Main
             // 
@@ -920,6 +960,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -1026,6 +1067,9 @@
         private System.Windows.Forms.ToolStripMenuItem functionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiGetModuleFromID;
         private System.Windows.Forms.ToolStripMenuItem tsmiGetFrameFromID;
+        private System.Windows.Forms.Label lbError;
+        private System.Windows.Forms.ToolStripMenuItem tsmiShowTableColumnTree;
+        private System.Windows.Forms.ToolStripButton tsbShowDataTree;
     }
 }
 

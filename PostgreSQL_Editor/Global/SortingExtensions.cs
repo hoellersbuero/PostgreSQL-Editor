@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace PostgreSQL_Editor
+namespace PostgreSQL_Editor.Global
 {
     /// <summary>
     /// Universelle Sortier‑Extensions — sortiert IList<T> nach einem "Name"-Key oder nach einem Key‑Selector.

@@ -230,7 +230,9 @@ namespace PostgreSQL_Editor.Properties {
         ///ALTER SCHEMA
         ///ALTER SEQUENCE
         ///ALTER SERVER
-        ///ALTER STATIST [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///ALTER STATISTICS
+        ///ALTER SUBSCRIPTION
+        ///ALTER  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string SQL_Statements {
             get {
@@ -264,6 +266,16 @@ namespace PostgreSQL_Editor.Properties {
         internal static System.Drawing.Bitmap TakeItTransparent {
             get {
                 object obj = ResourceManager.GetObject("TakeItTransparent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TreeView {
+            get {
+                object obj = ResourceManager.GetObject("TreeView", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

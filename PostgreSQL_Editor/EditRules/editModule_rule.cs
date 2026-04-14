@@ -1,7 +1,10 @@
 ﻿using Npgsql;
 using PostgreSQL_Editor.Utilities;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -13,8 +16,8 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editModule_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private List<material_type_rule> filteredMaterialRules = new List<material_type_rule>();
-        private List<module_rule> moduleRules = new List<module_rule>();
+        private BindingList<material_type_rule> filteredMaterialRules = new BindingList<material_type_rule>();
+        private BindingList<module_rule> moduleRules = new BindingList<module_rule>();
         private List<module_rule> newModuleRules = new List<module_rule>();
         private List<module_rule> changedModuleRules = new List<module_rule>();
         private List<frame_type> filteredFrameTypes = new List<frame_type>();
@@ -66,8 +69,8 @@ namespace PostgreSQL_Editor.EditRules
             cbModule.DataSource = standardLists.modules;
             cbModule.DisplayMember = "name";
             cbModule.SelectedIndex = 0;
-            moduleRules = standardLists.moduleRules;
-            dgv.DataSource = moduleRules;
+            moduleRules = new BindingList<module_rule>(standardLists.moduleRules);
+            dgv.DataSource =  moduleRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
         }
@@ -211,8 +214,6 @@ namespace PostgreSQL_Editor.EditRules
             moduleRules.Add(moduleRule);
             newModuleRules.Add(moduleRule);
             updateLbInfo();
-            dgv.DataSource = null;
-            dgv.DataSource = moduleRules;
             _dgvChangeDetector.TakeSnapshot();
             btnCreateSQL.Enabled = newModuleRules.Count > 0 || changedModuleRules.Count > 0;
         }

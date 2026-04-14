@@ -2,19 +2,22 @@
 using PostgreSQL_Editor.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Windows.Forms;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 
 namespace PostgreSQL_Editor.EditRules
 {
     public partial class editBMSTFTMT_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private List<material_type_rule> materialTypeRules = new List<material_type_rule>();
+        private BindingList<material_type_rule> materialTypeRules = new BindingList<material_type_rule>();
         private List<material_type_rule> newMaterialTypeRules = new List<material_type_rule>();
         private List<material_type_rule> changedMaterialTypeRules = new List<material_type_rule>();
         private List<system_type> filteredSystemTypes = new List<system_type>();
@@ -53,7 +56,7 @@ namespace PostgreSQL_Editor.EditRules
             cbMaterialType.DataSource = standardLists.materialTypes;
             cbMaterialType.DisplayMember = "name";
             cbMaterialType.SelectedIndex = 0;
-            materialTypeRules = standardLists.materialTypeRules;
+            materialTypeRules = new BindingList<material_type_rule>(standardLists.materialTypeRules);
             dgv.DataSource = materialTypeRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
@@ -194,8 +197,6 @@ namespace PostgreSQL_Editor.EditRules
             materialTypeRules.Add(materialTypeRule);
             newMaterialTypeRules.Add(materialTypeRule);
             updateLbInfo();
-            dgv.DataSource = null;
-            dgv.DataSource = materialTypeRules;
             _dgvChangeDetector.TakeSnapshot();
             btnCreateSQL.Enabled = newMaterialTypeRules.Count > 0 || changedMaterialTypeRules.Count > 0;
         }

@@ -1,7 +1,10 @@
 ﻿using Npgsql;
 using PostgreSQL_Editor.Utilities;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -15,7 +18,7 @@ namespace PostgreSQL_Editor.EditRules
     {
         private NpgsqlConnection npgsql;
         private List<material_type_rule> filteredMaterialRules = new List<material_type_rule>();
-        private List<wedge_rule> wedgeRules = new List<wedge_rule>();
+        private BindingList<wedge_rule> wedgeRules = new BindingList<wedge_rule>();
         private List<wedge_rule> newWedgeRules = new List<wedge_rule>();
         private List<wedge_rule> changedWedgeRules = new List<wedge_rule>();
         private List<frame_type> filteredFrameTypes = new List<frame_type>();
@@ -53,7 +56,7 @@ namespace PostgreSQL_Editor.EditRules
             cbWedge.DataSource = standardLists.wedgeTypes;
             cbWedge.DisplayMember = "name";
             cbWedge.SelectedIndex = 0;
-            wedgeRules = standardLists.wedgeRules;
+            wedgeRules = new BindingList<wedge_rule>(standardLists.wedgeRules);
             dgv.DataSource = wedgeRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
@@ -193,8 +196,6 @@ namespace PostgreSQL_Editor.EditRules
             wedgeRules.Add(wedgeRule);
             newWedgeRules.Add(wedgeRule);
             updateLbInfo();
-            dgv.DataSource = null;
-            dgv.DataSource = wedgeRules;
             _dgvChangeDetector.TakeSnapshot();
             btnCreateSQL.Enabled = newWedgeRules.Count > 0 || changedWedgeRules.Count > 0;
         }

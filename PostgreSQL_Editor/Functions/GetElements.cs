@@ -1,4 +1,6 @@
 ﻿using PostgreSQL_Editor.Models;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

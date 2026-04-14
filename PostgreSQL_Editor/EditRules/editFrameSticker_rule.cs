@@ -1,7 +1,10 @@
 ﻿using Npgsql;
 using PostgreSQL_Editor.Utilities;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -14,7 +17,7 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editFrameSticker_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private List<frame_sticker_rule> frameStickerRules = new List<frame_sticker_rule>();
+        private BindingList<frame_sticker_rule> frameStickerRules = new BindingList<frame_sticker_rule>();
         private List<frame_sticker_rule> newFrameStickerRules = new List<frame_sticker_rule>();
         private List<frame_sticker_rule> changedFrameStickerRules = new List<frame_sticker_rule>();
         private DgvChangeDetector _dgvChangeDetector;
@@ -49,6 +52,7 @@ namespace PostgreSQL_Editor.EditRules
             cbSticker.DataSource = standardLists.stickerTypes;
             cbSticker.DisplayMember = "name";
             cbSticker.SelectedIndex = 0;
+            dgv.DataSource = frameStickerRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
         }
@@ -185,8 +189,6 @@ namespace PostgreSQL_Editor.EditRules
             frameStickerRules.Add(frameStickerRule);
             newFrameStickerRules.Add(frameStickerRule);
             updateLbInfo();
-            dgv.DataSource = null;
-            dgv.DataSource = frameStickerRules;
             _dgvChangeDetector.TakeSnapshot();
             btnCreateSQL.Enabled = newFrameStickerRules.Count > 0 || changedFrameStickerRules.Count > 0;
         }

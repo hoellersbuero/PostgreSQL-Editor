@@ -1,7 +1,10 @@
 ﻿using Npgsql;
 using PostgreSQL_Editor.Utilities;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -14,7 +17,7 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editSleeveSticker_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private List<sleeve_sticker_rule> sleeveStickerRules = new List<sleeve_sticker_rule>();
+        private BindingList<sleeve_sticker_rule> sleeveStickerRules = new BindingList<sleeve_sticker_rule>();
         private List<sleeve_sticker_rule> newSleeveStickerRules = new List<sleeve_sticker_rule>();
         private List<sleeve_sticker_rule> changedSleeveStickerRules = new List<sleeve_sticker_rule>();
         private DgvChangeDetector _dgvChangeDetector;
@@ -46,6 +49,7 @@ namespace PostgreSQL_Editor.EditRules
             cbSticker.DataSource = standardLists.stickerTypes;
             cbSticker.DisplayMember = "name";
             cbSticker.SelectedIndex = 0;
+            dgv.DataSource = sleeveStickerRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
         }
@@ -179,8 +183,6 @@ namespace PostgreSQL_Editor.EditRules
             sleeveStickerRules.Add(materialTypeRule);
             newSleeveStickerRules.Add(materialTypeRule);
             updateLbInfo();
-            dgv.DataSource = null;
-            dgv.DataSource = sleeveStickerRules;
             _dgvChangeDetector.TakeSnapshot();
             btnCreateSQL.Enabled = newSleeveStickerRules.Count > 0 || changedSleeveStickerRules.Count > 0;
         }

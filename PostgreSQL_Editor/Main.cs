@@ -1,4 +1,8 @@
 ﻿using Npgsql;
+using PostgreSQL_Editor.EditRules;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
+using PostgreSQL_Editor.FunctionViews;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,10 +14,6 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using PostgreSQL_Editor.FunctionViews;
-using PostgreSQL_Editor.Functions;
-using PostgreSQL_Editor.Models;
-using PostgreSQL_Editor.EditRules;
 
 namespace PostgreSQL_Editor
 {
@@ -79,6 +79,8 @@ namespace PostgreSQL_Editor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            lbSQL.Text = "";
+            lbError.Text = "";
             tbClassField.BackColor = Color.White;
             tbClassField.ForeColor = Color.Black;
             tpSchema.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -96,6 +98,10 @@ namespace PostgreSQL_Editor
             tsbSQL.Checked = false;
             tsbExecute.Enabled = false;
             tsbClear.Enabled = false;
+            tsbLoadSQL.Enabled = false;
+            tsbSaveSQL.Enabled = false;
+            tsbExportExcel.Enabled = false;
+            tsbShowDataTree.Checked = false;
             splitContainer2.Panel1Collapsed = true;
             treeView.ImageList = imageList;
             LoadDB();
@@ -125,10 +131,10 @@ namespace PostgreSQL_Editor
             {
                 using (var cmd = npgsql.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = '" + Global.schema + "' ORDER BY tablename;";
+                    cmd.CommandText = "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = '" + Global.Global.schema + "' ORDER BY tablename;";
                     using (NpgsqlDataReader rd = cmd.ExecuteReader())
                     {
-                        rootNode = new TreeNode(Global.schema);
+                        rootNode = new TreeNode(Global.Global.schema);
                         rootNode.ImageIndex = 0;
                         rootNode.SelectedImageIndex = 0;
                         while (rd.Read())
@@ -183,11 +189,16 @@ namespace PostgreSQL_Editor
         {
             try
             {
+                tsbRefresh.Enabled = false;
                 tsbSQL.Enabled = false;
                 tsbExecute.Enabled = false;
                 tsbClear.Enabled = false;
                 tsbLoadSQL.Enabled = false;
                 tsbSaveSQL.Enabled = false;
+                tsbExportExcel.Enabled = false;
+                tsbShowDataTree.Enabled = false;
+                tsbForeignKeys.Enabled = false;
+                tsbCreateFKeys.Enabled = false;
                 tsmiFile.Enabled = false;
                 treeView.Enabled = false;
                 tbQuery.Enabled = false;
@@ -200,11 +211,16 @@ namespace PostgreSQL_Editor
             }
             finally
             {
+                tsbRefresh.Enabled = true;
                 tsbSQL.Enabled = true;
-                tsbExecute.Enabled = true;
-                tsbClear.Enabled = true;
-                tsbLoadSQL.Enabled = true;
-                tsbSaveSQL.Enabled = true;
+                tsbExecute.Enabled = tsbSQL.Checked;
+                tsbClear.Enabled = tsbSQL.Checked;
+                tsbLoadSQL.Enabled = tsbSQL.Checked;
+                tsbSaveSQL.Enabled = tsbSQL.Checked;
+                tsbExportExcel.Enabled = true;
+                tsbShowDataTree.Enabled = true;
+                tsbForeignKeys.Enabled = true;
+                tsbCreateFKeys.Enabled = true;
                 tsmiFile.Enabled = true;
                 treeView.Enabled = true;
                 tbQuery.Enabled = true;
@@ -216,14 +232,20 @@ namespace PostgreSQL_Editor
         {
             try
             {
+                lbError.Text = "";
+                lbSQL.Text = "";
                 DateTime dt = DateTime.Now;
                 using (var cmd = npgsql.CreateCommand())
                 {
-                    cmd.CommandText = "set schema '" + Global.schema + "'; " + query;
+                    cmd.CommandText = "set schema '" + Global.Global.schema + "'; " + query;
                     if (cmd.CommandText.ToUpper().Contains("SELECT"))
                     {
+                        DateTime dtq = DateTime.Now;
                         using (NpgsqlDataReader rd = cmd.ExecuteReader())
                         {
+                            TimeSpan tsq = DateTime.Now - dtq;
+                            lbSQL.Text = "Query executed in: " + Math.Round(tsq.TotalMilliseconds, 0).ToString() + " ms";
+                            Application.DoEvents();
                             var dataTable = new DataTable();
                             dataTable.Load(rd);
                             dataTable.Columns.Add("#", typeof(int)).SetOrdinal(0); // Neue Spalte "row_number" an erster Position
@@ -338,7 +360,7 @@ namespace PostgreSQL_Editor
                     }
                     if (!string.IsNullOrEmpty(query2))
                     {
-                        cmd.CommandText = "set schema '" + Global.schema + "'; " + query2;
+                        cmd.CommandText = "set schema '" + Global.Global.schema + "'; " + query2;
                         using (NpgsqlDataReader rd = cmd.ExecuteReader())
                         {
                             var dataTable = new DataTable();
@@ -359,7 +381,7 @@ namespace PostgreSQL_Editor
                     }
                     if (!string.IsNullOrEmpty(query3))
                     {
-                        cmd.CommandText = "set schema '" + Global.schema + "'; " + query3;
+                        cmd.CommandText = "set schema '" + Global.Global.schema + "'; " + query3;
                         using (NpgsqlDataReader rd = cmd.ExecuteReader())
                         {
                             var dataTable = new DataTable();
@@ -380,125 +402,132 @@ namespace PostgreSQL_Editor
                     }
                 }
                 TimeSpan ts = DateTime.Now - dt;
-                lbSQL.Text = "Response: " + Math.Round(ts.TotalMilliseconds, 0).ToString() + " ms";
+                lbSQL.Text += " Response: " + Math.Round(ts.TotalMilliseconds, 0).ToString() + " ms";
             }
             catch (Exception ex)
             {
-                lbSQL.Text = ex.Message;
+                lbError.Text = ex.Message;
             }
         }
 
         private void createClass(DataTable dt, string query = "")
         {
-            if (String.IsNullOrEmpty(query))
+            try
             {
-                tbClassField.Clear();
-                tbClassField.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-                string className = _selectedNode.Text;
-                tbClassField.AppendTextColor("public class ", Color.Blue);
-                tbClassField.AppendTextColor(className, Color.Gray);
-                tbClassField.AppendTextColor("\n{", Color.Black);
-                string classDef = $"public class {className}\n{{";
-                foreach (DataRow row in dt.Rows)
-                {
-                    string columnName = row["column_name"].ToString();
-                    string dataType = row["data_type"].ToString();
-                    dataType = translateDataType(dataType);
-                    Color col = getTypeColor(dataType);
-                    tbClassField.AppendTextColor("\n    public ", Color.Blue);
-                    tbClassField.AppendTextColor(dataType, col);
-                    tbClassField.AppendTextColor(" " + columnName, Color.Black);
-                    tbClassField.AppendTextColor(" { ", Color.Black);
-                    tbClassField.AppendTextColor("get", Color.Blue);
-                    tbClassField.AppendTextColor("; ", Color.Black);
-                    tbClassField.AppendTextColor("set", Color.Blue);
-                    tbClassField.AppendTextColor("; }", Color.Black);
-                }
-                tbClassField.AppendTextColor("\n}", Color.Black);
-                tbClassField.SelectionStart = 0;
-                tbClassField.SelectionLength = 0;
-            }
-            else
-            {
-                if (!query.Trim().StartsWith("select", StringComparison.OrdinalIgnoreCase))
+                if (String.IsNullOrEmpty(query))
                 {
                     tbClassField.Clear();
-                    return;
-                }
-                tbClassField.Clear();
-                tbClassField.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-                // Ersetze die fehlerhafte Zeile (und die ähnliche für columns) durch Tokenisierung:
-                List<string> tokenscol = query.extractColumns();
-                var tokenstab = query.RegexSplit(new[] { "select", "from" }).LastOrDefault();
-                var tabtokens = tokenstab.Split(new[] { ' ', '\r', '\n', '\t', ',', ';', '(', ')', '.', '=' }, StringSplitOptions.RemoveEmptyEntries);
-                List<string> tables = tabtokens
-                    .Select(tok => tok.ToString())
-                    .Where(tokStr => tableNames.Any(tn => string.Equals(tn, tokStr, StringComparison.OrdinalIgnoreCase)))
-                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                    .ToList();
-                List<string> columnsStar = new List<string>();
-                if (tokenscol.Contains("*"))
-                {
-                    tokenscol.Remove("*");
-                    foreach (string table in tables)
+                    tbClassField.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+                    string className = _selectedNode.Text;
+                    tbClassField.AppendTextColor("public class ", Color.Blue);
+                    tbClassField.AppendTextColor(className, Color.Gray);
+                    tbClassField.AppendTextColor("\n{", Color.Black);
+                    string classDef = $"public class {className}\n{{";
+                    foreach (DataRow row in dt.Rows)
                     {
-                        var tn = TableColumnsByTable.Where(k => k.Key.Equals(table)).FirstOrDefault();
-                        foreach (string s in tn.Value)
-                        {
-                            columnsStar.Add(table + "." + s);
-                        }
-                        tokenscol.Remove(table + ".*");
-                    }
-                }
-                foreach (string table in tables)
-                {
-                    if (query.Contains(table + ".*"))
-                    {
-                        var tn = TableColumnsByTable.Where(k => k.Key.Equals(table)).FirstOrDefault();
-                        foreach (string s in tn.Value)
-                        {
-                            columnsStar.Add(table + "." + s);
-                        }
-                        tokenscol.Remove(table + ".*");
-                    }
-                }
-                tokenscol.AddRange(columnsStar);
-                List<string> noTable = tokenscol.Where(x => !x.Contains('.')).ToList();
-                tokenscol = tokenscol.Except(noTable).ToList();
-                foreach (string table in tables)
-                {
-                    foreach (string col in noTable)
-                    {
-                        if (TableColumns.ContainsKey(table + "." + col))
-                            tokenscol.Add(table + "." + col);
-                    }
-                }
-                tokenscol = tokenscol.Distinct().ToList();
-                tokenscol.Sort();
-                tbClassField.AppendTextColor("public class ", Color.Blue);
-                tbClassField.AppendTextColor("newClass", Color.Gray);
-                tbClassField.AppendTextColor("\n{", Color.Black);
-                foreach (string column in tokenscol)
-                {
-                    //string columnName = column.Split('.').Last();
-                    //string tableName = column.Split('.').First();
-                    string dataType = TableColumns.ContainsKey(column) ? TableColumns[column] : null;
-                    if (!String.IsNullOrEmpty(dataType))
-                    {
+                        string columnName = row["column_name"].ToString();
+                        string dataType = row["data_type"].ToString();
+                        dataType = translateDataType(dataType);
                         Color col = getTypeColor(dataType);
                         tbClassField.AppendTextColor("\n    public ", Color.Blue);
                         tbClassField.AppendTextColor(dataType, col);
-                        tbClassField.AppendTextColor(" " + column.Replace('.', '-'), Color.Black);
+                        tbClassField.AppendTextColor(" " + columnName, Color.Black);
                         tbClassField.AppendTextColor(" { ", Color.Black);
                         tbClassField.AppendTextColor("get", Color.Blue);
                         tbClassField.AppendTextColor("; ", Color.Black);
                         tbClassField.AppendTextColor("set", Color.Blue);
                         tbClassField.AppendTextColor("; }", Color.Black);
                     }
+                    tbClassField.AppendTextColor("\n}", Color.Black);
+                    tbClassField.SelectionStart = 0;
+                    tbClassField.SelectionLength = 0;
                 }
-                tbClassField.AppendTextColor("\n}", Color.Black);
-                tbClassField.SelectionStart = 0;
-                tbClassField.SelectionLength = 0;
+                else
+                {
+                    if (!query.Trim().StartsWith("select", StringComparison.OrdinalIgnoreCase))
+                    {
+                        tbClassField.Clear();
+                        return;
+                    }
+                    tbClassField.Clear();
+                    tbClassField.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+                    // Ersetze die fehlerhafte Zeile (und die ähnliche für columns) durch Tokenisierung:
+                    List<string> tokenscol = query.extractColumns();
+                    var tokenstab = query.RegexSplit(new[] { "select", "from" }).LastOrDefault();
+                    var tabtokens = tokenstab.Split(new[] { ' ', '\r', '\n', '\t', ',', ';', '(', ')', '.', '=' }, StringSplitOptions.RemoveEmptyEntries);
+                    List<string> tables = tabtokens
+                        .Select(tok => tok.ToString())
+                        .Where(tokStr => tableNames.Any(tn => string.Equals(tn, tokStr, StringComparison.OrdinalIgnoreCase)))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .ToList();
+                    List<string> columnsStar = new List<string>();
+                    if (tokenscol.Contains("*"))
+                    {
+                        tokenscol.Remove("*");
+                        foreach (string table in tables)
+                        {
+                            var tn = TableColumnsByTable.Where(k => k.Key.Equals(table)).FirstOrDefault();
+                            foreach (string s in tn.Value)
+                            {
+                                columnsStar.Add(table + "." + s);
+                            }
+                            tokenscol.Remove(table + ".*");
+                        }
+                    }
+                    foreach (string table in tables)
+                    {
+                        if (query.Contains(table + ".*"))
+                        {
+                            var tn = TableColumnsByTable.Where(k => k.Key.Equals(table)).FirstOrDefault();
+                            foreach (string s in tn.Value)
+                            {
+                                columnsStar.Add(table + "." + s);
+                            }
+                            tokenscol.Remove(table + ".*");
+                        }
+                    }
+                    tokenscol.AddRange(columnsStar);
+                    List<string> noTable = tokenscol.Where(x => !x.Contains('.')).ToList();
+                    tokenscol = tokenscol.Except(noTable).ToList();
+                    foreach (string table in tables)
+                    {
+                        foreach (string col in noTable)
+                        {
+                            if (TableColumns.ContainsKey(table + "." + col))
+                                tokenscol.Add(table + "." + col);
+                        }
+                    }
+                    tokenscol = tokenscol.Distinct().ToList();
+                    tokenscol.Sort();
+                    tbClassField.AppendTextColor("public class ", Color.Blue);
+                    tbClassField.AppendTextColor("newClass", Color.Gray);
+                    tbClassField.AppendTextColor("\n{", Color.Black);
+                    foreach (string column in tokenscol)
+                    {
+                        //string columnName = column.Split('.').Last();
+                        //string tableName = column.Split('.').First();
+                        string dataType = TableColumns.ContainsKey(column) ? TableColumns[column] : null;
+                        if (!String.IsNullOrEmpty(dataType))
+                        {
+                            Color col = getTypeColor(dataType);
+                            tbClassField.AppendTextColor("\n    public ", Color.Blue);
+                            tbClassField.AppendTextColor(dataType, col);
+                            tbClassField.AppendTextColor(" " + column.Replace('.', '-'), Color.Black);
+                            tbClassField.AppendTextColor(" { ", Color.Black);
+                            tbClassField.AppendTextColor("get", Color.Blue);
+                            tbClassField.AppendTextColor("; ", Color.Black);
+                            tbClassField.AppendTextColor("set", Color.Blue);
+                            tbClassField.AppendTextColor("; }", Color.Black);
+                        }
+                    }
+                    tbClassField.AppendTextColor("\n}", Color.Black);
+                    tbClassField.SelectionStart = 0;
+                    tbClassField.SelectionLength = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                lbError.Text = "Error in create class: " + ex.Message.Replace("\r\n", " ");
             }
         }
 
@@ -590,6 +619,8 @@ namespace PostgreSQL_Editor
                 splitContainer2.Panel1Collapsed = false;
                 tsbExecute.Enabled = true;
                 tsbClear.Enabled = true;
+                tsbLoadSQL.Enabled = true;
+                tsbSaveSQL.Enabled = true;
                 tsmiLoadSQLQuery.Enabled = true;
                 tsmiSaveSQLQuery.Enabled = true;
                 lInfoSchema.Visible = true;
@@ -599,6 +630,8 @@ namespace PostgreSQL_Editor
                 splitContainer2.Panel1Collapsed = true;
                 tsbExecute.Enabled = false;
                 tsbClear.Enabled = false;
+                tsbLoadSQL.Enabled = false;
+                tsbSaveSQL.Enabled = false;
                 tsmiLoadSQLQuery.Enabled = false;
                 tsmiSaveSQLQuery.Enabled = false;
                 lInfoSchema.Visible = false;
@@ -609,11 +642,11 @@ namespace PostgreSQL_Editor
         {
             if (e.Node.Level == 0) return;
             _selectedNode = e.Node;
-            string sql = "SELECT * FROM " + Global.schema + "." + e.Node.Text;
+            string sql = "SELECT * FROM " + Global.Global.schema + "." + e.Node.Text;
             ExecuteSQL(0, sql);
             sql = " select column_name, data_type, character_maximum_length from INFORMATION_SCHEMA.COLUMNS where table_name ='" + e.Node.Text + "';";
-            string sqlsc = Global.getConstraints.Replace("{{table}}", e.Node.Text);
-            string sqlidx = Global.getIndexes.Replace("{{table}}", e.Node.Text);
+            string sqlsc = Global.Global.getConstraints.Replace("{{table}}", e.Node.Text);
+            string sqlidx = Global.Global.getIndexes.Replace("{{table}}", e.Node.Text);
             ExecuteSQL(2, sql, sqlsc, sqlidx);
             sql = "SELECT\r\n'CREATE TABLE ' || relname || E'\\n(\\n' ||\r\n  array_to_string(\r\n    array_agg(\r\n      '    ' || column_name || ' ' ||" +
                   "  type || ' '|| not_null\r\n    )\r\n    , E',\\n'\r\n  ) || E'\\n);\\n'\r\nfrom\r\n(\r\n  SELECT \r\n    c.relname, a.attname AS column_name,\r\n" +
@@ -1071,7 +1104,7 @@ namespace PostgreSQL_Editor
                 if (!_selectedNode.Text.Equals(table))
                 {
                     string query = "SELECT * FROM " + table + ";";
-                    using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; " + query, npgsql))
+                    using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; " + query, npgsql))
                     {
                         using (NpgsqlDataReader reader = command.ExecuteReader())
                         {
@@ -1314,7 +1347,7 @@ namespace PostgreSQL_Editor
             foreach (string t in tableNames)
                 tl.Add("rel.relname = '" + t + "'");
             string tn = String.Join(" OR ", tl);
-            string sql = "set schema '" + Global.schema + "'; " + Global.allForeignKeys2.Replace("{{alltables}}", tn);
+            string sql = "set schema '" + Global.Global.schema + "'; " + Global.Global.allForeignKeys2.Replace("{{alltables}}", tn);
             ExecuteSQL(1, sql);
         }
 
@@ -1324,7 +1357,7 @@ namespace PostgreSQL_Editor
             foreach (string t in tableNames)
                 tl.Add("rel.relname = '" + t + "'");
             string tn = String.Join(" OR ", tl);
-            string sql = "set schema '" + Global.schema + "'; " + Global.allForeignKeys2.Replace("{{alltables}}", tn);
+            string sql = "set schema '" + Global.Global.schema + "'; " + Global.Global.allForeignKeys2.Replace("{{alltables}}", tn);
             ExecuteSQL(1, sql);
             List<string> ls = new List<string>();
             foreach (DataGridViewRow row in dgv.Rows)
@@ -1334,7 +1367,7 @@ namespace PostgreSQL_Editor
                 string reftable = row.Cells["referenced_table"].Value as string;
                 string column = row.Cells["columns"].Value as string;
                 string refcol = row.Cells["referenced_columns"].Value as string;
-                string csql = Global.alterConstraints.Replace("{{table}}", table);
+                string csql = Global.Global.alterConstraints.Replace("{{table}}", table);
                 csql = csql.Replace("{{fkey}}", fkey);
                 csql = csql.Replace("{{column}}", column);
                 csql = csql.Replace("{{referenced_table}}", reftable);
@@ -1385,6 +1418,21 @@ namespace PostgreSQL_Editor
         private void tsmiGetFrameFromID_Click(object sender, EventArgs e)
         {
             getFrameFromId.Execute(this);
+        }
+
+        private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            tsbExportExcel.Enabled = dgv.Rows.Count > 0;
+        }
+
+        private void tsmiShowTableColumnTree_Click(object sender, EventArgs e)
+        {
+            showTabelColumnTree.Execute(this, TableColumnsByTable);
+        }
+
+        private void tsbShowDataTree_Click(object sender, EventArgs e)
+        {
+            showTabelColumnTree.Execute(this, TableColumnsByTable);
         }
     }
 

@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using PostgreSQL_Editor.Global;
 
-namespace PostgreSQL_Editor
+namespace PostgreSQL_Editor.DBUtils
 {
     public class standardLists
     {
@@ -101,7 +102,7 @@ namespace PostgreSQL_Editor
         {
             systemTypesAllowed.Clear();
             string query = "select distinct system_type.* from system_type, system_type_rule where system_type_rule.system_type_id=system_type.id and system_type_rule.is_active";
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; " + query, npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; " + query, npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -171,7 +172,7 @@ namespace PostgreSQL_Editor
         public static void getProducts(NpgsqlConnection npgsql)
         {
             products.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM product", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM product", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -196,7 +197,7 @@ namespace PostgreSQL_Editor
         public static void getBaseMaterials(NpgsqlConnection npgsql)
         {
             baseMaterials.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM base_material", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM base_material", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -220,7 +221,7 @@ namespace PostgreSQL_Editor
         public static void getSystemTypes(NpgsqlConnection npgsql)
         {
             systemTypes.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM system_type", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM system_type", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -245,7 +246,7 @@ namespace PostgreSQL_Editor
         public static void getFrameTypes(NpgsqlConnection npgsql)
         {
             frameTypes.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM frame_type", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM frame_type", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -276,7 +277,7 @@ namespace PostgreSQL_Editor
         public static void getMaterialTypes(NpgsqlConnection npgsql)
         {
             materialTypes.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM material_type", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM material_type", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -343,7 +344,7 @@ namespace PostgreSQL_Editor
             string query = "select product.id, product.name, product.article_number, product.weight_kg, module_type.height, module_type.width, is_filler_module, is_oversize_module, max_cable_capacity from product, module_type" +
                            " where module_type.id = product.id and is_available = true" +
                            " order by product.name, module_type.height, module_type.width";
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; " + query, npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; " + query, npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -402,7 +403,7 @@ namespace PostgreSQL_Editor
         {
             frames.Clear();
             string query = "select * from frame";
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; " + query, npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; " + query, npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -448,7 +449,7 @@ namespace PostgreSQL_Editor
         public static void getFrameGeometries(NpgsqlConnection npgsql)
         {
             frameGeometries.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM frame_geometry", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM frame_geometry", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -476,7 +477,7 @@ namespace PostgreSQL_Editor
         public static void getFrameWindows(NpgsqlConnection npgsql)
         {
             frameWindows.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM frame_window", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM frame_window", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -502,7 +503,7 @@ namespace PostgreSQL_Editor
         public static void getFrameHoleSchemas(NpgsqlConnection npgsql)
         {
             frameHoleSchemas.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM frame_hole_schema", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM frame_hole_schema", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -528,7 +529,7 @@ namespace PostgreSQL_Editor
         public static void getWedgeTypes(NpgsqlConnection npgsql)
         {
             wedgeTypes.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM wedge_type", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM wedge_type", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -557,7 +558,7 @@ namespace PostgreSQL_Editor
         public static void getSleeveTypes(NpgsqlConnection npgsql)
         {
             sleeveTypes.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM sleeve_type", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM sleeve_type", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -588,7 +589,7 @@ namespace PostgreSQL_Editor
         public static void getStickerTypes(NpgsqlConnection npgsql)
         {
             stickerTypes.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM sticker_type", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM sticker_type", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -619,7 +620,7 @@ namespace PostgreSQL_Editor
                          "and frame_type.shape = 0 " +
                          "and frame_window.frame_id = frame.id " +
                          "and frame_type.name not like 'STRF'";
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "';" + sql, npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "';" + sql, npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -636,7 +637,7 @@ namespace PostgreSQL_Editor
         public static void getEntityMetaData(NpgsqlConnection npgsql)
         {
             entityMetaData.Clear();
-            using (var command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM entity_metadata", npgsql))
+            using (var command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM entity_metadata", npgsql))
             using (var reader = command.ExecuteReader())
             {
                 int ordStringValue = reader.GetOrdinal("string_value");
@@ -669,7 +670,7 @@ namespace PostgreSQL_Editor
         public static void getDrillingSchemas(NpgsqlConnection npgsql)
         {
             drillingSchemas.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM drilling_schema", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM drilling_schema", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -693,7 +694,7 @@ namespace PostgreSQL_Editor
         public static void getDrillingSchemaAngled(NpgsqlConnection npgsql)
         {
             drillingSchemaAngled.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM drilling_schema_angled", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM drilling_schema_angled", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -718,7 +719,7 @@ namespace PostgreSQL_Editor
         public static void getDrillingSchemaRound(NpgsqlConnection npgsql)
         {
             drillingSchemaRound.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM drilling_schema_round", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM drilling_schema_round", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -743,7 +744,7 @@ namespace PostgreSQL_Editor
         public static void getModuleVariations(NpgsqlConnection npgsql)
         {
             moduleVariations.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM module_variation", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM module_variation", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -767,7 +768,7 @@ namespace PostgreSQL_Editor
         public static void getModulePackagings(NpgsqlConnection npgsql)
         {
             modulePackagings.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM module_packaging", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM module_packaging", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -794,7 +795,7 @@ namespace PostgreSQL_Editor
         public static void getSystemTypeRules(NpgsqlConnection npgsql)
         {
             baseMaterialSystemTypeRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM system_type_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM system_type_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -818,7 +819,7 @@ namespace PostgreSQL_Editor
         public static void getSystemTypeFrameTypeRules(NpgsqlConnection npgsql)
         {
             systemTypeFrameTypeRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM system_type_frame_type_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM system_type_frame_type_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -842,7 +843,7 @@ namespace PostgreSQL_Editor
         public static void getMateriaTypeRules(NpgsqlConnection npgsql)
         {
             materialTypeRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM material_type_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM material_type_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -869,7 +870,7 @@ namespace PostgreSQL_Editor
         public static void getFrameTypeRules(NpgsqlConnection npgsql)
         {
             frameTypeRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM frame_type_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM frame_type_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -896,7 +897,7 @@ namespace PostgreSQL_Editor
         public static void getModuleRules(NpgsqlConnection npgsql)
         {
             moduleRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM module_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM module_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -925,7 +926,7 @@ namespace PostgreSQL_Editor
         {
             frameSleeveRules.Clear();
             moduleRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM frame_sleeve_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM frame_sleeve_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -951,7 +952,7 @@ namespace PostgreSQL_Editor
         public static void getFrameStickerRules(NpgsqlConnection npgsql)
         {
             frameStickerRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM frame_sticker_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM frame_sticker_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -976,7 +977,7 @@ namespace PostgreSQL_Editor
         public static void getSleeveStickerRules(NpgsqlConnection npgsql)
         {
             sleeveStickerRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM sleeve_sticker_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM sleeve_sticker_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -1003,7 +1004,7 @@ namespace PostgreSQL_Editor
         {
             // Implementierung ähnlich zu den anderen Regeltypen, z.B.:
             wedgeRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.schema + "'; SELECT * FROM wedge_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM wedge_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {

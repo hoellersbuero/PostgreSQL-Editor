@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using PostgreSQL_Editor.Global;
+using PostgreSQL_Editor.DBUtils;
 
 namespace PostgreSQL_Editor.EditRules
 {

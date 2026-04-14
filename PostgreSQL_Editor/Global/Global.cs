@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 
-namespace PostgreSQL_Editor
+namespace PostgreSQL_Editor.Global
 {
     public class Global
     {
@@ -436,6 +436,7 @@ namespace PostgreSQL_Editor
         public string sleeve_type { get; set; }
         public int rule_version { get; set; }
         public bool is_active { get; set; }
+        public bool is_mandatory { get; set; }
         public DateTime created_ts { get; set; }
         public DateTime modified_ts { get; set; }
         public string modified_by { get; set; }
