@@ -87,7 +87,11 @@ namespace PostgreSQL_Editor.EditRules
                     else
                     {
                         // UPDATE-Logik für geänderte Regeln
-                        sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + ", rule_version = " + rule.rule_version + " WHERE id = '" + rule.id.ToString() + "'";
+                        sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + ", rule_version = " + rule.rule_version 
+                            + ", system_type_id = '" + rule.system_type_id.ToString() + "'::uuid, sleeve_type_id = '" 
+                            + rule.sleeve_type_id.ToString() + "'::uuid, sticker_type_id = '" + rule.sticker_type_id.ToString() + "'::uuid, modified_ts = '" 
+                            + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + "', modified_by = 'pg_editor'"
+                            + " WHERE id = '" + rule.id.ToString() + "'";
                     }
                     sqllist.Add(sql + ";");
                 }

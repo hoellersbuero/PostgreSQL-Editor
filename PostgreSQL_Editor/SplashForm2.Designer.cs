@@ -33,74 +33,80 @@ namespace PostgreSQL_Editor
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashForm2));
-            this.lblTitle = new Label();
-            this.lblStatus = new Label();
-            this.pb = new ProgressBar();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "SplashForm2";
-
-            // Controls werden in der anderen Partial-Klasse deklariert (oder hierher verschieben).
-            // Falls die Felder `lblTitle`, `lblStatus`, `pb` noch in SplasForm.cs stehen,
-            // dürfen sie hier NICHT nochmals deklariert werden. Entferne dann die Deklarationen aus SplasForm.cs.
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pb = new System.Windows.Forms.ProgressBar();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // SplashForm (Form-Eigenschaften)
+            // panel1
             // 
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(460, 140);
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = Color.White;
-            this.TopMost = true;
-            this.ShowInTaskbar = false;
-            this.Name = "SplashForm";
-            this.Text = "SplashForm";
-
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.Text = "PostgreSQL Editor";
-            this.lblTitle.AutoSize = false;
-            this.lblTitle.TextAlign = ContentAlignment.MiddleCenter;
-            this.lblTitle.Dock = DockStyle.Top;
-            this.lblTitle.Height = 70;
-            this.lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.Text = "Starting...";
-            this.lblStatus.AutoSize = false;
-            this.lblStatus.TextAlign = ContentAlignment.MiddleCenter;
-            this.lblStatus.Dock = DockStyle.Top;
-            this.lblStatus.Height = 24;
-            this.lblStatus.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.pb);
+            this.panel1.Controls.Add(this.lblStatus);
+            this.panel1.Controls.Add(this.lblTitle);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(460, 140);
+            this.panel1.TabIndex = 0;
             // 
             // pb
             // 
-            this.pb.Style = ProgressBarStyle.Marquee;
+            this.pb.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pb.Location = new System.Drawing.Point(0, 120);
             this.pb.MarqueeAnimationSpeed = 30;
-            this.pb.Dock = DockStyle.Bottom;
-            this.pb.Height = 18;
-
+            this.pb.Name = "pb";
+            this.pb.Size = new System.Drawing.Size(458, 18);
+            this.pb.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pb.TabIndex = 3;
             // 
-            // Controls hinzufügen (Reihenfolge wie im Original)
+            // lblStatus
             // 
-            this.Controls.Add(this.pb);
-            this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.lblTitle);
-
+            this.lblStatus.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblStatus.Location = new System.Drawing.Point(0, 70);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(458, 24);
+            this.lblStatus.TabIndex = 4;
+            this.lblStatus.Text = "Starting...";
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(458, 70);
+            this.lblTitle.TabIndex = 5;
+            this.lblTitle.Text = "PostgreSQL Editor";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // SplashForm2
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(460, 140);
+            this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "SplashForm2";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "SplashForm";
+            this.TopMost = true;
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
         #endregion
 
-        private Label lblTitle;
-        private Label lblStatus;
+        private Panel panel1;
         private ProgressBar pb;
+        private Label lblStatus;
+        private Label lblTitle;
     }
 
 

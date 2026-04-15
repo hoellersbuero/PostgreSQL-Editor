@@ -173,8 +173,11 @@ namespace PostgreSQL_Editor.EditRules
             if (sfd.ShowDialog(this) == DialogResult.OK)
             {
                 string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
-                string sqlinsert = "INSERT INTO entity_metadata (id, entity_id, entity_type, metadata_key, string_value, bool_value, number_value, json_value, created_by, created_ts, modified_by, modified_ts) VALUES ";
-                string sqlupdate = "UPDATE entity_metadata SET entity_id = @entity_id, entity_type = @entity_type, metadata_key = @metadata_key, string_value = @string_value, bool_value = @bool_value, number_value = @number_value, json_value = @json_value WHERE id = @id;";
+                string sqlinsert = "INSERT INTO entity_metadata (id, entity_id, entity_type, metadata_key, string_value, bool_value, " +
+                    "number_value, json_value, created_by, created_ts, modified_by, modified_ts) VALUES ";
+                string sqlupdate = "UPDATE entity_metadata SET entity_id = @entity_id, entity_type = @entity_type, metadata_key = @metadata_key, " +
+                    "string_value = @string_value, bool_value = @bool_value, number_value = @number_value, json_value = @json_value, " +
+                    "modified_by = @modified_by, modified_ts = @modified_ts WHERE id = @id;";
                 string sqldelete = "DELETE FROM entity_metadata WHERE id = @id;";
                 foreach (var newRule in newEntityData)
                 {
@@ -185,8 +188,16 @@ namespace PostgreSQL_Editor.EditRules
                 }
                 foreach (var changedRule in changedEntityData.Where(x => !x.check))
                 {
-                    string sqlSet = $"entity_id = '{changedRule.entity_id}', entity_type = '{changedRule.entity_type}', metadata_key = '{changedRule.metadata_key}', string_value = '{changedRule.string_value}', bool_value = {changedRule.bool_value}, number_value = {(changedRule.number_value.HasValue ? changedRule.number_value.Value.ToString() : "NULL")}, json_value = '{changedRule.json_value.RootElement.ToString()}'";
-                    sqllist.Add(sqlupdate.Replace("@id", $"'{changedRule.id}'").Replace("@entity_id", $"'{changedRule.entity_id}'").Replace("@entity_type", $"'{changedRule.entity_type}'").Replace("@metadata_key", $"'{changedRule.metadata_key}'").Replace("@string_value", $"'{changedRule.string_value}'").Replace("@bool_value", changedRule.bool_value.ToString()).Replace("@number_value", changedRule.number_value.HasValue ? changedRule.number_value.Value.ToString() : "NULL").Replace("@json_value", $"'{changedRule.json_value.RootElement.ToString()}'"));
+                    string sqlSet = $"entity_id = '{changedRule.entity_id}', entity_type = '{changedRule.entity_type}', metadata_key = '{changedRule.metadata_key}', " +
+                        $"string_value = '{changedRule.string_value}', bool_value = {changedRule.bool_value}, " +
+                        $"number_value = {(changedRule.number_value.HasValue ? changedRule.number_value.Value.ToString() : "NULL")}, " +
+                        $"json_value = '{changedRule.json_value.RootElement.ToString()}'";
+                    sqllist.Add(sqlupdate.Replace("@id", $"'{changedRule.id}'").Replace("@entity_id", $"'{changedRule.entity_id}'").
+                        Replace("@entity_type", $"'{changedRule.entity_type}'").Replace("@metadata_key", $"'{changedRule.metadata_key}'").
+                        Replace("@string_value", $"'{changedRule.string_value}'").Replace("@bool_value", changedRule.bool_value.ToString()).
+                        Replace("@number_value", changedRule.number_value.HasValue ? changedRule.number_value.Value.ToString() : "NULL").
+                        Replace("@json_value", $"'{changedRule.json_value.RootElement.ToString()}'").
+                        Replace("@modified_by", "'pg_editor'").Replace("@modified_ts", $"'{s}'"));
                 }
                 foreach (var deletedRule in changedEntityData.Where(x => x.check))
                 {

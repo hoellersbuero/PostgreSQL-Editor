@@ -149,7 +149,8 @@ namespace PostgreSQL_Editor.EditRules
             if (sfd.ShowDialog(this) == DialogResult.OK)
             {
                 // Speichern der Änderungen in der Datenbank
-                string sqlinsert = "INSERT INTO frame_sleeve_rule (id,base_material_id,system_type_id,frame_id,sleeve_type_id,rule_version,is_active,created_ts,created_by,modified_ts,modified_by) VALUES ";
+                string sqlinsert = "INSERT INTO frame_sleeve_rule (id,base_material_id,system_type_id,frame_id,sleeve_type_id," +
+                                   "rule_version,is_active,created_ts,created_by,modified_ts,modified_by) VALUES ";
                 string sqlinsertmeta = "INSERT INTO entity_metadata (id,entity_id,entity_type,metadata_key,bool_value,created_ts,created_by,modified_ts,modified_by) VALUES ";
                 string sqlupdate = "UPDATE frame_sleeve_rule SET ";
                 string sqlupdatemeta = "UPDATE entity_metadata SET ";
@@ -180,12 +181,14 @@ namespace PostgreSQL_Editor.EditRules
                     else
                     {
                         // UPDATE-Logik für geänderte Regeln
-                        sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + ", rule_version = " + rule.rule_version
-                                        + " WHERE id = '" + rule.id.ToString() + "'::uuid";
+                        sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + ", rule_version = " + rule.rule_version 
+                                        + ", modified_ts = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) 
+                                        + "', modified_by = 'pg_editor' " + " WHERE id = '" + rule.id.ToString() + "'::uuid";
                         sqllist.Add(sql + ";");
-                        sql = sqlupdatemeta + "bool_value = " + rule.is_mandatory.ToString().ToLower() + ", modified_ts = '" +
-                                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + "', modified_by = 'pg_editor' " +
-                                        "WHERE entity_id = '" + rule.id.ToString() + "'::uuid AND entity_type = 'frame' AND metadata_key = 'sleeve_is_mandatory'";
+                        sql = sqlupdatemeta + "bool_value = " + rule.is_mandatory.ToString().ToLower() 
+                                            + ", modified_ts = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) 
+                                            + "', modified_by = 'pg_editor' " 
+                                            + "WHERE entity_id = '" + rule.id.ToString() + "'::uuid AND entity_type = 'frame' AND metadata_key = 'sleeve_is_mandatory'";
                         sqllist.Add(sql + ";");
                     }
                 }

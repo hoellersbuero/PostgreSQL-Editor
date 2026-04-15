@@ -73,10 +73,10 @@ namespace PostgreSQL_Editor.EditRules
                 string sqlinsert = "INSERT INTO frame_type_rule (id,base_material_id,system_type_id, frame_type_id,material_type_id,rule_version,is_active,is_special,created_ts,created_by,modified_ts,modified_by) VALUES ";
                 string sqlupdate = "UPDATE frame_type_rule SET ";
                 string sqldelete = "DELETE FROM frame_type_rule WHERE id = ";
+                string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
                 foreach (var rule in newFrameTypeRules)
                 {
                     // INSERT-Logik für neue Regeln
-                    string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
                     string sql = "('" + rule.id.ToString() + "'::uuid,'" + 
                                         rule.base_material_id.ToString() + "'::uuid,'" +
                                         rule.system_type_id.ToString() + "'::uuid,'" + 
@@ -97,8 +97,9 @@ namespace PostgreSQL_Editor.EditRules
                     else
                     {
                         // UPDATE-Logik für geänderte Regeln
-                        sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + ", is_special = " + rule.is_special.ToString().ToLower()
-                                        + ", rule_version = " + rule.rule_version + " WHERE id = '" + rule.id.ToString() + "'::uuid";
+                        sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + ", is_special = " + rule.is_special.ToString().ToLower() + 
+                                        ", rule_version = " + rule.rule_version + ", modified_ts = '" + s + "', modified_by = 'pg_editor' "
+                                        + " WHERE id = '" + rule.id.ToString() + "'::uuid";
                     }
                     sqllist.Add(sql + ";");
                 }
