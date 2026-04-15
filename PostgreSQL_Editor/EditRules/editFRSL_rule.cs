@@ -150,8 +150,11 @@ namespace PostgreSQL_Editor.EditRules
             {
                 // Speichern der Änderungen in der Datenbank
                 string sqlinsert = "INSERT INTO frame_sleeve_rule (id,base_material_id,system_type_id,frame_id,sleeve_type_id,rule_version,is_active,created_ts,created_by,modified_ts,modified_by) VALUES ";
+                string sqlinsertmeta = "INSERT INTO entity_metadata (id,entity_id,entity_type,metadata_key,bool_value,created_ts,created_by,modified_ts,modified_by) VALUES ";
                 string sqlupdate = "UPDATE frame_sleeve_rule SET ";
+                string sqlupdatemeta = "UPDATE entity_metadata SET ";
                 string sqldelete = "DELETE FROM frame_sleeve_rule WHERE id = '";
+                string sqldeletemeta = "DELETE FROM entity_metadata WHERE entity_id = '";
                 foreach (var rule in newFrameSleeveRules)
                 {
                     // INSERT-Logik für neue Regeln
@@ -160,6 +163,8 @@ namespace PostgreSQL_Editor.EditRules
                                  "'::uuid,'" + rule.frame_id.ToString() + "'::uuid,'" + rule.sleeve_type_id.ToString() +
                                  "'::uuid, " + rule.rule_version.ToString() + "," + rule.is_active.ToString().ToLower() + ",'" + s + "','pg_editor','" + s + "','pg_editor')";
                     sqllist.Add(sqlinsert + sql + ";");
+                    sql = ("('" + Guid.NewGuid().ToString() + "'::uuid,'" + rule.id.ToString() + "'::uuid,'frame','sleeve_is_mandatory'," + rule.is_mandatory.ToString().ToLower() + ",'" + s + "','pg_editor','" + s + "','pg_editor')");
+                    sqllist.Add(sqlinsertmeta + sql + ";");
                 }
                 foreach (var rule in changedFrameSleeveRules)
                 {
@@ -168,14 +173,21 @@ namespace PostgreSQL_Editor.EditRules
                     {
                         // Delete-Logik für gelöschte Regeln
                         sql = sqldelete + rule.id.ToString() + "'";
+                        sqllist.Add(sql + ";");
+                        sql = sqldeletemeta + rule.id.ToString() + "' AND entity_type = 'frame' AND metadata_key = 'sleeve_is_mandatory'";
+                        sqllist.Add(sql + ";");
                     }
                     else
                     {
                         // UPDATE-Logik für geänderte Regeln
                         sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + ", rule_version = " + rule.rule_version
                                         + " WHERE id = '" + rule.id.ToString() + "'::uuid";
+                        sqllist.Add(sql + ";");
+                        sql = sqlupdatemeta + "bool_value = " + rule.is_mandatory.ToString().ToLower() + ", modified_ts = '" +
+                                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + "', modified_by = 'pg_editor' " +
+                                        "WHERE entity_id = '" + rule.id.ToString() + "'::uuid AND entity_type = 'frame' AND metadata_key = 'sleeve_is_mandatory'";
+                        sqllist.Add(sql + ";");
                     }
-                    sqllist.Add(sql + ";");
                 }
                 File.WriteAllLines(sfd.FileName, sqllist);
                 newFrameSleeveRules.Clear();

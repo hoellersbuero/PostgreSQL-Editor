@@ -176,7 +176,7 @@
     <Compile Include="EditRules\editWedge_rule.Designer.cs">
       <DependentUpon>editWedge_rule.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExportHelpers.cs" />
+    <Compile Include="Helper\ExportHelpers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Functions\GetElements.cs" />
     <Compile Include="FunctionViews\getFrameFromId.cs">

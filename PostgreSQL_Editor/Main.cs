@@ -1,8 +1,8 @@
 ﻿using Npgsql;
-using PostgreSQL_Editor.EditRules;
-using PostgreSQL_Editor.Global;
 using PostgreSQL_Editor.DBUtils;
+using PostgreSQL_Editor.EditRules;
 using PostgreSQL_Editor.FunctionViews;
+using PostgreSQL_Editor.Global;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

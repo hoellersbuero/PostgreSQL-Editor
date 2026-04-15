@@ -254,6 +254,7 @@ namespace PostgreSQL_Editor.Global
 
     public class entity_metadata
     {
+        public bool check { get; set; }
         public Guid id { get; set; }
         public Guid entity_id { get; set; }
         public string entity_name { get; set; }
@@ -327,6 +328,16 @@ namespace PostgreSQL_Editor.Global
         public DateTime modified_ts { get; set; }
         public string created_by { get; set; }
         public string comment { get; set; }
+        public string modified_by { get; set; }
+    }
+
+    public class product_type
+    {
+        public Guid id { get; set; }
+        public DateTime created_ts { get; set; }
+        public DateTime modified_ts { get; set; }
+        public string name { get; set; }
+        public string created_by { get; set; }
         public string modified_by { get; set; }
     }
 

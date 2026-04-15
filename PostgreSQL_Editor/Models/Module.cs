@@ -1,6 +1,6 @@
-﻿using System;
+﻿using PostgreSQL_Editor.Global;
+using System;
 using System.Collections.Generic;
-using PostgreSQL_Editor.Global;
 
 namespace PostgreSQL_Editor.Models
 {

@@ -25,6 +25,7 @@ namespace PostgreSQL_Editor.DBUtils
         public static List<sticker_type> stickerTypes = new List<sticker_type>();
         public static List<decimal> fwHeights = new List<decimal>();
         public static List<entity_metadata> entityMetaData = new List<entity_metadata>();
+        public static List<product_type> productTypes = new List<product_type>();
         public static List<module_variation> moduleVariations = new List<module_variation>();
         public static List<module_packaging> modulePackagings = new List<module_packaging>();
         public static List<drilling_schema> drillingSchemas = new List<drilling_schema>();
@@ -61,12 +62,13 @@ namespace PostgreSQL_Editor.DBUtils
             getSleeveTypes(npgsql);
             getStickerTypes(npgsql);
             getFwHeights(npgsql);
-            getEntityMetaData(npgsql);
+            getProductType(npgsql);
             getDrillingSchemas(npgsql);
             getDrillingSchemaAngled(npgsql);
             getDrillingSchemaRound(npgsql);
             getModuleVariations(npgsql);
             getModulePackagings(npgsql);
+            getEntityMetaData(npgsql);
             getSystemTypeRules(npgsql);
             getSystemTypeFrameTypeRules(npgsql);
             getMateriaTypeRules(npgsql);
@@ -650,7 +652,6 @@ namespace PostgreSQL_Editor.DBUtils
                     var r = new entity_metadata();
                     r.id = (Guid)reader["id"];
                     r.entity_id = (Guid)reader["entity_id"];
-                    r.entity_name = products.Where(x => x.id.Equals(r.entity_id)).FirstOrDefault()?.name;
                     r.entity_type = (string)reader["entity_type"];
                     r.metadata_key = (string)reader["metadata_key"];
                     r.string_value = reader.IsDBNull(ordStringValue) ? null : reader.GetString(ordStringValue);
@@ -661,10 +662,39 @@ namespace PostgreSQL_Editor.DBUtils
                     r.created_ts = (DateTime)reader["created_ts"];
                     r.modified_by = (string)reader["modified_by"];
                     r.modified_ts = (DateTime)reader["modified_ts"];
+                    if (r.entity_type == "module_variation")
+                        r.entity_name = (from product p in standardLists.products from module_variation mv in standardLists.moduleVariations where mv.id == r.entity_id && p.id == mv.module_type_id select p.name).FirstOrDefault();
+                    else if (r.entity_type == "sleeve_is_mandatory")
+                        r.entity_name = (from product p in standardLists.products from frame_sleeve_rule fsr in standardLists.frameSleeveRules where fsr.id == r.entity_id && p.id == fsr.frame_id select p.name).FirstOrDefault();
+                    else
+                        r.entity_name = products.Where(x => x.id.Equals(r.entity_id)).FirstOrDefault()?.name;
                     entityMetaData.Add(r);
                 }
             }
             entityMetaData = entityMetaData.OrderBy(x => x.entity_type).ThenBy(x => x.entity_name).ThenBy(x => x.metadata_key).ToList();
+        }
+
+        public static void getProductType(NpgsqlConnection npgsql)
+        {
+            productTypes.Clear();
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM product_type", npgsql))
+            {
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        product_type pt = new product_type();
+                        pt.id = (Guid)reader["id"];
+                        pt.name = (string)reader["name"];
+                        pt.created_by = (string)reader["created_by"];
+                        pt.created_ts = (DateTime)reader["created_ts"];
+                        pt.modified_by = (string)reader["modified_by"];
+                        pt.modified_ts = (DateTime)reader["modified_ts"];
+                        productTypes.Add(pt);
+                    }
+                }
+            }
+            productTypes.SortByName<product_type>();
         }
 
         public static void getDrillingSchemas(NpgsqlConnection npgsql)
