@@ -17,9 +17,9 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editBMSTFTMT_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private BindingList<material_type_rule> materialTypeRules = new BindingList<material_type_rule>();
-        private List<material_type_rule> newMaterialTypeRules = new List<material_type_rule>();
-        private List<material_type_rule> changedMaterialTypeRules = new List<material_type_rule>();
+        private BindingList<BMSTFTMT_rule> BMSTFTMT_rules = new BindingList<BMSTFTMT_rule>();
+        private List<BMSTFTMT_rule> newBMSTFTMT_rules = new List<BMSTFTMT_rule>();
+        private List<BMSTFTMT_rule> changedBMSTFTMT_rules = new List<BMSTFTMT_rule>();
         private List<system_type> filteredSystemTypes = new List<system_type>();
         private List<frame_type> filteredFrameTypes = new List<frame_type>();
         private DgvChangeDetector _dgvChangeDetector;
@@ -56,8 +56,8 @@ namespace PostgreSQL_Editor.EditRules
             cbMaterialType.DataSource = standardLists.materialTypes;
             cbMaterialType.DisplayMember = "name";
             cbMaterialType.SelectedIndex = 0;
-            materialTypeRules = new BindingList<material_type_rule>(standardLists.materialTypeRules);
-            dgv.DataSource = materialTypeRules;
+            BMSTFTMT_rules = new BindingList<BMSTFTMT_rule>(standardLists.BMSTFTMT_rules);
+            dgv.DataSource = BMSTFTMT_rules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
         }
@@ -72,11 +72,11 @@ namespace PostgreSQL_Editor.EditRules
             if (sfd.ShowDialog(this) == DialogResult.OK)
             {
                 // Speichern der Änderungen in der Datenbank
-                string sqlinsert = "INSERT INTO system_type_rule (id,base_material_id,system_type_id, frame_type_id,material_type_id," +
+                string sqlinsert = "INSERT INTO material_type_rule (id,base_material_id,system_type_id, frame_type_id,material_type_id," +
                                    "rule_version,is_active,is_special,created_ts,created_by,modified_ts,modified_by) VALUES ";
-                string sqlupdate = "UPDATE system_type_rule SET ";
-                string sqldelete = "DELETE FROM system_type_rule WHERE id = ";
-                foreach (var rule in newMaterialTypeRules)
+                string sqlupdate = "UPDATE material_type_rule SET ";
+                string sqldelete = "DELETE FROM material_type_rule WHERE id = ";
+                foreach (var rule in newBMSTFTMT_rules)
                 {
                     // INSERT-Logik für neue Regeln
                     string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
@@ -86,7 +86,7 @@ namespace PostgreSQL_Editor.EditRules
                         rule.is_special.ToString().ToLower() + ",'" + s + "','pg_editor','" + s + "','pg_editor')";
                     sqllist.Add(sqlinsert + sql + ";");
                 }
-                foreach (var rule in changedMaterialTypeRules)
+                foreach (var rule in changedBMSTFTMT_rules)
                 {
                     string sql = String.Empty;
                     if (rule.check)
@@ -97,17 +97,17 @@ namespace PostgreSQL_Editor.EditRules
                     else
                     {
                         // UPDATE-Logik für geänderte Regeln
-                        sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + "is_special = " + rule.is_special.ToString().ToLower() 
+                        sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + ", is_special = " + rule.is_special.ToString().ToLower() 
                                         + ", modified_ts = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + "', modified_by = 'pg_editor'"
                                         + ", rule_version = " + rule.rule_version + " WHERE id = '" + rule.id.ToString() + "'";
                     }
                     sqllist.Add(sql + ";");
                 }
                 File.WriteAllLines(sfd.FileName, sqllist);
-                newMaterialTypeRules.Clear();
-                changedMaterialTypeRules.Clear();
+                newBMSTFTMT_rules.Clear();
+                changedBMSTFTMT_rules.Clear();
                 CreateDgvChangeDetector();
-                btnAdd.Enabled = newMaterialTypeRules.Count > 0 || changedMaterialTypeRules.Count > 0;
+                btnAdd.Enabled = newBMSTFTMT_rules.Count > 0 || changedBMSTFTMT_rules.Count > 0;
             }
         }
 
@@ -120,17 +120,17 @@ namespace PostgreSQL_Editor.EditRules
                 // direkt bei Änderung: changedRow enthält die veränderte DataGridViewRow
                 // Beispiel: markiere die Zeile visuell
                 changedRow.DefaultCellStyle.BackColor = System.Drawing.Color.LightYellow;
-                material_type_rule changedRule = changedRow.DataBoundItem as material_type_rule;
+                BMSTFTMT_rule changedRule = changedRow.DataBoundItem as BMSTFTMT_rule;
                 string jsonNew = JsonSerializer.Serialize(changedRule);
-                var x = from rule in changedMaterialTypeRules where JsonSerializer.Serialize(rule) == jsonNew select rule;
+                var x = from rule in changedBMSTFTMT_rules where JsonSerializer.Serialize(rule) == jsonNew select rule;
                 if (x.Count() == 0)
                 {
-                    changedMaterialTypeRules.Add(changedRow.DataBoundItem as material_type_rule);
+                    changedBMSTFTMT_rules.Add(changedRow.DataBoundItem as BMSTFTMT_rule);
                     updateLbInfo();
                 }
                 Action updateButton = () =>
                 {
-                    btnCreateSQL.Enabled = (newMaterialTypeRules?.Count ?? 0) > 0 || changedMaterialTypeRules.Count > 0;
+                    btnCreateSQL.Enabled = (newBMSTFTMT_rules?.Count ?? 0) > 0 || changedBMSTFTMT_rules.Count > 0;
                 };
 
                 if (btnCreateSQL.InvokeRequired)
@@ -147,7 +147,7 @@ namespace PostgreSQL_Editor.EditRules
 
         private void editBMSTFTMT_rule_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (changedMaterialTypeRules.Count > 0 || newMaterialTypeRules.Count > 0)
+            if (changedBMSTFTMT_rules.Count > 0 || newBMSTFTMT_rules.Count > 0)
             {
                 var result = MessageBox.Show(this, "Do you want to save the changes?", "Save changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -168,12 +168,12 @@ namespace PostgreSQL_Editor.EditRules
 
         private void updateLbInfo()
         {
-            lbInfo.Text = "Rules: " + materialTypeRules.Count.ToString() + " | New: " + newMaterialTypeRules.Count.ToString() + " | Changed: " + changedMaterialTypeRules.Where(x => !x.check).Count().ToString() + " | Deleted: " + changedMaterialTypeRules.Where(x => x.check).Count().ToString();
+            lbInfo.Text = "Rules: " + BMSTFTMT_rules.Count.ToString() + " | New: " + newBMSTFTMT_rules.Count.ToString() + " | Changed: " + changedBMSTFTMT_rules.Where(x => !x.check).Count().ToString() + " | Deleted: " + changedBMSTFTMT_rules.Where(x => x.check).Count().ToString();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            bool exists = materialTypeRules.Any(x => x.base_material_id == ((base_material)cbBaseMaterial.SelectedItem).id &&
+            bool exists = BMSTFTMT_rules.Any(x => x.base_material_id == ((base_material)cbBaseMaterial.SelectedItem).id &&
                           x.system_type_id == ((system_type)cbSystemType.SelectedItem).id &&
                           x.frame_type_id == ((frame_type)cbFrameType.SelectedItem).id &&
                           x.material_type_id == ((material_type)cbMaterialType.SelectedItem).id &&
@@ -184,7 +184,7 @@ namespace PostgreSQL_Editor.EditRules
                 MessageBox.Show(this, "This rule is already implemented", "Already implemented", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            material_type_rule materialTypeRule = new material_type_rule();
+            BMSTFTMT_rule materialTypeRule = new BMSTFTMT_rule();
             materialTypeRule.id = Guid.NewGuid();
             materialTypeRule.base_material_id = ((base_material)cbBaseMaterial.SelectedItem).id;
             materialTypeRule.base_material = ((base_material)cbBaseMaterial.SelectedItem).visiblename;
@@ -196,11 +196,11 @@ namespace PostgreSQL_Editor.EditRules
             materialTypeRule.material_type = ((material_type)cbMaterialType.SelectedItem).name;
             materialTypeRule.is_active = cbActive.Checked;
             materialTypeRule.rule_version = (int)nudVersion.Value;
-            materialTypeRules.Add(materialTypeRule);
-            newMaterialTypeRules.Add(materialTypeRule);
+            BMSTFTMT_rules.Add(materialTypeRule);
+            newBMSTFTMT_rules.Add(materialTypeRule);
             updateLbInfo();
             _dgvChangeDetector.TakeSnapshot();
-            btnCreateSQL.Enabled = newMaterialTypeRules.Count > 0 || changedMaterialTypeRules.Count > 0;
+            btnCreateSQL.Enabled = newBMSTFTMT_rules.Count > 0 || changedBMSTFTMT_rules.Count > 0;
         }
 
         private void cbBaseMaterial_SelectedIndexChanged(object sender, EventArgs e)

@@ -344,7 +344,7 @@ namespace PostgreSQL_Editor.Global
     #endregion =================================================================================
 
     #region rules classes ======================================================================
-    public class system_type_rule
+    public class material_type_rule
     {
         public bool check { get; set; }
         public Guid id { get; set; }
@@ -391,7 +391,7 @@ namespace PostgreSQL_Editor.Global
         public string created_by { get; set; }
     }
 
-    public class material_type_rule
+    public class BMSTFTMT_rule
     {
         public bool check { get; set; }
         public Guid id { get; set; }

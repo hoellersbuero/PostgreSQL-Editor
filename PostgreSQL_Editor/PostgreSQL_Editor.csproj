@@ -176,6 +176,12 @@
     <Compile Include="EditRules\editWedge_rule.Designer.cs">
       <DependentUpon>editWedge_rule.cs</DependentUpon>
     </Compile>
+    <Compile Include="FunctionViews\columnList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FunctionViews\columnList.Designer.cs">
+      <DependentUpon>columnList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helper\ExportHelpers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Functions\GetElements.cs" />
@@ -245,6 +251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditRules\editWedge_rule.resx">
       <DependentUpon>editWedge_rule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FunctionViews\columnList.resx">
+      <DependentUpon>columnList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FunctionViews\getFrameFromId.resx">
       <DependentUpon>getFrameFromId.cs</DependentUpon>

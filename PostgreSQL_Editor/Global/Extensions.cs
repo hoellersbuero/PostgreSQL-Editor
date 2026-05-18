@@ -23,11 +23,11 @@ namespace PostgreSQL_Editor.Global
 
         public static string BaseMaterialName(this base_material baseMaterial)
         {
-            if (baseMaterial.name.Equals("ProfisCT_Core_BaseConcrete"))
+            if (baseMaterial.name.EndsWith("concrete"))
                 return "Concrete";
-            else if (baseMaterial.name.Equals("ProfisCT_Core_BaseSteel"))
+            else if (baseMaterial.name.EndsWith("steel"))
                 return "Steel";
-            else if (baseMaterial.name.Equals("ProfisCT_Core_CabinetSeal"))
+            else if (baseMaterial.name.EndsWith("cabinet"))
                 return "Cabinet seal";
             else
                 return baseMaterial.name;

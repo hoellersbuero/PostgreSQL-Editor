@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PostgreSQL_Editor.FunctionViews
@@ -13,6 +9,7 @@ namespace PostgreSQL_Editor.FunctionViews
     public partial class showTabelColumnTree : Form
     {
         private Dictionary<string, List<string>> TableColumnsByTable;
+        private List<tableItem> treeNodes = new List<tableItem>();
 
         public showTabelColumnTree()
         {
@@ -88,5 +85,30 @@ namespace PostgreSQL_Editor.FunctionViews
         {
             Close();
         }
+
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            treeNodes.Clear();
+            foreach (TreeNode tableNode in tv.Nodes)
+            {
+                foreach (TreeNode columnNode in tableNode.Nodes)
+                {
+                    if (string.Equals(columnNode.Text, tbSearch.Text, StringComparison.OrdinalIgnoreCase))
+                    {
+                        tv.SelectedNode = columnNode;
+                        columnNode.EnsureVisible();
+                        tableItem item = new tableItem() { parent = tableNode.Text, child = columnNode.Text };
+                        treeNodes.Add(item);
+                    }
+                }
+            }
+            columnList.Execute(this, treeNodes);
+        }
+    }
+
+    public class tableItem
+    {
+        public string parent { get; set; }
+        public string child { get; set; }
     }
 }

@@ -17,9 +17,9 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editBMST_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private BindingList<system_type_rule> systemTypeRules = new BindingList<system_type_rule>();
-        private List<system_type_rule> newSystemTypeRules = new List<system_type_rule>();
-        private List<system_type_rule> changedSystemTypeRules = new List<system_type_rule>();
+        private BindingList<material_type_rule> systemTypeRules = new BindingList<material_type_rule>();
+        private List<material_type_rule> newSystemTypeRules = new List<material_type_rule>();
+        private List<material_type_rule> changedSystemTypeRules = new List<material_type_rule>();
         private List<system_type> filteredSystemTypes = new List<system_type>();
         private DgvChangeDetector _dgvChangeDetector;
 
@@ -47,7 +47,7 @@ namespace PostgreSQL_Editor.EditRules
             cbSystemType.DataSource = standardLists.systemTypes;
             cbSystemType.DisplayMember = "name";
             cbSystemType.SelectedIndex = 0;
-            systemTypeRules = new BindingList<system_type_rule>(standardLists.baseMaterialSystemTypeRules);
+            systemTypeRules = new BindingList<material_type_rule>(standardLists.baseMaterialSystemTypeRules);
             dgv.DataSource = systemTypeRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
@@ -68,7 +68,7 @@ namespace PostgreSQL_Editor.EditRules
                 MessageBox.Show(this, "This rule is already implemented", "Already implemented", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            system_type_rule systemTypeRule = new system_type_rule();
+            material_type_rule systemTypeRule = new material_type_rule();
             systemTypeRule.id = Guid.NewGuid();
             systemTypeRule.base_material_id = ((base_material)cbBaseMaterial.SelectedItem).id;
             systemTypeRule.base_material = ((base_material)cbBaseMaterial.SelectedItem).visiblename;
@@ -116,9 +116,9 @@ namespace PostgreSQL_Editor.EditRules
             if (sfd.ShowDialog(this) == DialogResult.OK)
             {
                 // Speichern der Änderungen in der Datenbank
-                string sqlinsert = "INSERT INTO system_type_rule (id,base_material_id,system_type_id,rule_version,is_active,created_ts,created_by,modified_ts,modified_by) VALUES ";
-                string sqlupdate = "UPDATE system_type_rule SET ";
-                string sqldelete = "DELETE FROM system_type_rule WHERE id = ";
+                string sqlinsert = "INSERT INTO material_type_rule (id,base_material_id,system_type_id,rule_version,is_active,created_ts,created_by,modified_ts,modified_by) VALUES ";
+                string sqlupdate = "UPDATE material_type_rule SET ";
+                string sqldelete = "DELETE FROM material_type_rule WHERE id = ";
                 string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
                 foreach (var rule in newSystemTypeRules)
                 {
@@ -161,12 +161,12 @@ namespace PostgreSQL_Editor.EditRules
                 // direkt bei Änderung: changedRow enthält die veränderte DataGridViewRow
                 // Beispiel: markiere die Zeile visuell
                 changedRow.DefaultCellStyle.BackColor = System.Drawing.Color.LightYellow;
-                system_type_rule changedRule = changedRow.DataBoundItem as system_type_rule;
+                material_type_rule changedRule = changedRow.DataBoundItem as material_type_rule;
                 string jsonNew = JsonSerializer.Serialize(changedRule);
                 var x = from rule in changedSystemTypeRules where JsonSerializer.Serialize(rule) == jsonNew select rule;
                 if (x.Count() == 0)
                 {
-                    changedSystemTypeRules.Add(changedRow.DataBoundItem as system_type_rule);
+                    changedSystemTypeRules.Add(changedRow.DataBoundItem as material_type_rule);
                     updateLbInfo();
                 }
                 Action updateButton = () =>

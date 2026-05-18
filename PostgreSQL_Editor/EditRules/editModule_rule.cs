@@ -85,9 +85,9 @@ namespace PostgreSQL_Editor.EditRules
             if (sfd.ShowDialog(this) == DialogResult.OK)
             {
                 // Speichern der Änderungen in der Datenbank
-                string sqlinsert = "INSERT INTO system_type_rule (id,base_material_id,system_type_id, frame_type_id,material_type_id,rule_version,is_active,is_special,created_ts,created_by,modified_ts,modified_by) VALUES ";
-                string sqlupdate = "UPDATE system_type_rule SET ";
-                string sqldelete = "DELETE FROM system_type_rule WHERE id = ";
+                string sqlinsert = "INSERT INTO material_type_rule (id,base_material_id,system_type_id, frame_type_id,material_type_id,rule_version,is_active,is_special,created_ts,created_by,modified_ts,modified_by) VALUES ";
+                string sqlupdate = "UPDATE material_type_rule SET ";
+                string sqldelete = "DELETE FROM material_type_rule WHERE id = ";
                 foreach (var rule in newModuleRules)
                 {
                     // INSERT-Logik für neue Regeln
@@ -229,7 +229,7 @@ namespace PostgreSQL_Editor.EditRules
 
         private void cbFrameType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<material_type> matlist = standardLists.materialTypeRules.Where(x => x.frame_type_id == ((frame_type)cbFrameType.SelectedItem).id && x.is_active)
+            List<material_type> matlist = standardLists.BMSTFTMT_rules.Where(x => x.frame_type_id == ((frame_type)cbFrameType.SelectedItem).id && x.is_active)
                                  .Select(x => new material_type() { id = x.material_type_id, name = x.material_type }).Distinct().OrderBy(x => x.name).ToList();
             filteredMaterialTypes = matlist.Count > 0 ? matlist : standardLists.materialTypes;
             cbMaterialType.DataSource = filteredMaterialTypes;

@@ -244,5 +244,25 @@ namespace PostgreSQL_Editor.EditRules
                                   .Select(x => new system_type() { id = x.system_type_id, name = x.system_type }).Distinct().OrderBy(x => x.name).ToList();
             cbSystemType.DataSource = filteredSystemTypes;
         }
+
+        private void cbFrame_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            frame fr = cbFrame.SelectedItem as frame;
+            if (fr != null)
+            {
+                frame_geometry fg = standardLists.frameGeometries.Where(x => x.id.Equals(fr.geometry_id)).FirstOrDefault();
+                if (fg != null)
+                {
+                    List<sleeve_type> sls = standardLists.sleeveTypes.Where(x => x.name.Contains(" " + fg.b1.ToString())).ToList();
+                    if (sls != null && sls.Count() > 0)
+                    {
+                        cbSleeve.DataSource = sls;
+                        cbSleeve.DisplayMember = "name";
+                    }
+                    else
+                        cbSleeve.DataSource = standardLists.sleeveTypes;
+                }
+            }
+        }
     }
 }

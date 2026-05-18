@@ -64,9 +64,9 @@ namespace PostgreSQL_Editor.EditRules
             if (sfd.ShowDialog(this) == DialogResult.OK)
             {
                 // Speichern der Änderungen in der Datenbank
-                string sqlinsert = "INSERT INTO system_type_rule (id,system_type_id, sleeve_type_id,sticker_type_id,rule_version,is_active,is_special,created_ts,created_by,modified_ts,modified_by) VALUES ";
-                string sqlupdate = "UPDATE system_type_rule SET ";
-                string sqldelete = "DELETE FROM system_type_rule WHERE id = ";
+                string sqlinsert = "INSERT INTO material_type_rule (id,system_type_id, sleeve_type_id,sticker_type_id,rule_version,is_active,is_special,created_ts,created_by,modified_ts,modified_by) VALUES ";
+                string sqlupdate = "UPDATE material_type_rule SET ";
+                string sqldelete = "DELETE FROM material_type_rule WHERE id = ";
                 foreach (var rule in sleeveStickerRules)
                 {
                     // INSERT-Logik für neue Regeln

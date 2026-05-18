@@ -46,10 +46,10 @@
             this.tsbSaveSQL = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbExportExcel = new System.Windows.Forms.ToolStripButton();
+            this.tsbShowDataTree = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbForeignKeys = new System.Windows.Forms.ToolStripButton();
             this.tsbCreateFKeys = new System.Windows.Forms.ToolStripButton();
-            this.tsbShowDataTree = new System.Windows.Forms.ToolStripButton();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tbQuery = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -303,6 +303,17 @@
             this.tsbExportExcel.Text = "Export content to excel";
             this.tsbExportExcel.Click += new System.EventHandler(this.tsbExportExcel_Click);
             // 
+            // tsbShowDataTree
+            // 
+            this.tsbShowDataTree.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbShowDataTree.Image = global::PostgreSQL_Editor.Properties.Resources.TreeView;
+            this.tsbShowDataTree.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbShowDataTree.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbShowDataTree.Name = "tsbShowDataTree";
+            this.tsbShowDataTree.Size = new System.Drawing.Size(28, 28);
+            this.tsbShowDataTree.Text = "Show Tables and Columns";
+            this.tsbShowDataTree.Click += new System.EventHandler(this.tsbShowDataTree_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -331,17 +342,6 @@
             this.tsbCreateFKeys.Size = new System.Drawing.Size(52, 28);
             this.tsbCreateFKeys.Text = "Create foreign keys with on delete cascade";
             this.tsbCreateFKeys.Click += new System.EventHandler(this.tsbCreateFKeys_Click);
-            // 
-            // tsbShowDataTree
-            // 
-            this.tsbShowDataTree.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbShowDataTree.Image = global::PostgreSQL_Editor.Properties.Resources.TreeView;
-            this.tsbShowDataTree.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsbShowDataTree.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbShowDataTree.Name = "tsbShowDataTree";
-            this.tsbShowDataTree.Size = new System.Drawing.Size(28, 28);
-            this.tsbShowDataTree.Text = "Show Tables and Columns";
-            this.tsbShowDataTree.Click += new System.EventHandler(this.tsbShowDataTree_Click);
             // 
             // splitContainer2
             // 

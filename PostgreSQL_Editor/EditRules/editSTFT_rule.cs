@@ -160,7 +160,7 @@ namespace PostgreSQL_Editor.EditRules
                 // direkt bei Änderung: changedRow enthält die veränderte DataGridViewRow
                 // Beispiel: markiere die Zeile visuell
                 changedRow.DefaultCellStyle.BackColor = System.Drawing.Color.LightYellow;
-                system_type_rule changedRule = changedRow.DataBoundItem as system_type_rule;
+                material_type_rule changedRule = changedRow.DataBoundItem as material_type_rule;
                 string jsonNew = JsonSerializer.Serialize(changedRule);
                 var x = from rule in changedFrameTypeRules where JsonSerializer.Serialize(rule) == jsonNew select rule;
                 if (x.Count() == 0)

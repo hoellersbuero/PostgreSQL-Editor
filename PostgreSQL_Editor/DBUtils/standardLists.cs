@@ -31,9 +31,10 @@ namespace PostgreSQL_Editor.DBUtils
         public static List<drilling_schema> drillingSchemas = new List<drilling_schema>();
         public static List<drilling_schema_angled> drillingSchemaAngled = new List<drilling_schema_angled>();
         public static List<drilling_schema_round> drillingSchemaRound = new List<drilling_schema_round>();
-        public static List<system_type_rule> baseMaterialSystemTypeRules = new List<system_type_rule>();
+        public static List<material_type_rule> baseMaterialSystemTypeRules = new List<material_type_rule>();
         public static List<system_type_frame_type_rule> systemTypeFrameTypeRules = new List<system_type_frame_type_rule>();
         public static List<material_type_rule> materialTypeRules = new List<material_type_rule>();
+        public static List<BMSTFTMT_rule> BMSTFTMT_rules = new List<BMSTFTMT_rule>();
         public static List<frame_type_rule> frameTypeRules = new List<frame_type_rule>();
         public static List<module_rule> moduleRules = new List<module_rule>();
         public static List<frame_sleeve_rule> frameSleeveRules = new List<frame_sleeve_rule>();
@@ -71,8 +72,8 @@ namespace PostgreSQL_Editor.DBUtils
             getEntityMetaData(npgsql);
             getSystemTypeRules(npgsql);
             getSystemTypeFrameTypeRules(npgsql);
-            getMateriaTypeRules(npgsql);
             getFrameTypeRules(npgsql);
+            getBMSTFTMTRules(npgsql);
             getModuleRules(npgsql);
             getFrameSleeveRules(npgsql);
             getFrameStickerRules(npgsql);
@@ -103,7 +104,7 @@ namespace PostgreSQL_Editor.DBUtils
         public static void getAllSystemTypesAllowed(NpgsqlConnection npgsql)
         {
             systemTypesAllowed.Clear();
-            string query = "select distinct system_type.* from system_type, system_type_rule where system_type_rule.system_type_id=system_type.id and system_type_rule.is_active";
+            string query = "select distinct system_type.* from system_type, material_type_rule where material_type_rule.system_type_id=system_type.id and material_type_rule.is_active";
             using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; " + query, npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
@@ -206,7 +207,7 @@ namespace PostgreSQL_Editor.DBUtils
                     while (reader.Read())
                     {
                         base_material baseMaterial = new base_material();
-                        baseMaterial.name = (string)reader["name"];
+                        baseMaterial.name = (string)reader["name_key"];
                         baseMaterial.visiblename = baseMaterial.BaseMaterialName();
                         baseMaterial.id = (Guid)reader["id"];
                         baseMaterial.created_by = (string)reader["created_by"];
@@ -825,13 +826,13 @@ namespace PostgreSQL_Editor.DBUtils
         public static void getSystemTypeRules(NpgsqlConnection npgsql)
         {
             baseMaterialSystemTypeRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM system_type_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM material_type_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        system_type_rule systemTypeRule = new system_type_rule();
+                        material_type_rule systemTypeRule = new material_type_rule();
                         systemTypeRule.check = false;
                         systemTypeRule.id = (Guid)reader["id"];
                         systemTypeRule.base_material_id = (Guid)reader["base_material_id"];
@@ -870,33 +871,34 @@ namespace PostgreSQL_Editor.DBUtils
             }
         }
 
-        public static void getMateriaTypeRules(NpgsqlConnection npgsql)
+        public static void getBMSTFTMTRules(NpgsqlConnection npgsql)
         {
-            materialTypeRules.Clear();
+            BMSTFTMT_rules.Clear();
             using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM material_type_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        material_type_rule materialTypeRule = new material_type_rule();
-                        materialTypeRule.check = false;
-                        materialTypeRule.id = (Guid)reader["id"];
-                        materialTypeRule.base_material_id = (Guid)reader["base_material_id"];
-                        materialTypeRule.base_material = getBaseMaterialName(materialTypeRule.id);
-                        materialTypeRule.system_type_id = (Guid)reader["system_type_id"];
-                        materialTypeRule.system_type = getSystemTypeName(materialTypeRule.system_type_id);
-                        materialTypeRule.frame_type_id = (Guid)reader["frame_type_id"];
-                        materialTypeRule.frame_type = getFrameTypeName(materialTypeRule.frame_type_id);
-                        materialTypeRule.material_type_id = (Guid)reader["material_type_id"];
-                        materialTypeRule.material_type = getMaterialTypeName(materialTypeRule.material_type_id);
-                        materialTypeRule.is_active = (bool)reader["is_active"];
-                        materialTypeRule.rule_version = (int)reader["rule_version"];
-                        materialTypeRules.Add(materialTypeRule);
+                        BMSTFTMT_rule BMRule = new BMSTFTMT_rule();
+                        BMRule.check = false;
+                        BMRule.id = (Guid)reader["id"];
+                        BMRule.base_material_id = (Guid)reader["base_material_id"];
+                        BMRule.base_material = getBaseMaterialName(BMRule.base_material_id);
+                        BMRule.system_type_id = (Guid)reader["system_type_id"];
+                        BMRule.system_type = getSystemTypeName(BMRule.system_type_id);
+                        BMRule.frame_type_id = (Guid)reader["frame_type_id"];
+                        BMRule.frame_type = getFrameTypeName(BMRule.frame_type_id);
+                        BMRule.material_type_id = (Guid)reader["material_type_id"];
+                        BMRule.material_type = getMaterialTypeName(BMRule.material_type_id);
+                        BMRule.is_active = (bool)reader["is_active"];
+                        BMRule.rule_version = (int)reader["rule_version"];
+                        BMSTFTMT_rules.Add(BMRule);
                     }
                 }
             }
         }
+
         public static void getFrameTypeRules(NpgsqlConnection npgsql)
         {
             frameTypeRules.Clear();
@@ -911,7 +913,7 @@ namespace PostgreSQL_Editor.DBUtils
                         frameTypeRule.check = false;
                         frameTypeRule.id = (Guid)reader["id"];
                         frameTypeRule.base_material_id = (Guid)reader["base_material_id"];
-                        frameTypeRule.base_material = getBaseMaterialName(frameTypeRule.id);
+                        frameTypeRule.base_material = getBaseMaterialName(frameTypeRule.base_material_id);
                         frameTypeRule.system_type_id = (Guid)reader["system_type_id"];
                         frameTypeRule.system_type = getSystemTypeName(frameTypeRule.system_type_id);
                         frameTypeRule.frame_type_id = (Guid)reader["frame_type_id"];
@@ -974,6 +976,7 @@ namespace PostgreSQL_Editor.DBUtils
                         rule.sleeve_type = products.Where(x => x.id.Equals(rule.sleeve_type_id)).FirstOrDefault()?.name;
                         rule.rule_version = (int)reader["rule_version"];
                         rule.is_active = (bool)reader["is_active"];
+                        frameSleeveRules.Add(rule);
                     }
                 }
             }

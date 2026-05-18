@@ -290,7 +290,7 @@
             // 
             // btnCreateSQL
             // 
-            this.btnCreateSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.btnCreateSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCreateSQL.Enabled = false;
             this.btnCreateSQL.Location = new System.Drawing.Point(12, 429);
             this.btnCreateSQL.Name = "btnCreateSQL";
