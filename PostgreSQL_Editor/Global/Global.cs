@@ -129,6 +129,16 @@ namespace PostgreSQL_Editor.Global
         public string created_by { get; set; }
     }
 
+    public class module_class
+    {
+        public Guid id { get; set; }
+        public string name { get; set; }
+        public DateTime created_ts { get; set; }
+        public DateTime modified_ts { get; set; }
+        public string modified_by { get; set; }
+        public string created_by { get; set; }
+    }
+
     public class module : product
     {
         public decimal height { get; set; }
@@ -418,12 +428,10 @@ namespace PostgreSQL_Editor.Global
         public Guid id { get; set; }
         public Guid system_type_id { get; set; }
         public string system_type { get; set; }
-        public Guid material_type_id { get; set; }
-        public string material_type { get; set; }
+        public Guid module_class_id { get; set; }
+        public string module_class { get; set; }
         public Guid frame_type_id { get; set; }
         public string frame_type { get; set; }
-        public Guid module_id { get; set; }
-        public string module { get; set; }
         public int priority { get; set; }
         public int rule_version { get; set; }
         public bool is_active { get; set; }

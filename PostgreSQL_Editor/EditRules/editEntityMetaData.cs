@@ -98,9 +98,10 @@ namespace PostgreSQL_Editor.EditRules
 
         private void cbEntityType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cbEntityType.SelectedItem as product_type)
+            product_type pt = cbEntityType.SelectedItem as product_type;
+            switch (pt.name)
             {
-                case product_type pt when pt.name == "Module variation":
+                case "Module variation":
                     filteredEntityNames = (from mv in standardLists.moduleVariations
                                            join m in standardLists.modules on mv.module_type_id equals m.id
                                            select new { m.name, mv.id }).GroupBy(x => x.name).ToDictionary(g => g.Key, g => g.First().id);
@@ -108,14 +109,22 @@ namespace PostgreSQL_Editor.EditRules
                     sortedModuleVariations.Sort((a, b) => string.Compare(a.Key, b.Key, StringComparison.OrdinalIgnoreCase));
                     cbEntity.DataSource = sortedModuleVariations;
                     break;
-                case product_type pt when pt.name == "Frame sleeve rule":
+                case"Frame sleeve rule":
                     filteredEntityNames = (from frame_sleeve_rule fsr in standardLists.frameSleeveRules
                                            join f in standardLists.frames on fsr.frame_id equals f.id
-                                           select new { f.name, fsr.id }).ToDictionary(x => x.name, x => x.id);
+                                           select new { f.name, fsr.id }).Distinct().ToDictionary(x => x.name, x => x.id);
                     var sortedFrameSleeveRules = filteredEntityNames.ToList();
                     sortedFrameSleeveRules.Sort((a, b) => string.Compare(a.Key, b.Key, StringComparison.OrdinalIgnoreCase));
                     cbEntity.DataSource = sortedFrameSleeveRules;
                     break;
+                case "frame_type":
+                    filteredEntityNames = (from frame_type ft in standardLists.frameTypes
+                                           select new { ft.name, ft.id }).ToDictionary(x => x.name, x => x.id);
+                    var sortedFrameTypes = filteredEntityNames.ToList();
+                    sortedFrameTypes.Sort((a, b) => string.Compare(a.Key, b.Key, StringComparison.OrdinalIgnoreCase));
+                    cbEntity.DataSource = sortedFrameTypes;
+                    break;
+
                 default:
                     filteredEntityNames = standardLists.products.Where(x => x.product_type_id == (cbEntityType.SelectedValue as Guid?)).ToDictionary(x => x.name, x => x.id);
                     cbEntity.DataSource = filteredEntityNames.ToList();

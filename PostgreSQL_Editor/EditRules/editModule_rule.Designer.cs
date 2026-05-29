@@ -33,13 +33,11 @@
             this.cbActive = new System.Windows.Forms.CheckBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.cbMaterialType = new System.Windows.Forms.ComboBox();
+            this.cbModuleClass = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbFrameType = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.cbSystemType = new System.Windows.Forms.ComboBox();
-            this.cbModule = new System.Windows.Forms.ComboBox();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCreateSQL = new System.Windows.Forms.Button();
             this.dgv = new System.Windows.Forms.DataGridView();
@@ -49,10 +47,9 @@
             this.cCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cBaseMaterial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSystemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cFrametype = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cMaterialType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cModuleClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.cSpecial = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cSpecial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cRuleVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cFill = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.nudVersion)).BeginInit();
@@ -108,17 +105,17 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(263, 9);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.Size = new System.Drawing.Size(72, 13);
             this.label4.TabIndex = 37;
-            this.label4.Text = "Materialtype:";
+            this.label4.Text = "Module class:";
             // 
-            // cbMaterialType
+            // cbModuleClass
             // 
-            this.cbMaterialType.FormattingEnabled = true;
-            this.cbMaterialType.Location = new System.Drawing.Point(266, 25);
-            this.cbMaterialType.Name = "cbMaterialType";
-            this.cbMaterialType.Size = new System.Drawing.Size(84, 21);
-            this.cbMaterialType.TabIndex = 36;
+            this.cbModuleClass.FormattingEnabled = true;
+            this.cbModuleClass.Location = new System.Drawing.Point(266, 25);
+            this.cbModuleClass.Name = "cbModuleClass";
+            this.cbModuleClass.Size = new System.Drawing.Size(117, 21);
+            this.cbModuleClass.TabIndex = 36;
             // 
             // label3
             // 
@@ -136,7 +133,6 @@
             this.cbFrameType.Name = "cbFrameType";
             this.cbFrameType.Size = new System.Drawing.Size(121, 21);
             this.cbFrameType.TabIndex = 34;
-            this.cbFrameType.SelectedIndexChanged += new System.EventHandler(this.cbFrameType_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -147,15 +143,6 @@
             this.label2.TabIndex = 33;
             this.label2.Text = "Systemtype:";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(353, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "Module:";
-            // 
             // cbSystemType
             // 
             this.cbSystemType.FormattingEnabled = true;
@@ -164,14 +151,6 @@
             this.cbSystemType.Size = new System.Drawing.Size(121, 21);
             this.cbSystemType.TabIndex = 31;
             this.cbSystemType.SelectedIndexChanged += new System.EventHandler(this.cbSystemType_SelectedIndexChanged);
-            // 
-            // cbModule
-            // 
-            this.cbModule.FormattingEnabled = true;
-            this.cbModule.Location = new System.Drawing.Point(356, 25);
-            this.cbModule.Name = "cbModule";
-            this.cbModule.Size = new System.Drawing.Size(158, 21);
-            this.cbModule.TabIndex = 30;
             // 
             // btnClose
             // 
@@ -209,8 +188,7 @@
             this.cCheck,
             this.cBaseMaterial,
             this.cSystemType,
-            this.cFrametype,
-            this.cMaterialType,
+            this.cModuleClass,
             this.cActive,
             this.cSpecial,
             this.cRuleVersion,
@@ -281,23 +259,14 @@
             this.cSystemType.ReadOnly = true;
             this.cSystemType.Width = 130;
             // 
-            // cFrametype
+            // cModuleClass
             // 
-            this.cFrametype.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cFrametype.DataPropertyName = "Matrial_type";
-            this.cFrametype.HeaderText = "Materialtype";
-            this.cFrametype.MinimumWidth = 130;
-            this.cFrametype.Name = "cFrametype";
-            this.cFrametype.Width = 130;
-            // 
-            // cMaterialType
-            // 
-            this.cMaterialType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cMaterialType.DataPropertyName = "module";
-            this.cMaterialType.HeaderText = "Module";
-            this.cMaterialType.MinimumWidth = 130;
-            this.cMaterialType.Name = "cMaterialType";
-            this.cMaterialType.Width = 130;
+            this.cModuleClass.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.cModuleClass.DataPropertyName = "module_class";
+            this.cModuleClass.HeaderText = "Module class";
+            this.cModuleClass.MinimumWidth = 130;
+            this.cModuleClass.Name = "cModuleClass";
+            this.cModuleClass.Width = 130;
             // 
             // cActive
             // 
@@ -314,7 +283,6 @@
             this.cSpecial.HeaderText = "Priority";
             this.cSpecial.Name = "cSpecial";
             this.cSpecial.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.cSpecial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.cSpecial.Width = 63;
             // 
             // cRuleVersion
@@ -347,18 +315,16 @@
             this.Controls.Add(this.cbActive);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.cbMaterialType);
+            this.Controls.Add(this.cbModuleClass);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cbFrameType);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.cbSystemType);
-            this.Controls.Add(this.cbModule);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximumSize = new System.Drawing.Size(825, 9999);
             this.MinimumSize = new System.Drawing.Size(825, 500);
             this.Name = "editModule_rule";
-            this.Text = "Edit Systemtype-Frametype-Materialtype-Module Rules";
+            this.Text = "Edit Systemtype-Frametype-Module-class Rules";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.editModule_rule_FormClosing);
             this.Load += new System.EventHandler(this.editModule_rule_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudVersion)).EndInit();
@@ -375,13 +341,11 @@
         private System.Windows.Forms.CheckBox cbActive;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cbMaterialType;
+        private System.Windows.Forms.ComboBox cbModuleClass;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbFrameType;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbSystemType;
-        private System.Windows.Forms.ComboBox cbModule;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnCreateSQL;
         private System.Windows.Forms.DataGridView dgv;
@@ -391,10 +355,9 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn cCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn cBaseMaterial;
         private System.Windows.Forms.DataGridViewTextBoxColumn cSystemType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cFrametype;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cMaterialType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cModuleClass;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cActive;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn cSpecial;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cSpecial;
         private System.Windows.Forms.DataGridViewTextBoxColumn cRuleVersion;
         private System.Windows.Forms.DataGridViewTextBoxColumn cFill;
     }

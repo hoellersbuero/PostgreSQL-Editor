@@ -853,7 +853,7 @@
             // 
             this.editSTFTMTModule.Name = "editSTFTMTModule";
             this.editSTFTMTModule.Size = new System.Drawing.Size(411, 22);
-            this.editSTFTMTModule.Text = "Edit Systemtype - Frametype - Materialtype - Module Rules";
+            this.editSTFTMTModule.Text = "Edit Systemtype - Frametype - Module-class Rules";
             this.editSTFTMTModule.Click += new System.EventHandler(this.editSTFTMTModule_Click);
             // 
             // editFRSL

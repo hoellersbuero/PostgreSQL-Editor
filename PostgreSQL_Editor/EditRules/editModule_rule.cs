@@ -48,9 +48,9 @@ namespace PostgreSQL_Editor.EditRules
             cbFrameType.DataSource = (filteredFrameTypes.Count == 0) ? standardLists.frameTypes : filteredFrameTypes;
             cbFrameType.DisplayMember = "name";
             cbFrameType.SelectedIndex = 0;
-            cbMaterialType.DataSource = (filteredMaterialTypes.Count == 0) ? standardLists.materialTypes : filteredMaterialTypes;
-            cbMaterialType.DisplayMember = "name";
-            cbMaterialType.SelectedIndex = 0;
+            cbModuleClass.DataSource = standardLists.moduleClasses;
+            cbModuleClass.DisplayMember = "name";
+            cbModuleClass.SelectedIndex = 0;
             // List<module> filteredModules = (from module m in standardLists.modules from system_type s in standardLists.systemTypesAllowed where m.name.StartsWith(s.name) select m).ToList();
             // Filter modules (case-insensitive, trimmed) und eindeutige Einträge nach id
             // filteredModules = standardLists.modules
@@ -62,13 +62,6 @@ namespace PostgreSQL_Editor.EditRules
             //    .ToList();
             // Falls kein Filterergebnis, fallback auf komplette Liste
             // cbModule.DataSource = (filteredModules.Count > 0) ? filteredModules : standardLists.modules;
-            cbModule.DataSource = standardLists.modules;
-            cbModule.DisplayMember = "name";
-            if (cbModule.Items.Count > 0) cbModule.SelectedIndex = 0;
-            // filteredModules = standardLists.modules.Where(m => standardLists.systemTypesAllowed.Any(s => !string.IsNullOrEmpty(m.name) && !string.IsNullOrEmpty(s.name) && m.name.Trim().StartsWith(s.name.Trim(), StringComparison.OrdinalIgnoreCase))).ToList();
-            cbModule.DataSource = standardLists.modules;
-            cbModule.DisplayMember = "name";
-            cbModule.SelectedIndex = 0;
             moduleRules = new BindingList<module_rule>(standardLists.moduleRules);
             dgv.DataSource =  moduleRules;
             _dgvChangeDetector.TakeSnapshot();
@@ -93,8 +86,8 @@ namespace PostgreSQL_Editor.EditRules
                     // INSERT-Logik für neue Regeln
                     string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
                     string sql = "('" + rule.id.ToString() + "'::uuid,'" + rule.system_type_id.ToString() + "'::uuid,'" +
-                                        rule.frame_type_id.ToString() + "'::uuid,'" + rule.material_type_id.ToString() + "'::uuid,'" +
-                                        rule.module_id.ToString() + "'::uuid, " + rule.rule_version.ToString() + "," +
+                                        rule.frame_type_id.ToString() + "'::uuid,'" + rule.module_class_id.ToString() + "'::uuid,'" +
+                                        rule.rule_version.ToString() + "," +
                                         rule.is_active.ToString().ToLower() + ",'" + s + "','pg_editor','" + s + "','pg_editor')";
                     sqllist.Add(sqlinsert + sql + ";");
                 }
@@ -188,8 +181,7 @@ namespace PostgreSQL_Editor.EditRules
         {
             bool exists = moduleRules.Any(x => x.system_type_id == ((system_type)cbSystemType.SelectedItem).id &&
                           x.frame_type_id == ((frame_type)cbFrameType.SelectedItem).id &&
-                          x.material_type_id == ((material_type)cbMaterialType.SelectedItem).id &&
-                          x.module_id == ((module)cbModule.SelectedItem).id &&
+                          x.module_class_id == ((material_type)cbModuleClass.SelectedItem).id &&
                           x.is_active == cbActive.Checked && x.priority == (int)nudPriority.Value &&
                           x.rule_version == (int)nudVersion.Value);
             if (exists)
@@ -203,12 +195,10 @@ namespace PostgreSQL_Editor.EditRules
             moduleRule.system_type = ((system_type)cbSystemType.SelectedItem).name;
             moduleRule.frame_type_id = ((frame_type)cbFrameType.SelectedItem).id;
             moduleRule.frame_type = ((frame_type)cbFrameType.SelectedItem).name;
-            moduleRule.material_type_id = ((material_type)cbMaterialType.SelectedItem).id;
-            moduleRule.material_type = ((material_type)cbMaterialType.SelectedItem).name;
-            moduleRule.material_type_id = ((material_type)cbMaterialType.SelectedItem).id;
-            moduleRule.material_type = ((material_type)cbMaterialType.SelectedItem).name;
-            moduleRule.module_id = ((module)cbModule.SelectedItem).id;
-            moduleRule.module = ((module)cbModule.SelectedItem).name;
+            moduleRule.module_class_id = ((material_type)cbModuleClass.SelectedItem).id;
+            moduleRule.module_class = ((material_type)cbModuleClass.SelectedItem).name;
+            moduleRule.module_class_id = ((material_type)cbModuleClass.SelectedItem).id;
+            moduleRule.module_class = ((material_type)cbModuleClass.SelectedItem).name;
             moduleRule.is_active = cbActive.Checked;
             moduleRule.priority = (int)nudPriority.Value;
             moduleRule.rule_version = (int)nudVersion.Value;
@@ -225,14 +215,6 @@ namespace PostgreSQL_Editor.EditRules
                                  .Select(x => new frame_type() { id = x.frame_type_id, name = x.frame_type }).Distinct().OrderBy(x => x.name).ToList();
             filteredFrameTypes = framelist.Count > 0 ? framelist : standardLists.frameTypes;
             cbFrameType.DataSource = filteredFrameTypes;
-        }
-
-        private void cbFrameType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            List<material_type> matlist = standardLists.BMSTFTMT_rules.Where(x => x.frame_type_id == ((frame_type)cbFrameType.SelectedItem).id && x.is_active)
-                                 .Select(x => new material_type() { id = x.material_type_id, name = x.material_type }).Distinct().OrderBy(x => x.name).ToList();
-            filteredMaterialTypes = matlist.Count > 0 ? matlist : standardLists.materialTypes;
-            cbMaterialType.DataSource = filteredMaterialTypes;
         }
     }
 }

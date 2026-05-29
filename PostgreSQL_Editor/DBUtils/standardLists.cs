@@ -15,6 +15,7 @@ namespace PostgreSQL_Editor.DBUtils
         public static List<system_type> systemTypesAllowed = new List<system_type>();
         public static List<frame_type> frameTypes = new List<frame_type>();
         public static List<material_type> materialTypes = new List<material_type>();
+        public static List<module_class> moduleClasses = new List<module_class>();
         public static List<module> modules = new List<module>();
         public static List<frame_geometry> frameGeometries = new List<frame_geometry>();
         public static List<frame_window> frameWindows = new List<frame_window>();
@@ -54,6 +55,7 @@ namespace PostgreSQL_Editor.DBUtils
             getAllSystemTypesAllowed(npgsql);
             getFrameTypes(npgsql);
             getMaterialTypes(npgsql);
+            getModuleClasses(npgsql);
             getModules(npgsql);
             getFrameGeometries(npgsql);
             getFrameWindows(npgsql);
@@ -162,6 +164,12 @@ namespace PostgreSQL_Editor.DBUtils
         {
             material_type mt = materialTypes.Where(x => x.id == material_type_id).FirstOrDefault();
             return (mt == null) ? null : mt.name;
+        }
+
+        private static string getModuleClassName(Guid module_class_id)
+        {
+            module_class mc = moduleClasses.Where(x => x.id == module_class_id).FirstOrDefault();
+            return (mc == null) ? null : mc.name;
         }
 
         public static string getModuleName(Guid module_type_id)
@@ -300,6 +308,29 @@ namespace PostgreSQL_Editor.DBUtils
                 }
             }
             materialTypes.SortByName<material_type>();
+        }
+
+        public static void getModuleClasses(NpgsqlConnection npgsql)
+        {
+            moduleClasses.Clear();
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM module_class", npgsql))
+            {
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        module_class moduleClass = new module_class();
+                        moduleClass.id = (Guid)reader["id"];
+                        moduleClass.name = (string)reader["name"];
+                        moduleClass.created_by = (string)reader["created_by"];
+                        moduleClass.created_ts = (DateTime)reader["created_ts"];
+                        moduleClass.modified_by = (string)reader["modified_by"];
+                        moduleClass.modified_ts = (DateTime)reader["modified_ts"];
+                        moduleClasses.Add(moduleClass);
+                    }
+                }
+            }
+            moduleClasses.SortByName<module_class>();
         }
 
         //public static void getModules(NpgsqlConnection npgsql)
@@ -667,6 +698,8 @@ namespace PostgreSQL_Editor.DBUtils
                         r.entity_name = (from product p in standardLists.products from module_variation mv in standardLists.moduleVariations where mv.id == r.entity_id && p.id == mv.module_type_id select p.name).FirstOrDefault();
                     else if (r.entity_type == "sleeve_is_mandatory")
                         r.entity_name = (from product p in standardLists.products from frame_sleeve_rule fsr in standardLists.frameSleeveRules where fsr.id == r.entity_id && p.id == fsr.frame_id select p.name).FirstOrDefault();
+                    else if (r.entity_type == "frame_type")
+                        r.entity_name = (from frame_type p in standardLists.frameTypes where p.id == r.entity_id select p.name).FirstOrDefault();
                     else
                         r.entity_name = products.Where(x => x.id.Equals(r.entity_id)).FirstOrDefault()?.name;
                     entityMetaData.Add(r);
@@ -942,10 +975,8 @@ namespace PostgreSQL_Editor.DBUtils
                         moduleRule.system_type = getSystemTypeName(moduleRule.system_type_id);
                         moduleRule.frame_type_id = (Guid)reader["frame_type_id"];
                         moduleRule.frame_type = getFrameTypeName(moduleRule.frame_type_id);
-                        moduleRule.material_type_id = (Guid)reader["material_type_id"];
-                        moduleRule.material_type = getMaterialTypeName(moduleRule.material_type_id);
-                        moduleRule.module_id = (Guid)reader["module_type_id"];
-                        moduleRule.module = getModuleName(moduleRule.module_id);
+                        moduleRule.module_class_id = (Guid)reader["module_class_id"];
+                        moduleRule.module_class = getModuleClassName(moduleRule.module_class_id);
                         moduleRule.is_active = (bool)reader["is_active"];
                         moduleRule.rule_version = (int)reader["rule_version"];
                         moduleRules.Add(moduleRule);
@@ -957,7 +988,6 @@ namespace PostgreSQL_Editor.DBUtils
         public static void getFrameSleeveRules(NpgsqlConnection npgsql)
         {
             frameSleeveRules.Clear();
-            moduleRules.Clear();
             using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM frame_sleeve_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
