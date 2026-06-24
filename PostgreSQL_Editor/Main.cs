@@ -46,7 +46,7 @@ namespace PostgreSQL_Editor
             // Wiederherstellen der letzten Fenstergröße/-position vor weiteren Initialisierungen
             RestoreWindowState();
 
-            string connectionstring = "Host=localhost:5434;Username=admin;Password=test123;Database=PCTproducts";
+            string connectionstring = "Host=localhost:5434;Username=admin;Password=test123;Database=postgres";
             npgsql = new NpgsqlConnection(connectionstring);
             try
             {
