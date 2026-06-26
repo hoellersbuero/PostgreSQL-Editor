@@ -505,10 +505,6 @@ namespace PostgreSQL_Editor.Global
         public Guid id { get; set; }
         public Guid system_type_id { get; set; }
         public string system_type { get; set; }
-        public Guid frame_type_id { get; set; }
-        public string frame_type { get; set; }
-        public Guid material_type_id { get; set; }
-        public string material_type { get; set; }
         public Guid wedge_type_id { get; set; }
         public string wedge_type { get; set; }
         public int rule_version { get; set; }

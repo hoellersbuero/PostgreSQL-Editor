@@ -1067,7 +1067,7 @@ namespace PostgreSQL_Editor.DBUtils
         {
             // Implementierung ähnlich zu den anderen Regeltypen, z.B.:
             wedgeRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM wedge_rule", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM wedge_rule order by system_type_id, wedge_type_id", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -1077,8 +1077,6 @@ namespace PostgreSQL_Editor.DBUtils
                         rule.id = (Guid)reader["id"];
                         rule.system_type_id = (Guid)reader["system_type_id"];
                         rule.system_type = getSystemTypeName(rule.system_type_id);
-                        rule.frame_type_id = (Guid)reader["frame_type_id"];
-                        rule.frame_type = getFrameTypeName(rule.frame_type_id);
                         rule.wedge_type_id = (Guid)reader["wedge_type_id"];
                         rule.wedge_type = products.Where(x => x.id.Equals(rule.wedge_type_id)).FirstOrDefault()?.name;
                         rule.rule_version = (int)reader["rule_version"];

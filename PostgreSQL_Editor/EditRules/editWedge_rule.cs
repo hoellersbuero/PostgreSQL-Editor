@@ -21,8 +21,6 @@ namespace PostgreSQL_Editor.EditRules
         private BindingList<wedge_rule> wedgeRules = new BindingList<wedge_rule>();
         private List<wedge_rule> newWedgeRules = new List<wedge_rule>();
         private List<wedge_rule> changedWedgeRules = new List<wedge_rule>();
-        private List<frame_type> filteredFrameTypes = new List<frame_type>();
-        private List<material_type> filteredMaterialTypes = new List<material_type>();
         private DgvChangeDetector _dgvChangeDetector;
 
         public editWedge_rule()
@@ -46,13 +44,6 @@ namespace PostgreSQL_Editor.EditRules
             cbSystemType.DataSource = standardLists.systemTypesAllowed;
             cbSystemType.DisplayMember = "name";
             cbSystemType.SelectedIndex = 0;
-            filteredFrameTypes = (filteredFrameTypes.Count == 0) ? standardLists.frameTypes : filteredFrameTypes;
-            cbFrameType.DataSource = standardLists.frameTypes;
-            cbFrameType.DisplayMember = "name";
-            cbFrameType.SelectedIndex = 0;
-            cbMaterialType.DataSource = standardLists.materialTypes;
-            cbMaterialType.DisplayMember = "name";
-            cbMaterialType.SelectedIndex = 0;
             cbWedge.DataSource = standardLists.wedgeTypes;
             cbWedge.DisplayMember = "name";
             cbWedge.SelectedIndex = 0;
@@ -115,7 +106,6 @@ namespace PostgreSQL_Editor.EditRules
                     // INSERT-Logik für neue Regeln
                     string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
                     string sql = "('" + rule.id.ToString() + "'::uuid,'" + rule.system_type_id.ToString() + "'::uuid,'" + 
-                                        rule.frame_type_id.ToString() + "'::uuid,'" + rule.material_type_id.ToString() + "'::uuid,'" +
                                         rule.wedge_type_id.ToString() + "'::uuid," + rule.rule_version.ToString() + "," + 
                                         rule.is_active.ToString().ToLower() + "," + ",'" + s + "','pg_editor','" + s + "','pg_editor')";
                     sqllist.Add(sqlinsert + sql + ";");
@@ -174,8 +164,6 @@ namespace PostgreSQL_Editor.EditRules
         private void btnAdd_Click(object sender, EventArgs e)
         {
             bool exists = wedgeRules.Any(x => x.system_type_id == ((system_type)cbSystemType.SelectedItem).id &&
-                          x.material_type_id == ((material_type)cbMaterialType.SelectedItem).id &&
-                          x.frame_type_id == ((frame_type)cbFrameType.SelectedItem).id &&
                           x.wedge_type_id == ((wedge_type)cbWedge.SelectedItem).id &&
                           x.is_active == cbActive.Checked && x.rule_version == (int)nudVersion.Value);
             if (exists)
@@ -185,12 +173,6 @@ namespace PostgreSQL_Editor.EditRules
             }
             wedge_rule wedgeRule = new wedge_rule();
             wedgeRule.id = Guid.NewGuid();
-            wedgeRule.system_type_id = ((system_type)cbSystemType.SelectedItem).id;
-            wedgeRule.system_type = ((system_type)cbSystemType.SelectedItem).name;
-            wedgeRule.frame_type_id = ((frame_type)cbFrameType.SelectedItem).id;
-            wedgeRule.frame_type = ((frame_type)cbFrameType.SelectedItem).name;
-            wedgeRule.material_type_id = ((material_type)cbMaterialType.SelectedItem).id;
-            wedgeRule.material_type = ((material_type)cbMaterialType.SelectedItem).name;
             wedgeRule.wedge_type_id = ((wedge_type)cbWedge.SelectedItem).id;
             wedgeRule.wedge_type = ((wedge_type)cbWedge.SelectedItem).name;
             wedgeRule.is_active = cbActive.Checked;
@@ -203,9 +185,6 @@ namespace PostgreSQL_Editor.EditRules
         }
         private void cbSystemType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            filteredFrameTypes = standardLists.systemTypeFrameTypeRules.Where(x => x.system_type_id == ((system_type)cbSystemType.SelectedItem).id && x.is_active)
-                                 .Select(x => new frame_type() { id = x.frame_type_id, name = x.frame_type }).Distinct().OrderBy(x => x.name).ToList();
-            cbFrameType.DataSource = filteredFrameTypes;
         }
     }
 }
