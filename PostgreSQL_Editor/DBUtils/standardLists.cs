@@ -878,6 +878,7 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
+            baseMaterialSystemTypeRules = baseMaterialSystemTypeRules.OrderBy(x => x.base_material).ThenBy(x => x.system_type).ToList();
         }
 
         public static void getSystemTypeFrameTypeRules(NpgsqlConnection npgsql)
@@ -902,6 +903,7 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
+            systemTypeFrameTypeRules = systemTypeFrameTypeRules.OrderBy(x => x.system_type).ThenBy(x => x.frame_type).ToList();
         }
 
         public static void getBMSTFTMTRules(NpgsqlConnection npgsql)
@@ -930,6 +932,7 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
+            BMSTFTMT_rules = BMSTFTMT_rules.OrderBy(x => x.base_material).ThenBy(x => x.system_type).ThenBy(x => x.frame_type).ThenBy(x => x.material_type).ToList();
         }
 
         public static void getFrameTypeRules(NpgsqlConnection npgsql)
@@ -957,6 +960,7 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
+            frameTypeRules = frameTypeRules.OrderBy(x => x.base_material).ThenBy(x => x.system_type).ThenBy(x => x.frame_type).ToList();
         }
 
         public static void getModuleRules(NpgsqlConnection npgsql)
@@ -983,6 +987,7 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
+            moduleRules = moduleRules.OrderBy(x => x.system_type).ThenBy(x => x.frame_type).ThenBy(x => x.module_class).ToList();
         }
 
         public static void getFrameSleeveRules(NpgsqlConnection npgsql)
@@ -1010,6 +1015,7 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
+            frameSleeveRules = frameSleeveRules.OrderBy(x => x.base_material).ThenBy(x => x.system_type).ThenBy(x => x.frame).ThenBy(x => x.sleeve_type).ToList();
         }
 
         public static void getFrameStickerRules(NpgsqlConnection npgsql)
@@ -1035,6 +1041,7 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
+            frameStickerRules = frameStickerRules.OrderBy(x => x.system_type).ThenBy(x => x.frame_type).ThenBy(x => x.fw_height).ThenBy(x => x.sticker_type).ToList();
         }
 
         public static void getSleeveStickerRules(NpgsqlConnection npgsql)
@@ -1061,13 +1068,14 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
+            sleeveStickerRules = sleeveStickerRules.OrderBy(x => x.system_type).ThenBy(x => x.sleeve_type).ThenBy(x => x.sticker_type).ToList();
         }
 
         public static void getWedgeRules(NpgsqlConnection npgsql)
         {
             // Implementierung ähnlich zu den anderen Regeltypen, z.B.:
             wedgeRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM wedge_rule order by system_type_id, wedge_type_id", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM wedge_rule", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -1085,6 +1093,7 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
+            wedgeRules = wedgeRules.OrderBy(x => x.system_type).ThenBy(x => x.wedge_type).ToList();
         }
         #endregion
     }
