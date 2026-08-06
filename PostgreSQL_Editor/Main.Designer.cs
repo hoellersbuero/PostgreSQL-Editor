@@ -89,14 +89,14 @@
             this.tsmiSaveSQLQuery = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTools = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEditBMST = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiEditSTFT = new System.Windows.Forms.ToolStripMenuItem();
             this.editBMSTFT = new System.Windows.Forms.ToolStripMenuItem();
             this.editBMSTFTMT = new System.Windows.Forms.ToolStripMenuItem();
             this.editSTFTMTModule = new System.Windows.Forms.ToolStripMenuItem();
-            this.editFRSL = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiEditSTFT = new System.Windows.Forms.ToolStripMenuItem();
             this.editSTFTMTWE = new System.Windows.Forms.ToolStripMenuItem();
-            this.editSLST = new System.Windows.Forms.ToolStripMenuItem();
+            this.editFRSL = new System.Windows.Forms.ToolStripMenuItem();
             this.editFRST = new System.Windows.Forms.ToolStripMenuItem();
+            this.editSLST = new System.Windows.Forms.ToolStripMenuItem();
             this.editEntityMetadata = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.functionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,6 +105,7 @@
             this.tsmiGetFrameFromID = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
+            this.editFrameSleeveRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -559,7 +560,7 @@
             this.tpSchema.Location = new System.Drawing.Point(4, 28);
             this.tpSchema.Name = "tpSchema";
             this.tpSchema.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSchema.Size = new System.Drawing.Size(575, 270);
+            this.tpSchema.Size = new System.Drawing.Size(575, 272);
             this.tpSchema.TabIndex = 1;
             this.tpSchema.Text = "Schema";
             this.tpSchema.UseVisualStyleBackColor = true;
@@ -578,7 +579,7 @@
             // splitContainerSchema1.Panel2
             // 
             this.splitContainerSchema1.Panel2.Controls.Add(this.splitContainerSchema2);
-            this.splitContainerSchema1.Size = new System.Drawing.Size(569, 218);
+            this.splitContainerSchema1.Size = new System.Drawing.Size(569, 220);
             this.splitContainerSchema1.SplitterDistance = 57;
             this.splitContainerSchema1.TabIndex = 4;
             // 
@@ -615,7 +616,7 @@
             // splitContainerSchema2.Panel2
             // 
             this.splitContainerSchema2.Panel2.Controls.Add(this.dgvidx);
-            this.splitContainerSchema2.Size = new System.Drawing.Size(569, 157);
+            this.splitContainerSchema2.Size = new System.Drawing.Size(569, 159);
             this.splitContainerSchema2.SplitterDistance = 64;
             this.splitContainerSchema2.TabIndex = 4;
             // 
@@ -648,7 +649,7 @@
             this.dgvidx.Name = "dgvidx";
             this.dgvidx.RowHeadersVisible = false;
             this.dgvidx.RowHeadersWidth = 51;
-            this.dgvidx.Size = new System.Drawing.Size(569, 89);
+            this.dgvidx.Size = new System.Drawing.Size(569, 91);
             this.dgvidx.TabIndex = 4;
             // 
             // lInfoSchema
@@ -656,7 +657,7 @@
             this.lInfoSchema.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lInfoSchema.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lInfoSchema.ForeColor = System.Drawing.Color.Green;
-            this.lInfoSchema.Location = new System.Drawing.Point(3, 244);
+            this.lInfoSchema.Location = new System.Drawing.Point(3, 246);
             this.lInfoSchema.Name = "lInfoSchema";
             this.lInfoSchema.Size = new System.Drawing.Size(569, 23);
             this.lInfoSchema.TabIndex = 2;
@@ -681,7 +682,7 @@
             this.tpCreate.Location = new System.Drawing.Point(4, 28);
             this.tpCreate.Name = "tpCreate";
             this.tpCreate.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCreate.Size = new System.Drawing.Size(575, 270);
+            this.tpCreate.Size = new System.Drawing.Size(575, 272);
             this.tpCreate.TabIndex = 2;
             this.tpCreate.Text = "Create statement";
             this.tpCreate.UseVisualStyleBackColor = true;
@@ -695,7 +696,7 @@
             this.tbCreate.Location = new System.Drawing.Point(3, 3);
             this.tbCreate.Name = "tbCreate";
             this.tbCreate.ReadOnly = true;
-            this.tbCreate.Size = new System.Drawing.Size(569, 264);
+            this.tbCreate.Size = new System.Drawing.Size(569, 266);
             this.tbCreate.TabIndex = 0;
             this.tbCreate.Text = "";
             // 
@@ -706,7 +707,7 @@
             this.tpClass.Location = new System.Drawing.Point(4, 28);
             this.tpClass.Name = "tpClass";
             this.tpClass.Padding = new System.Windows.Forms.Padding(3);
-            this.tpClass.Size = new System.Drawing.Size(575, 270);
+            this.tpClass.Size = new System.Drawing.Size(575, 272);
             this.tpClass.TabIndex = 3;
             this.tpClass.Text = "Class";
             this.tpClass.UseVisualStyleBackColor = true;
@@ -734,7 +735,7 @@
             this.tbClassField.Location = new System.Drawing.Point(3, 3);
             this.tbClassField.Name = "tbClassField";
             this.tbClassField.ReadOnly = true;
-            this.tbClassField.Size = new System.Drawing.Size(569, 264);
+            this.tbClassField.Size = new System.Drawing.Size(569, 266);
             this.tbClassField.TabIndex = 0;
             this.tbClassField.Text = "";
             // 
@@ -744,7 +745,7 @@
             this.tpGuidSearch.Controls.Add(this.lbGuidSearch);
             this.tpGuidSearch.Location = new System.Drawing.Point(4, 28);
             this.tpGuidSearch.Name = "tpGuidSearch";
-            this.tpGuidSearch.Size = new System.Drawing.Size(575, 270);
+            this.tpGuidSearch.Size = new System.Drawing.Size(575, 272);
             this.tpGuidSearch.TabIndex = 4;
             this.tpGuidSearch.Text = "Guid search";
             this.tpGuidSearch.UseVisualStyleBackColor = true;
@@ -757,7 +758,7 @@
             this.dgvGuidSearch.Location = new System.Drawing.Point(0, 25);
             this.dgvGuidSearch.Name = "dgvGuidSearch";
             this.dgvGuidSearch.RowHeadersWidth = 25;
-            this.dgvGuidSearch.Size = new System.Drawing.Size(575, 245);
+            this.dgvGuidSearch.Size = new System.Drawing.Size(575, 247);
             this.dgvGuidSearch.TabIndex = 1;
             // 
             // lbGuidSearch
@@ -821,6 +822,7 @@
             this.tsmiEditSTFT,
             this.editSTFTMTWE,
             this.editFRSL,
+            this.editFrameSleeveRulesToolStripMenuItem,
             this.editFRST,
             this.editSLST,
             this.editEntityMetadata});
@@ -834,13 +836,6 @@
             this.tsmiEditBMST.Size = new System.Drawing.Size(519, 26);
             this.tsmiEditBMST.Text = "Edit Basematerial - Systemtype Rules";
             this.tsmiEditBMST.Click += new System.EventHandler(this.tsmiEditBMST_Click);
-            // 
-            // tsmiEditSTFT
-            // 
-            this.tsmiEditSTFT.Name = "tsmiEditSTFT";
-            this.tsmiEditSTFT.Size = new System.Drawing.Size(519, 26);
-            this.tsmiEditSTFT.Text = "Edit Systemtype - Frametype Rules";
-            this.tsmiEditSTFT.Click += new System.EventHandler(this.tsmiEditSTFT_Click);
             // 
             // editBMSTFT
             // 
@@ -863,12 +858,12 @@
             this.editSTFTMTModule.Text = "Edit Systemtype - Frametype - Module-class Rules";
             this.editSTFTMTModule.Click += new System.EventHandler(this.editSTFTMTModule_Click);
             // 
-            // editFRSL
+            // tsmiEditSTFT
             // 
-            this.editFRSL.Name = "editFRSL";
-            this.editFRSL.Size = new System.Drawing.Size(519, 26);
-            this.editFRSL.Text = "Edit Frame - Sleeve Rules";
-            this.editFRSL.Click += new System.EventHandler(this.editFRSL_Click);
+            this.tsmiEditSTFT.Name = "tsmiEditSTFT";
+            this.tsmiEditSTFT.Size = new System.Drawing.Size(519, 26);
+            this.tsmiEditSTFT.Text = "Edit Systemtype - Frametype Rules";
+            this.tsmiEditSTFT.Click += new System.EventHandler(this.tsmiEditSTFT_Click);
             // 
             // editSTFTMTWE
             // 
@@ -877,12 +872,12 @@
             this.editSTFTMTWE.Text = "Edit Systemtype - Wedge Rules";
             this.editSTFTMTWE.Click += new System.EventHandler(this.editSTFTMTWE_Click);
             // 
-            // editSLST
+            // editFRSL
             // 
-            this.editSLST.Name = "editSLST";
-            this.editSLST.Size = new System.Drawing.Size(519, 26);
-            this.editSLST.Text = "Edit Sleeve - Sticker Rules";
-            this.editSLST.Click += new System.EventHandler(this.editSLST_Click);
+            this.editFRSL.Name = "editFRSL";
+            this.editFRSL.Size = new System.Drawing.Size(519, 26);
+            this.editFRSL.Text = "Edit Frametype - Sleeve Rules";
+            this.editFRSL.Click += new System.EventHandler(this.editFRSL_Click);
             // 
             // editFRST
             // 
@@ -890,6 +885,13 @@
             this.editFRST.Size = new System.Drawing.Size(519, 26);
             this.editFRST.Text = "Edit Frame - Sticker Rules";
             this.editFRST.Click += new System.EventHandler(this.editFRST_Click);
+            // 
+            // editSLST
+            // 
+            this.editSLST.Name = "editSLST";
+            this.editSLST.Size = new System.Drawing.Size(519, 26);
+            this.editSLST.Text = "Edit Sleeve - Sticker Rules";
+            this.editSLST.Click += new System.EventHandler(this.editSLST_Click);
             // 
             // editEntityMetadata
             // 
@@ -942,6 +944,13 @@
             this.label1.Size = new System.Drawing.Size(49, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
+            // 
+            // editFrameSleeveRulesToolStripMenuItem
+            // 
+            this.editFrameSleeveRulesToolStripMenuItem.Name = "editFrameSleeveRulesToolStripMenuItem";
+            this.editFrameSleeveRulesToolStripMenuItem.Size = new System.Drawing.Size(519, 26);
+            this.editFrameSleeveRulesToolStripMenuItem.Text = "Edit Frame - Sleeve Rules";
+            this.editFrameSleeveRulesToolStripMenuItem.Click += new System.EventHandler(this.editFrameSleeveRulesToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -1077,6 +1086,7 @@
         private System.Windows.Forms.Label lbError;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowTableColumnTree;
         private System.Windows.Forms.ToolStripButton tsbShowDataTree;
+        private System.Windows.Forms.ToolStripMenuItem editFrameSleeveRulesToolStripMenuItem;
     }
 }
 

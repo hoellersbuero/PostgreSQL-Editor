@@ -110,8 +110,8 @@ namespace PostgreSQL_Editor.EditRules
                     cbEntity.DataSource = sortedModuleVariations;
                     break;
                 case"Frame sleeve rule":
-                    filteredEntityNames = (from frame_sleeve_rule fsr in standardLists.frameSleeveRules
-                                           join f in standardLists.frames on fsr.frame_id equals f.id
+                    filteredEntityNames = (from sleeve_rule fsr in standardLists.sleeveRules
+                                           join f in standardLists.frames on fsr.frame_type_id equals f.id
                                            select new { f.name, fsr.id }).Distinct().ToDictionary(x => x.name, x => x.id);
                     var sortedFrameSleeveRules = filteredEntityNames.ToList();
                     sortedFrameSleeveRules.Sort((a, b) => string.Compare(a.Key, b.Key, StringComparison.OrdinalIgnoreCase));

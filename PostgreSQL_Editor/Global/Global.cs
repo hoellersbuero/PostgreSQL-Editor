@@ -441,7 +441,7 @@ namespace PostgreSQL_Editor.Global
         public string created_by { get; set; }
     }
 
-    public class frame_sleeve_rule
+    public class sleeve_rule
     {
         public bool check { get; set; }
         public Guid id { get; set; }
@@ -449,13 +449,27 @@ namespace PostgreSQL_Editor.Global
         public string base_material { get; set; }
         public Guid system_type_id { get; set; }
         public string system_type { get; set; }
-        public Guid frame_id { get; set; }
-        public string frame { get; set; }
-        public Guid sleeve_type_id { get; set; }
-        public string sleeve_type { get; set; }
+        public Guid frame_type_id { get; set; }
+        public string frame_type { get; set; }
         public int rule_version { get; set; }
         public bool is_active { get; set; }
         public bool is_mandatory { get; set; }
+        public DateTime created_ts { get; set; }
+        public DateTime modified_ts { get; set; }
+        public string modified_by { get; set; }
+        public string created_by { get; set; }
+    }
+
+    public class frame_sleeve_rule
+    {
+        public bool check { get; set; }
+        public Guid id { get; set; }
+        public Guid frame_id { get; set; }
+        public string frame_name { get; set; } = null;
+        public Guid sleeve_id { get; set; }
+        public string sleeve_name { get; set; } = null;
+        public bool is_active { get; set; }
+        public int rule_version { get; set; }
         public DateTime created_ts { get; set; }
         public DateTime modified_ts { get; set; }
         public string modified_by { get; set; }

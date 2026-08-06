@@ -1,9 +1,10 @@
 ﻿using Npgsql;
+using PostgreSQL_Editor.Global;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using PostgreSQL_Editor.Global;
+using System.Text.RegularExpressions;
 
 namespace PostgreSQL_Editor.DBUtils
 {
@@ -38,6 +39,7 @@ namespace PostgreSQL_Editor.DBUtils
         public static List<BMSTFTMT_rule> BMSTFTMT_rules = new List<BMSTFTMT_rule>();
         public static List<frame_type_rule> frameTypeRules = new List<frame_type_rule>();
         public static List<module_rule> moduleRules = new List<module_rule>();
+        public static List<sleeve_rule> sleeveRules = new List<sleeve_rule>();
         public static List<frame_sleeve_rule> frameSleeveRules = new List<frame_sleeve_rule>();
         public static List<frame_sticker_rule> frameStickerRules = new List<frame_sticker_rule>();
         public static List<sleeve_sticker_rule> sleeveStickerRules = new List<sleeve_sticker_rule>();
@@ -77,6 +79,7 @@ namespace PostgreSQL_Editor.DBUtils
             getFrameTypeRules(npgsql);
             getBMSTFTMTRules(npgsql);
             getModuleRules(npgsql);
+            getSleeveRules(npgsql);
             getFrameSleeveRules(npgsql);
             getFrameStickerRules(npgsql);
             getSleeveStickerRules(npgsql);
@@ -697,7 +700,7 @@ namespace PostgreSQL_Editor.DBUtils
                     if (r.entity_type == "module_variation")
                         r.entity_name = (from product p in standardLists.products from module_variation mv in standardLists.moduleVariations where mv.id == r.entity_id && p.id == mv.module_type_id select p.name).FirstOrDefault();
                     else if (r.entity_type == "sleeve_is_mandatory")
-                        r.entity_name = (from product p in standardLists.products from frame_sleeve_rule fsr in standardLists.frameSleeveRules where fsr.id == r.entity_id && p.id == fsr.frame_id select p.name).FirstOrDefault();
+                        r.entity_name = (from product p in standardLists.products from sleeve_rule fsr in standardLists.sleeveRules where fsr.id == r.entity_id && p.id == fsr.frame_type_id select p.name).FirstOrDefault();
                     else if (r.entity_type == "frame_type")
                         r.entity_name = (from frame_type p in standardLists.frameTypes where p.id == r.entity_id select p.name).FirstOrDefault();
                     else
@@ -990,6 +993,36 @@ namespace PostgreSQL_Editor.DBUtils
             moduleRules = moduleRules.OrderBy(x => x.system_type).ThenBy(x => x.frame_type).ThenBy(x => x.module_class).ToList();
         }
 
+        public static void getSleeveRules(NpgsqlConnection npgsql)
+        {
+            sleeveRules.Clear();
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM sleeve_rule", npgsql))
+            {
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        sleeve_rule rule = new sleeve_rule();
+                        rule.id = (Guid)reader["id"];
+                        rule.base_material_id = (Guid)reader["base_material_id"];
+                        rule.base_material = getBaseMaterialName(rule.base_material_id);
+                        rule.system_type_id = (Guid)reader["system_type_id"];
+                        rule.system_type = getSystemTypeName(rule.system_type_id);
+                        rule.frame_type_id = (Guid)reader["frame_type_id"];
+                        rule.frame_type = getFrameTypeName(rule.frame_type_id);
+                        rule.rule_version = (int)reader["rule_version"];
+                        rule.is_active = (bool)reader["is_active"];
+                        rule.is_mandatory = (bool)reader["is_mandatory"];
+                        sleeveRules.Add(rule);
+                    }
+                }
+            }
+            List<sleeve_rule> sortedSleeveRules = sleeveRules.Where(x => x.base_material.Equals("Concrete")).OrderBy(x => x.system_type).ThenBy(x => x.frame_type).ToList();
+            sortedSleeveRules.AddRange(sleeveRules.Where(x => x.base_material.Equals("Steel")).OrderBy(x => x.system_type).ThenBy(x => x.frame_type).ToList());
+            sortedSleeveRules.AddRange(sleeveRules.Where(x => x.base_material.Equals("Cabinet seal")).OrderBy(x => x.system_type).ThenBy(x => x.frame_type).ToList());
+            sleeveRules = sortedSleeveRules;
+        }
+
         public static void getFrameSleeveRules(NpgsqlConnection npgsql)
         {
             frameSleeveRules.Clear();
@@ -1001,21 +1034,19 @@ namespace PostgreSQL_Editor.DBUtils
                     {
                         frame_sleeve_rule rule = new frame_sleeve_rule();
                         rule.id = (Guid)reader["id"];
-                        rule.base_material_id = (Guid)reader["base_material_id"];
-                        rule.base_material = getBaseMaterialName(rule.base_material_id);
-                        rule.system_type_id = (Guid)reader["system_type_id"];
-                        rule.system_type = getSystemTypeName(rule.system_type_id);
                         rule.frame_id = (Guid)reader["frame_id"];
-                        rule.frame = products.Where(x => x.id.Equals(rule.frame_id)).FirstOrDefault()?.name;
-                        rule.sleeve_type_id = (Guid)reader["sleeve_type_id"];
-                        rule.sleeve_type = products.Where(x => x.id.Equals(rule.sleeve_type_id)).FirstOrDefault()?.name;
+                        frame fr = standardLists.frames.FirstOrDefault(x => x.id.Equals(rule.frame_id));
+                        material_type mt = standardLists.materialTypes.FirstOrDefault(x => x.id.Equals(fr.material_type_id));
+                        rule.frame_name = fr.name;
+                        rule.sleeve_id = (Guid)reader["sleeve_type_id"];
+                        rule.sleeve_name = products.Where(x => x.id.Equals(rule.sleeve_id)).FirstOrDefault()?.name;
                         rule.rule_version = (int)reader["rule_version"];
                         rule.is_active = (bool)reader["is_active"];
                         frameSleeveRules.Add(rule);
                     }
                 }
             }
-            frameSleeveRules = frameSleeveRules.OrderBy(x => x.base_material).ThenBy(x => x.system_type).ThenBy(x => x.frame).ThenBy(x => x.sleeve_type).ToList();
+            frameSleeveRules = frameSleeveRules.OrderBy(x => x.frame_name.Split(new char[] { '-' })[1]).ThenBy(x => int.Parse(Regex.Match(x.frame_name, @"\d+").Value)).ThenBy(x => x.frame_name).ThenBy(x => x.sleeve_name).ToList();
         }
 
         public static void getFrameStickerRules(NpgsqlConnection npgsql)

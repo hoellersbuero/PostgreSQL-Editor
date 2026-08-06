@@ -140,17 +140,23 @@
     <Compile Include="EditRules\editEntityMetaData.Designer.cs">
       <DependentUpon>editEntityMetaData.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditRules\EditFrameSleeveRule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditRules\EditFrameSleeveRule.Designer.cs">
+      <DependentUpon>EditFrameSleeveRule.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditRules\editFrameSticker_rule.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditRules\editFrameSticker_rule.Designer.cs">
       <DependentUpon>editFrameSticker_rule.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditRules\editFRSL_rule.cs">
+    <Compile Include="EditRules\editSleeve_rule.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditRules\editFRSL_rule.Designer.cs">
-      <DependentUpon>editFRSL_rule.cs</DependentUpon>
+    <Compile Include="EditRules\editSleeve_rule.Designer.cs">
+      <DependentUpon>editSleeve_rule.cs</DependentUpon>
     </Compile>
     <Compile Include="EditRules\editModule_rule.cs">
       <SubType>Form</SubType>
@@ -234,11 +240,14 @@
     <EmbeddedResource Include="EditRules\editEntityMetaData.resx">
       <DependentUpon>editEntityMetaData.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditRules\EditFrameSleeveRule.resx">
+      <DependentUpon>EditFrameSleeveRule.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditRules\editFrameSticker_rule.resx">
       <DependentUpon>editFrameSticker_rule.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditRules\editFRSL_rule.resx">
-      <DependentUpon>editFRSL_rule.cs</DependentUpon>
+    <EmbeddedResource Include="EditRules\editSleeve_rule.resx">
+      <DependentUpon>editSleeve_rule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditRules\editModule_rule.resx">
       <DependentUpon>editModule_rule.cs</DependentUpon>

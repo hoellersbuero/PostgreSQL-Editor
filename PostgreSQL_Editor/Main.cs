@@ -1151,7 +1151,7 @@ namespace PostgreSQL_Editor
 
         private void editFRSL_Click(object sender, EventArgs e)
         {
-            editFRSL_rule.Execute(this, npgsql);
+            editSleeve_rule.Execute(this, npgsql);
         }
 
         private void editSTFTMTWE_Click(object sender, EventArgs e)
@@ -1433,6 +1433,11 @@ namespace PostgreSQL_Editor
         private void tsbShowDataTree_Click(object sender, EventArgs e)
         {
             showTabelColumnTree.Execute(this, TableColumnsByTable);
+        }
+
+        private void editFrameSleeveRulesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditFrameSleeveRule.Execute(this, npgsql);
         }
     }
 
