@@ -95,6 +95,7 @@
             this.tsmiEditSTFT = new System.Windows.Forms.ToolStripMenuItem();
             this.editSTFTMTWE = new System.Windows.Forms.ToolStripMenuItem();
             this.editFRSL = new System.Windows.Forms.ToolStripMenuItem();
+            this.editFrameSleeveRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editFRST = new System.Windows.Forms.ToolStripMenuItem();
             this.editSLST = new System.Windows.Forms.ToolStripMenuItem();
             this.editEntityMetadata = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,7 +106,6 @@
             this.tsmiGetFrameFromID = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.editFrameSleeveRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -150,9 +150,9 @@
             this.toolStripStatusLabel1,
             this.tsslSuccess,
             this.tslInfo});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 477);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 481);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(800, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -160,34 +160,34 @@
             // 
             this.tsslLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.tsslLabel1.Name = "tsslLabel1";
-            this.tsslLabel1.Size = new System.Drawing.Size(34, 20);
+            this.tsslLabel1.Size = new System.Drawing.Size(27, 17);
             this.tsslLabel1.Text = "DB:";
             // 
             // tsslInfo
             // 
             this.tsslInfo.ForeColor = System.Drawing.Color.Navy;
             this.tsslInfo.Name = "tsslInfo";
-            this.tsslInfo.Size = new System.Drawing.Size(69, 20);
+            this.tsslInfo.Size = new System.Drawing.Size(54, 17);
             this.tsslInfo.Text = "DBStatus";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(62, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(49, 17);
             this.toolStripStatusLabel1.Text = "QUERY:";
             // 
             // tsslSuccess
             // 
             this.tsslSuccess.ForeColor = System.Drawing.Color.Navy;
             this.tsslSuccess.Name = "tsslSuccess";
-            this.tsslSuccess.Size = new System.Drawing.Size(57, 20);
+            this.tsslSuccess.Size = new System.Drawing.Size(47, 17);
             this.tsslSuccess.Text = "success";
             // 
             // tslInfo
             // 
             this.tslInfo.Name = "tslInfo";
-            this.tslInfo.Size = new System.Drawing.Size(0, 20);
+            this.tslInfo.Size = new System.Drawing.Size(0, 17);
             // 
             // toolStrip1
             // 
@@ -206,7 +206,7 @@
             this.toolStripSeparator3,
             this.tsbForeignKeys,
             this.tsbCreateFKeys});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(800, 31);
             this.toolStrip1.TabIndex = 7;
@@ -219,7 +219,7 @@
             this.tsbRefresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Size = new System.Drawing.Size(29, 28);
+            this.tsbRefresh.Size = new System.Drawing.Size(28, 28);
             this.tsbRefresh.Text = "Refresh database";
             this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
             // 
@@ -237,7 +237,7 @@
             this.tsbSQL.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbSQL.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSQL.Name = "tsbSQL";
-            this.tsbSQL.Size = new System.Drawing.Size(29, 28);
+            this.tsbSQL.Size = new System.Drawing.Size(28, 28);
             this.tsbSQL.Text = "Open Query Input";
             this.tsbSQL.CheckedChanged += new System.EventHandler(this.tsbSQL_CheckedChanged);
             // 
@@ -249,7 +249,7 @@
             this.tsbExecute.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbExecute.Margin = new System.Windows.Forms.Padding(4, 1, 0, 2);
             this.tsbExecute.Name = "tsbExecute";
-            this.tsbExecute.Size = new System.Drawing.Size(29, 28);
+            this.tsbExecute.Size = new System.Drawing.Size(28, 28);
             this.tsbExecute.Text = "Execute SQL";
             this.tsbExecute.Click += new System.EventHandler(this.BtnExecute_Click);
             // 
@@ -285,7 +285,7 @@
             this.tsbSaveSQL.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSaveSQL.Margin = new System.Windows.Forms.Padding(4, 1, 0, 2);
             this.tsbSaveSQL.Name = "tsbSaveSQL";
-            this.tsbSaveSQL.Size = new System.Drawing.Size(29, 28);
+            this.tsbSaveSQL.Size = new System.Drawing.Size(28, 28);
             this.tsbSaveSQL.Text = "Save SQL Query";
             this.tsbSaveSQL.Click += new System.EventHandler(this.tsmiSaveSQLQuery_Click);
             // 
@@ -313,7 +313,7 @@
             this.tsbShowDataTree.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbShowDataTree.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbShowDataTree.Name = "tsbShowDataTree";
-            this.tsbShowDataTree.Size = new System.Drawing.Size(29, 28);
+            this.tsbShowDataTree.Size = new System.Drawing.Size(28, 28);
             this.tsbShowDataTree.Text = "Show Tables and Columns";
             this.tsbShowDataTree.Click += new System.EventHandler(this.tsbShowDataTree_Click);
             // 
@@ -330,7 +330,7 @@
             this.tsbForeignKeys.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbForeignKeys.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbForeignKeys.Name = "tsbForeignKeys";
-            this.tsbForeignKeys.Size = new System.Drawing.Size(29, 28);
+            this.tsbForeignKeys.Size = new System.Drawing.Size(28, 28);
             this.tsbForeignKeys.Text = "Get all foreign keys";
             this.tsbForeignKeys.Click += new System.EventHandler(this.tsbForeignKeys_Click);
             // 
@@ -350,7 +350,7 @@
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 59);
+            this.splitContainer2.Location = new System.Drawing.Point(0, 55);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -362,7 +362,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer1);
-            this.splitContainer2.Size = new System.Drawing.Size(800, 418);
+            this.splitContainer2.Size = new System.Drawing.Size(800, 426);
             this.splitContainer2.SplitterDistance = 110;
             this.splitContainer2.TabIndex = 8;
             // 
@@ -395,10 +395,10 @@
             // 
             this.lbError.AutoSize = true;
             this.lbError.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lbError.Location = new System.Drawing.Point(675, 0);
+            this.lbError.Location = new System.Drawing.Point(689, 0);
             this.lbError.Name = "lbError";
             this.lbError.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lbError.Size = new System.Drawing.Size(123, 17);
+            this.lbError.Size = new System.Drawing.Size(109, 15);
             this.lbError.TabIndex = 2;
             this.lbError.Text = "kdlkdlfgfgdfsdfsdsfsdf";
             this.lbError.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -410,7 +410,7 @@
             this.lbSQL.Location = new System.Drawing.Point(0, 0);
             this.lbSQL.Name = "lbSQL";
             this.lbSQL.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lbSQL.Size = new System.Drawing.Size(67, 17);
+            this.lbSQL.Size = new System.Drawing.Size(59, 15);
             this.lbSQL.TabIndex = 1;
             this.lbSQL.Text = "sddsfssfsdf";
             this.lbSQL.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -429,7 +429,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 304);
+            this.splitContainer1.Size = new System.Drawing.Size(800, 312);
             this.splitContainer1.SplitterDistance = 213;
             this.splitContainer1.TabIndex = 10;
             // 
@@ -439,7 +439,7 @@
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Name = "treeView";
             this.treeView.ShowPlusMinus = false;
-            this.treeView.Size = new System.Drawing.Size(213, 304);
+            this.treeView.Size = new System.Drawing.Size(213, 312);
             this.treeView.TabIndex = 7;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             this.treeView.DoubleClick += new System.EventHandler(this.treeView_DoubleClick);
@@ -456,17 +456,17 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(583, 304);
+            this.tabControl1.Size = new System.Drawing.Size(583, 312);
             this.tabControl1.TabIndex = 3;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.dgv);
             this.tabPage1.Controls.Add(this.lbContent);
-            this.tabPage1.Location = new System.Drawing.Point(4, 28);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(575, 272);
+            this.tabPage1.Size = new System.Drawing.Size(575, 284);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Content";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -489,7 +489,7 @@
             this.dgv.ReadOnly = true;
             this.dgv.RowHeadersWidth = 25;
             this.dgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv.Size = new System.Drawing.Size(569, 243);
+            this.dgv.Size = new System.Drawing.Size(569, 255);
             this.dgv.TabIndex = 3;
             this.dgv.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv_DataBindingComplete);
             this.dgv.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dgv_KeyDown);
@@ -504,41 +504,41 @@
             this.tsmiDeselectAll,
             this.tsmiExportSqlDelete});
             this.cms.Name = "cms";
-            this.cms.Size = new System.Drawing.Size(221, 124);
+            this.cms.Size = new System.Drawing.Size(186, 114);
             this.cms.Opening += new System.ComponentModel.CancelEventHandler(this.cms_Opening);
             // 
             // tsmiCopy
             // 
             this.tsmiCopy.Name = "tsmiCopy";
-            this.tsmiCopy.Size = new System.Drawing.Size(220, 24);
+            this.tsmiCopy.Size = new System.Drawing.Size(185, 22);
             this.tsmiCopy.Text = "Copy";
             this.tsmiCopy.Click += new System.EventHandler(this.tsmiCopy_Click);
             // 
             // tsmiFindIdx
             // 
             this.tsmiFindIdx.Name = "tsmiFindIdx";
-            this.tsmiFindIdx.Size = new System.Drawing.Size(220, 24);
+            this.tsmiFindIdx.Size = new System.Drawing.Size(185, 22);
             this.tsmiFindIdx.Text = "Find Guid";
             this.tsmiFindIdx.Click += new System.EventHandler(this.tsmiFindIdx_Click);
             // 
             // tsmiSelectAll
             // 
             this.tsmiSelectAll.Name = "tsmiSelectAll";
-            this.tsmiSelectAll.Size = new System.Drawing.Size(220, 24);
+            this.tsmiSelectAll.Size = new System.Drawing.Size(185, 22);
             this.tsmiSelectAll.Text = "Select all";
             this.tsmiSelectAll.Click += new System.EventHandler(this.tsmiSelectAll_Click);
             // 
             // tsmiDeselectAll
             // 
             this.tsmiDeselectAll.Name = "tsmiDeselectAll";
-            this.tsmiDeselectAll.Size = new System.Drawing.Size(220, 24);
+            this.tsmiDeselectAll.Size = new System.Drawing.Size(185, 22);
             this.tsmiDeselectAll.Text = "Deselect all";
             this.tsmiDeselectAll.Click += new System.EventHandler(this.tsmiDeselectAll_Click);
             // 
             // tsmiExportSqlDelete
             // 
             this.tsmiExportSqlDelete.Name = "tsmiExportSqlDelete";
-            this.tsmiExportSqlDelete.Size = new System.Drawing.Size(220, 24);
+            this.tsmiExportSqlDelete.Size = new System.Drawing.Size(185, 22);
             this.tsmiExportSqlDelete.Text = "Export SQL for delete";
             this.tsmiExportSqlDelete.Click += new System.EventHandler(this.tsmiExportSqlDelete_Click);
             // 
@@ -557,10 +557,10 @@
             this.tpSchema.Controls.Add(this.splitContainerSchema1);
             this.tpSchema.Controls.Add(this.lInfoSchema);
             this.tpSchema.Controls.Add(this.lbTableName);
-            this.tpSchema.Location = new System.Drawing.Point(4, 28);
+            this.tpSchema.Location = new System.Drawing.Point(4, 24);
             this.tpSchema.Name = "tpSchema";
             this.tpSchema.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSchema.Size = new System.Drawing.Size(575, 272);
+            this.tpSchema.Size = new System.Drawing.Size(575, 276);
             this.tpSchema.TabIndex = 1;
             this.tpSchema.Text = "Schema";
             this.tpSchema.UseVisualStyleBackColor = true;
@@ -579,8 +579,8 @@
             // splitContainerSchema1.Panel2
             // 
             this.splitContainerSchema1.Panel2.Controls.Add(this.splitContainerSchema2);
-            this.splitContainerSchema1.Size = new System.Drawing.Size(569, 220);
-            this.splitContainerSchema1.SplitterDistance = 57;
+            this.splitContainerSchema1.Size = new System.Drawing.Size(569, 224);
+            this.splitContainerSchema1.SplitterDistance = 58;
             this.splitContainerSchema1.TabIndex = 4;
             // 
             // dgvs
@@ -598,7 +598,7 @@
             this.dgvs.Name = "dgvs";
             this.dgvs.RowHeadersVisible = false;
             this.dgvs.RowHeadersWidth = 51;
-            this.dgvs.Size = new System.Drawing.Size(569, 57);
+            this.dgvs.Size = new System.Drawing.Size(569, 58);
             this.dgvs.TabIndex = 0;
             this.dgvs.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvs_CellContentDoubleClick);
             // 
@@ -616,8 +616,8 @@
             // splitContainerSchema2.Panel2
             // 
             this.splitContainerSchema2.Panel2.Controls.Add(this.dgvidx);
-            this.splitContainerSchema2.Size = new System.Drawing.Size(569, 159);
-            this.splitContainerSchema2.SplitterDistance = 64;
+            this.splitContainerSchema2.Size = new System.Drawing.Size(569, 162);
+            this.splitContainerSchema2.SplitterDistance = 65;
             this.splitContainerSchema2.TabIndex = 4;
             // 
             // dgvsc
@@ -633,7 +633,7 @@
             this.dgvsc.Name = "dgvsc";
             this.dgvsc.RowHeadersVisible = false;
             this.dgvsc.RowHeadersWidth = 51;
-            this.dgvsc.Size = new System.Drawing.Size(569, 64);
+            this.dgvsc.Size = new System.Drawing.Size(569, 65);
             this.dgvsc.TabIndex = 3;
             // 
             // dgvidx
@@ -649,7 +649,7 @@
             this.dgvidx.Name = "dgvidx";
             this.dgvidx.RowHeadersVisible = false;
             this.dgvidx.RowHeadersWidth = 51;
-            this.dgvidx.Size = new System.Drawing.Size(569, 91);
+            this.dgvidx.Size = new System.Drawing.Size(569, 93);
             this.dgvidx.TabIndex = 4;
             // 
             // lInfoSchema
@@ -657,7 +657,7 @@
             this.lInfoSchema.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lInfoSchema.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lInfoSchema.ForeColor = System.Drawing.Color.Green;
-            this.lInfoSchema.Location = new System.Drawing.Point(3, 246);
+            this.lInfoSchema.Location = new System.Drawing.Point(3, 250);
             this.lInfoSchema.Name = "lInfoSchema";
             this.lInfoSchema.Size = new System.Drawing.Size(569, 23);
             this.lInfoSchema.TabIndex = 2;
@@ -679,10 +679,10 @@
             // tpCreate
             // 
             this.tpCreate.Controls.Add(this.tbCreate);
-            this.tpCreate.Location = new System.Drawing.Point(4, 28);
+            this.tpCreate.Location = new System.Drawing.Point(4, 24);
             this.tpCreate.Name = "tpCreate";
             this.tpCreate.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCreate.Size = new System.Drawing.Size(575, 272);
+            this.tpCreate.Size = new System.Drawing.Size(575, 276);
             this.tpCreate.TabIndex = 2;
             this.tpCreate.Text = "Create statement";
             this.tpCreate.UseVisualStyleBackColor = true;
@@ -696,7 +696,7 @@
             this.tbCreate.Location = new System.Drawing.Point(3, 3);
             this.tbCreate.Name = "tbCreate";
             this.tbCreate.ReadOnly = true;
-            this.tbCreate.Size = new System.Drawing.Size(569, 266);
+            this.tbCreate.Size = new System.Drawing.Size(569, 270);
             this.tbCreate.TabIndex = 0;
             this.tbCreate.Text = "";
             // 
@@ -704,10 +704,10 @@
             // 
             this.tpClass.Controls.Add(this.TakeIt);
             this.tpClass.Controls.Add(this.tbClassField);
-            this.tpClass.Location = new System.Drawing.Point(4, 28);
+            this.tpClass.Location = new System.Drawing.Point(4, 24);
             this.tpClass.Name = "tpClass";
             this.tpClass.Padding = new System.Windows.Forms.Padding(3);
-            this.tpClass.Size = new System.Drawing.Size(575, 272);
+            this.tpClass.Size = new System.Drawing.Size(575, 276);
             this.tpClass.TabIndex = 3;
             this.tpClass.Text = "Class";
             this.tpClass.UseVisualStyleBackColor = true;
@@ -735,7 +735,7 @@
             this.tbClassField.Location = new System.Drawing.Point(3, 3);
             this.tbClassField.Name = "tbClassField";
             this.tbClassField.ReadOnly = true;
-            this.tbClassField.Size = new System.Drawing.Size(569, 266);
+            this.tbClassField.Size = new System.Drawing.Size(569, 270);
             this.tbClassField.TabIndex = 0;
             this.tbClassField.Text = "";
             // 
@@ -743,9 +743,9 @@
             // 
             this.tpGuidSearch.Controls.Add(this.dgvGuidSearch);
             this.tpGuidSearch.Controls.Add(this.lbGuidSearch);
-            this.tpGuidSearch.Location = new System.Drawing.Point(4, 28);
+            this.tpGuidSearch.Location = new System.Drawing.Point(4, 24);
             this.tpGuidSearch.Name = "tpGuidSearch";
-            this.tpGuidSearch.Size = new System.Drawing.Size(575, 272);
+            this.tpGuidSearch.Size = new System.Drawing.Size(575, 276);
             this.tpGuidSearch.TabIndex = 4;
             this.tpGuidSearch.Text = "Guid search";
             this.tpGuidSearch.UseVisualStyleBackColor = true;
@@ -758,7 +758,7 @@
             this.dgvGuidSearch.Location = new System.Drawing.Point(0, 25);
             this.dgvGuidSearch.Name = "dgvGuidSearch";
             this.dgvGuidSearch.RowHeadersWidth = 25;
-            this.dgvGuidSearch.Size = new System.Drawing.Size(575, 247);
+            this.dgvGuidSearch.Size = new System.Drawing.Size(575, 251);
             this.dgvGuidSearch.TabIndex = 1;
             // 
             // lbGuidSearch
@@ -781,7 +781,7 @@
             this.functionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -791,7 +791,7 @@
             this.tsmiLoadSQLQuery,
             this.tsmiSaveSQLQuery});
             this.tsmiFile.Name = "tsmiFile";
-            this.tsmiFile.Size = new System.Drawing.Size(46, 24);
+            this.tsmiFile.Size = new System.Drawing.Size(37, 20);
             this.tsmiFile.Text = "File";
             // 
             // tsmiLoadSQLQuery
@@ -799,7 +799,7 @@
             this.tsmiLoadSQLQuery.Enabled = false;
             this.tsmiLoadSQLQuery.Image = global::PostgreSQL_Editor.Properties.Resources.Load;
             this.tsmiLoadSQLQuery.Name = "tsmiLoadSQLQuery";
-            this.tsmiLoadSQLQuery.Size = new System.Drawing.Size(196, 26);
+            this.tsmiLoadSQLQuery.Size = new System.Drawing.Size(157, 22);
             this.tsmiLoadSQLQuery.Text = "Load SQL query";
             this.tsmiLoadSQLQuery.Click += new System.EventHandler(this.tsmiLoadSQLQuery_Click);
             // 
@@ -808,7 +808,7 @@
             this.tsmiSaveSQLQuery.Enabled = false;
             this.tsmiSaveSQLQuery.Image = global::PostgreSQL_Editor.Properties.Resources.Save;
             this.tsmiSaveSQLQuery.Name = "tsmiSaveSQLQuery";
-            this.tsmiSaveSQLQuery.Size = new System.Drawing.Size(196, 26);
+            this.tsmiSaveSQLQuery.Size = new System.Drawing.Size(157, 22);
             this.tsmiSaveSQLQuery.Text = "Save SQL query";
             this.tsmiSaveSQLQuery.Click += new System.EventHandler(this.tsmiSaveSQLQuery_Click);
             // 
@@ -827,83 +827,90 @@
             this.editSLST,
             this.editEntityMetadata});
             this.tsmiTools.Name = "tsmiTools";
-            this.tsmiTools.Size = new System.Drawing.Size(58, 24);
+            this.tsmiTools.Size = new System.Drawing.Size(46, 20);
             this.tsmiTools.Text = "Tools";
             // 
             // tsmiEditBMST
             // 
             this.tsmiEditBMST.Name = "tsmiEditBMST";
-            this.tsmiEditBMST.Size = new System.Drawing.Size(519, 26);
+            this.tsmiEditBMST.Size = new System.Drawing.Size(411, 22);
             this.tsmiEditBMST.Text = "Edit Basematerial - Systemtype Rules";
             this.tsmiEditBMST.Click += new System.EventHandler(this.tsmiEditBMST_Click);
             // 
             // editBMSTFT
             // 
             this.editBMSTFT.Name = "editBMSTFT";
-            this.editBMSTFT.Size = new System.Drawing.Size(519, 26);
+            this.editBMSTFT.Size = new System.Drawing.Size(411, 22);
             this.editBMSTFT.Text = "Edit Basematerial - Systemtype - Frametype Rules";
             this.editBMSTFT.Click += new System.EventHandler(this.editBMSTFT_Click);
             // 
             // editBMSTFTMT
             // 
             this.editBMSTFTMT.Name = "editBMSTFTMT";
-            this.editBMSTFTMT.Size = new System.Drawing.Size(519, 26);
+            this.editBMSTFTMT.Size = new System.Drawing.Size(411, 22);
             this.editBMSTFTMT.Text = "Edit Basematerial - Systemtype - Frametype - Materialtype Rules";
             this.editBMSTFTMT.Click += new System.EventHandler(this.editBMSTFTMT_Click);
             // 
             // editSTFTMTModule
             // 
             this.editSTFTMTModule.Name = "editSTFTMTModule";
-            this.editSTFTMTModule.Size = new System.Drawing.Size(519, 26);
+            this.editSTFTMTModule.Size = new System.Drawing.Size(411, 22);
             this.editSTFTMTModule.Text = "Edit Systemtype - Frametype - Module-class Rules";
             this.editSTFTMTModule.Click += new System.EventHandler(this.editSTFTMTModule_Click);
             // 
             // tsmiEditSTFT
             // 
             this.tsmiEditSTFT.Name = "tsmiEditSTFT";
-            this.tsmiEditSTFT.Size = new System.Drawing.Size(519, 26);
+            this.tsmiEditSTFT.Size = new System.Drawing.Size(411, 22);
             this.tsmiEditSTFT.Text = "Edit Systemtype - Frametype Rules";
             this.tsmiEditSTFT.Click += new System.EventHandler(this.tsmiEditSTFT_Click);
             // 
             // editSTFTMTWE
             // 
             this.editSTFTMTWE.Name = "editSTFTMTWE";
-            this.editSTFTMTWE.Size = new System.Drawing.Size(519, 26);
+            this.editSTFTMTWE.Size = new System.Drawing.Size(411, 22);
             this.editSTFTMTWE.Text = "Edit Systemtype - Wedge Rules";
             this.editSTFTMTWE.Click += new System.EventHandler(this.editSTFTMTWE_Click);
             // 
             // editFRSL
             // 
             this.editFRSL.Name = "editFRSL";
-            this.editFRSL.Size = new System.Drawing.Size(519, 26);
+            this.editFRSL.Size = new System.Drawing.Size(411, 22);
             this.editFRSL.Text = "Edit Frametype - Sleeve Rules";
             this.editFRSL.Click += new System.EventHandler(this.editFRSL_Click);
+            // 
+            // editFrameSleeveRulesToolStripMenuItem
+            // 
+            this.editFrameSleeveRulesToolStripMenuItem.Name = "editFrameSleeveRulesToolStripMenuItem";
+            this.editFrameSleeveRulesToolStripMenuItem.Size = new System.Drawing.Size(411, 22);
+            this.editFrameSleeveRulesToolStripMenuItem.Text = "Edit Frame - Sleeve Rules";
+            this.editFrameSleeveRulesToolStripMenuItem.Click += new System.EventHandler(this.editFrameSleeveRulesToolStripMenuItem_Click);
             // 
             // editFRST
             // 
             this.editFRST.Name = "editFRST";
-            this.editFRST.Size = new System.Drawing.Size(519, 26);
+            this.editFRST.Size = new System.Drawing.Size(411, 22);
             this.editFRST.Text = "Edit Frame - Sticker Rules";
             this.editFRST.Click += new System.EventHandler(this.editFRST_Click);
             // 
             // editSLST
             // 
             this.editSLST.Name = "editSLST";
-            this.editSLST.Size = new System.Drawing.Size(519, 26);
+            this.editSLST.Size = new System.Drawing.Size(411, 22);
             this.editSLST.Text = "Edit Sleeve - Sticker Rules";
             this.editSLST.Click += new System.EventHandler(this.editSLST_Click);
             // 
             // editEntityMetadata
             // 
             this.editEntityMetadata.Name = "editEntityMetadata";
-            this.editEntityMetadata.Size = new System.Drawing.Size(519, 26);
+            this.editEntityMetadata.Size = new System.Drawing.Size(411, 22);
             this.editEntityMetadata.Text = "Edit Entity - Metadata";
             this.editEntityMetadata.Click += new System.EventHandler(this.editEntityMetadata_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(14, 24);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(12, 20);
             // 
             // functionsToolStripMenuItem
             // 
@@ -912,27 +919,27 @@
             this.tsmiGetModuleFromID,
             this.tsmiGetFrameFromID});
             this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
-            this.functionsToolStripMenuItem.Size = new System.Drawing.Size(85, 24);
+            this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.functionsToolStripMenuItem.Text = "Functions";
             // 
             // tsmiShowTableColumnTree
             // 
             this.tsmiShowTableColumnTree.Name = "tsmiShowTableColumnTree";
-            this.tsmiShowTableColumnTree.Size = new System.Drawing.Size(254, 26);
+            this.tsmiShowTableColumnTree.Size = new System.Drawing.Size(203, 22);
             this.tsmiShowTableColumnTree.Text = "Show Table Column Tree";
             this.tsmiShowTableColumnTree.Click += new System.EventHandler(this.tsmiShowTableColumnTree_Click);
             // 
             // tsmiGetModuleFromID
             // 
             this.tsmiGetModuleFromID.Name = "tsmiGetModuleFromID";
-            this.tsmiGetModuleFromID.Size = new System.Drawing.Size(254, 26);
+            this.tsmiGetModuleFromID.Size = new System.Drawing.Size(203, 22);
             this.tsmiGetModuleFromID.Text = "Get Module from ID";
             this.tsmiGetModuleFromID.Click += new System.EventHandler(this.getModuleFromID_Click);
             // 
             // tsmiGetFrameFromID
             // 
             this.tsmiGetFrameFromID.Name = "tsmiGetFrameFromID";
-            this.tsmiGetFrameFromID.Size = new System.Drawing.Size(254, 26);
+            this.tsmiGetFrameFromID.Size = new System.Drawing.Size(203, 22);
             this.tsmiGetFrameFromID.Text = "Get Frame from ID";
             this.tsmiGetFrameFromID.Click += new System.EventHandler(this.tsmiGetFrameFromID_Click);
             // 
@@ -944,13 +951,6 @@
             this.label1.Size = new System.Drawing.Size(49, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
-            // 
-            // editFrameSleeveRulesToolStripMenuItem
-            // 
-            this.editFrameSleeveRulesToolStripMenuItem.Name = "editFrameSleeveRulesToolStripMenuItem";
-            this.editFrameSleeveRulesToolStripMenuItem.Size = new System.Drawing.Size(519, 26);
-            this.editFrameSleeveRulesToolStripMenuItem.Text = "Edit Frame - Sleeve Rules";
-            this.editFrameSleeveRulesToolStripMenuItem.Click += new System.EventHandler(this.editFrameSleeveRulesToolStripMenuItem_Click);
             // 
             // Main
             // 
