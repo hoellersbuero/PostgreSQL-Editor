@@ -521,6 +521,8 @@ namespace PostgreSQL_Editor.Global
         public string system_type { get; set; }
         public Guid wedge_type_id { get; set; }
         public string wedge_type { get; set; }
+        public string article_number { get; set; }
+        public bool is_wedge_kit { get; set; }
         public int rule_version { get; set; }
         public bool is_active { get; set; }
         public DateTime created_ts { get; set; }

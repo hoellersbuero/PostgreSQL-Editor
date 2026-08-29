@@ -575,7 +575,7 @@ namespace PostgreSQL_Editor.DBUtils
                         wedge_type wedgeType = new wedge_type();
                         wedgeType.id = (Guid)reader["id"];
                         wedgeType.material_type_id = (Guid)reader["material_type_id"];
-                        wedgeType.name = products.Where(x => x.id.Equals(wedgeType.id)).FirstOrDefault()?.name + " " + materialTypes.Where(x => x.id == wedgeType.material_type_id).FirstOrDefault()?.name;
+                        wedgeType.name = products.Where(x => x.id.Equals(wedgeType.id)).FirstOrDefault()?.name;
                         wedgeType.width = (decimal)reader["width"];
                         wedgeType.height = (decimal)reader["height"];
                         wedgeType.is_compression_kit = (bool)reader["is_compression_kit"];
@@ -1118,6 +1118,8 @@ namespace PostgreSQL_Editor.DBUtils
                         rule.system_type = getSystemTypeName(rule.system_type_id);
                         rule.wedge_type_id = (Guid)reader["wedge_type_id"];
                         rule.wedge_type = products.Where(x => x.id.Equals(rule.wedge_type_id)).FirstOrDefault()?.name;
+                        rule.article_number = products.Where(x => x.id.Equals(rule.wedge_type_id)).FirstOrDefault()?.article_number;
+                        rule.is_wedge_kit = wedgeTypes.FirstOrDefault(w => w.id.Equals(rule.wedge_type_id)).is_compression_kit;
                         rule.rule_version = (int)reader["rule_version"];
                         rule.is_active = (bool)reader["is_active"];
                         wedgeRules.Add(rule);

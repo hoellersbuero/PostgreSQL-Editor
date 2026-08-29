@@ -21,6 +21,7 @@ namespace PostgreSQL_Editor.EditRules
         private BindingList<wedge_rule> wedgeRules = new BindingList<wedge_rule>();
         private List<wedge_rule> newWedgeRules = new List<wedge_rule>();
         private List<wedge_rule> changedWedgeRules = new List<wedge_rule>();
+        private List<wedgeListItem> wedgeListItems = new List<wedgeListItem>();
         private DgvChangeDetector _dgvChangeDetector;
 
         public editWedge_rule()
@@ -44,8 +45,12 @@ namespace PostgreSQL_Editor.EditRules
             cbSystemType.DataSource = standardLists.systemTypesAllowed;
             cbSystemType.DisplayMember = "name";
             cbSystemType.SelectedIndex = 0;
-            cbWedge.DataSource = standardLists.wedgeTypes;
-            cbWedge.DisplayMember = "name";
+            foreach (var wedge in standardLists.wedgeTypes)
+            {
+                wedgeListItems.Add(new wedgeListItem(wedge));
+            }
+            cbWedge.DataSource = wedgeListItems;
+            cbWedge.DisplayMember = "visual_name";
             cbWedge.SelectedIndex = 0;
             wedgeRules = new BindingList<wedge_rule>(standardLists.wedgeRules);
             dgv.DataSource = wedgeRules;
@@ -105,8 +110,8 @@ namespace PostgreSQL_Editor.EditRules
                 {
                     // INSERT-Logik für neue Regeln
                     string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
-                    string sql = "('" + rule.id.ToString() + "'::uuid,'" + rule.system_type_id.ToString() + "'::uuid,'" + 
-                                        rule.wedge_type_id.ToString() + "'::uuid," + rule.rule_version.ToString() + "," + 
+                    string sql = "('" + rule.id.ToString() + "'::uuid,'" + rule.system_type_id.ToString() + "'::uuid,'" +
+                                        rule.wedge_type_id.ToString() + "'::uuid," + rule.rule_version.ToString() + "," +
                                         rule.is_active.ToString().ToLower() + "," + ",'" + s + "','pg_editor','" + s + "','pg_editor')";
                     sqllist.Add(sqlinsert + sql + ";");
                 }
@@ -121,7 +126,7 @@ namespace PostgreSQL_Editor.EditRules
                     else
                     {
                         // UPDATE-Logik für geänderte Regeln
-                        sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + ", rule_version = " + rule.rule_version 
+                        sql = sqlupdate + "is_active = " + rule.is_active.ToString().ToLower() + ", rule_version = " + rule.rule_version
                                         + ", modified_ts = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + "', modified_by = 'pg_editor' "
                                         + " WHERE id = '" + rule.id.ToString() + "'";
                     }
@@ -185,6 +190,34 @@ namespace PostgreSQL_Editor.EditRules
         }
         private void cbSystemType_SelectedIndexChanged(object sender, EventArgs e)
         {
+        }
+    }
+
+    public class wedgeListItem : wedge_type
+    {
+        public wedgeListItem(wedge_type wedge)
+        {
+            this.id = wedge.id;
+            this.name = wedge.name;
+            this.is_compression_kit = wedge.is_compression_kit;
+            this.width = wedge.width;
+            this.height = wedge.height;
+            this.anchor_quantity = wedge.anchor_quantity;
+            this.fixing_anchor_quantity = wedge.fixing_anchor_quantity;
+            this.wedge_description = wedge.wedge_description;
+            this.material_type_id = wedge.material_type_id;
+            this.created_by = wedge.created_by;
+            this.created_ts = wedge.created_ts;
+            this.modified_by = wedge.modified_by;
+            this.modified_ts = wedge.modified_ts;
+            this.visual_name = wedge.name + " | " + (wedge.is_compression_kit ? "Compression Kit" : "Single");
+        }
+
+        public string visual_name { get; set; }
+
+        public override string ToString()
+        {
+            return visual_name;
         }
     }
 }

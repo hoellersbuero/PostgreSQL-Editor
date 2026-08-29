@@ -560,7 +560,7 @@
             this.tpSchema.Location = new System.Drawing.Point(4, 24);
             this.tpSchema.Name = "tpSchema";
             this.tpSchema.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSchema.Size = new System.Drawing.Size(575, 276);
+            this.tpSchema.Size = new System.Drawing.Size(575, 284);
             this.tpSchema.TabIndex = 1;
             this.tpSchema.Text = "Schema";
             this.tpSchema.UseVisualStyleBackColor = true;
@@ -579,8 +579,8 @@
             // splitContainerSchema1.Panel2
             // 
             this.splitContainerSchema1.Panel2.Controls.Add(this.splitContainerSchema2);
-            this.splitContainerSchema1.Size = new System.Drawing.Size(569, 224);
-            this.splitContainerSchema1.SplitterDistance = 58;
+            this.splitContainerSchema1.Size = new System.Drawing.Size(569, 232);
+            this.splitContainerSchema1.SplitterDistance = 60;
             this.splitContainerSchema1.TabIndex = 4;
             // 
             // dgvs
@@ -598,7 +598,7 @@
             this.dgvs.Name = "dgvs";
             this.dgvs.RowHeadersVisible = false;
             this.dgvs.RowHeadersWidth = 51;
-            this.dgvs.Size = new System.Drawing.Size(569, 58);
+            this.dgvs.Size = new System.Drawing.Size(569, 60);
             this.dgvs.TabIndex = 0;
             this.dgvs.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvs_CellContentDoubleClick);
             // 
@@ -616,8 +616,8 @@
             // splitContainerSchema2.Panel2
             // 
             this.splitContainerSchema2.Panel2.Controls.Add(this.dgvidx);
-            this.splitContainerSchema2.Size = new System.Drawing.Size(569, 162);
-            this.splitContainerSchema2.SplitterDistance = 65;
+            this.splitContainerSchema2.Size = new System.Drawing.Size(569, 168);
+            this.splitContainerSchema2.SplitterDistance = 67;
             this.splitContainerSchema2.TabIndex = 4;
             // 
             // dgvsc
@@ -633,7 +633,7 @@
             this.dgvsc.Name = "dgvsc";
             this.dgvsc.RowHeadersVisible = false;
             this.dgvsc.RowHeadersWidth = 51;
-            this.dgvsc.Size = new System.Drawing.Size(569, 65);
+            this.dgvsc.Size = new System.Drawing.Size(569, 67);
             this.dgvsc.TabIndex = 3;
             // 
             // dgvidx
@@ -649,7 +649,7 @@
             this.dgvidx.Name = "dgvidx";
             this.dgvidx.RowHeadersVisible = false;
             this.dgvidx.RowHeadersWidth = 51;
-            this.dgvidx.Size = new System.Drawing.Size(569, 93);
+            this.dgvidx.Size = new System.Drawing.Size(569, 97);
             this.dgvidx.TabIndex = 4;
             // 
             // lInfoSchema
@@ -657,7 +657,7 @@
             this.lInfoSchema.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lInfoSchema.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lInfoSchema.ForeColor = System.Drawing.Color.Green;
-            this.lInfoSchema.Location = new System.Drawing.Point(3, 250);
+            this.lInfoSchema.Location = new System.Drawing.Point(3, 258);
             this.lInfoSchema.Name = "lInfoSchema";
             this.lInfoSchema.Size = new System.Drawing.Size(569, 23);
             this.lInfoSchema.TabIndex = 2;
@@ -682,7 +682,7 @@
             this.tpCreate.Location = new System.Drawing.Point(4, 24);
             this.tpCreate.Name = "tpCreate";
             this.tpCreate.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCreate.Size = new System.Drawing.Size(575, 276);
+            this.tpCreate.Size = new System.Drawing.Size(575, 284);
             this.tpCreate.TabIndex = 2;
             this.tpCreate.Text = "Create statement";
             this.tpCreate.UseVisualStyleBackColor = true;
@@ -696,7 +696,7 @@
             this.tbCreate.Location = new System.Drawing.Point(3, 3);
             this.tbCreate.Name = "tbCreate";
             this.tbCreate.ReadOnly = true;
-            this.tbCreate.Size = new System.Drawing.Size(569, 270);
+            this.tbCreate.Size = new System.Drawing.Size(569, 278);
             this.tbCreate.TabIndex = 0;
             this.tbCreate.Text = "";
             // 
@@ -707,7 +707,7 @@
             this.tpClass.Location = new System.Drawing.Point(4, 24);
             this.tpClass.Name = "tpClass";
             this.tpClass.Padding = new System.Windows.Forms.Padding(3);
-            this.tpClass.Size = new System.Drawing.Size(575, 276);
+            this.tpClass.Size = new System.Drawing.Size(575, 284);
             this.tpClass.TabIndex = 3;
             this.tpClass.Text = "Class";
             this.tpClass.UseVisualStyleBackColor = true;
@@ -735,7 +735,7 @@
             this.tbClassField.Location = new System.Drawing.Point(3, 3);
             this.tbClassField.Name = "tbClassField";
             this.tbClassField.ReadOnly = true;
-            this.tbClassField.Size = new System.Drawing.Size(569, 270);
+            this.tbClassField.Size = new System.Drawing.Size(569, 278);
             this.tbClassField.TabIndex = 0;
             this.tbClassField.Text = "";
             // 
@@ -745,7 +745,7 @@
             this.tpGuidSearch.Controls.Add(this.lbGuidSearch);
             this.tpGuidSearch.Location = new System.Drawing.Point(4, 24);
             this.tpGuidSearch.Name = "tpGuidSearch";
-            this.tpGuidSearch.Size = new System.Drawing.Size(575, 276);
+            this.tpGuidSearch.Size = new System.Drawing.Size(575, 284);
             this.tpGuidSearch.TabIndex = 4;
             this.tpGuidSearch.Text = "Guid search";
             this.tpGuidSearch.UseVisualStyleBackColor = true;
@@ -758,7 +758,7 @@
             this.dgvGuidSearch.Location = new System.Drawing.Point(0, 25);
             this.dgvGuidSearch.Name = "dgvGuidSearch";
             this.dgvGuidSearch.RowHeadersWidth = 25;
-            this.dgvGuidSearch.Size = new System.Drawing.Size(575, 251);
+            this.dgvGuidSearch.Size = new System.Drawing.Size(575, 259);
             this.dgvGuidSearch.TabIndex = 1;
             // 
             // lbGuidSearch

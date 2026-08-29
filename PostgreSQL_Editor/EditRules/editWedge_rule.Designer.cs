@@ -43,6 +43,8 @@
             this.cCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cBaseMaterial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cMaterialType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cArticleNr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cCompression = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cRuleVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cFill = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -96,6 +98,8 @@
             this.cCheck,
             this.cBaseMaterial,
             this.cMaterialType,
+            this.cArticleNr,
+            this.cCompression,
             this.cActive,
             this.cRuleVersion,
             this.cFill});
@@ -112,7 +116,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(581, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(78, 15);
+            this.label5.Size = new System.Drawing.Size(69, 13);
             this.label5.TabIndex = 60;
             this.label5.Text = "Rule version:";
             // 
@@ -135,7 +139,7 @@
             this.cbActive.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbActive.Location = new System.Drawing.Point(522, 27);
             this.cbActive.Name = "cbActive";
-            this.cbActive.Size = new System.Drawing.Size(60, 19);
+            this.cbActive.Size = new System.Drawing.Size(56, 17);
             this.cbActive.TabIndex = 58;
             this.cbActive.Text = "Active";
             this.cbActive.UseVisualStyleBackColor = true;
@@ -155,7 +159,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(10, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 15);
+            this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 52;
             this.label2.Text = "Systemtype:";
             // 
@@ -164,7 +168,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(137, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 15);
+            this.label1.Size = new System.Drawing.Size(45, 13);
             this.label1.TabIndex = 51;
             this.label1.Text = "Wedge:";
             // 
@@ -182,7 +186,7 @@
             this.cbWedge.FormattingEnabled = true;
             this.cbWedge.Location = new System.Drawing.Point(140, 25);
             this.cbWedge.Name = "cbWedge";
-            this.cbWedge.Size = new System.Drawing.Size(158, 21);
+            this.cbWedge.Size = new System.Drawing.Size(365, 21);
             this.cbWedge.TabIndex = 49;
             // 
             // cCheck
@@ -213,6 +217,24 @@
             this.cMaterialType.Name = "cMaterialType";
             this.cMaterialType.Width = 130;
             // 
+            // cArticleNr
+            // 
+            this.cArticleNr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.cArticleNr.DataPropertyName = "article_number";
+            this.cArticleNr.HeaderText = "Article #";
+            this.cArticleNr.Name = "cArticleNr";
+            this.cArticleNr.ReadOnly = true;
+            this.cArticleNr.Width = 71;
+            // 
+            // cCompression
+            // 
+            this.cCompression.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.cCompression.DataPropertyName = "is_wedge_kit";
+            this.cCompression.HeaderText = "Is Kit";
+            this.cCompression.Name = "cCompression";
+            this.cCompression.ReadOnly = true;
+            this.cCompression.Width = 36;
+            // 
             // cActive
             // 
             this.cActive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -220,7 +242,7 @@
             this.cActive.HeaderText = "Active";
             this.cActive.MinimumWidth = 6;
             this.cActive.Name = "cActive";
-            this.cActive.Width = 44;
+            this.cActive.Width = 43;
             // 
             // cRuleVersion
             // 
@@ -229,7 +251,7 @@
             this.cRuleVersion.HeaderText = "Rule version";
             this.cRuleVersion.MinimumWidth = 6;
             this.cRuleVersion.Name = "cRuleVersion";
-            this.cRuleVersion.Width = 104;
+            this.cRuleVersion.Width = 91;
             // 
             // cFill
             // 
@@ -242,7 +264,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(739, 461);
+            this.ClientSize = new System.Drawing.Size(741, 461);
             this.Controls.Add(this.lbInfo);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnCreateSQL);
@@ -286,6 +308,8 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn cCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn cBaseMaterial;
         private System.Windows.Forms.DataGridViewTextBoxColumn cMaterialType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cArticleNr;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cCompression;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cActive;
         private System.Windows.Forms.DataGridViewTextBoxColumn cRuleVersion;
         private System.Windows.Forms.DataGridViewTextBoxColumn cFill;
