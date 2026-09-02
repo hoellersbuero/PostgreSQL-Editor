@@ -47,7 +47,7 @@ namespace PostgreSQL_Editor.EditRules
             cbSleeve.DisplayMember = "name";
             cbSleeve.SelectedIndex = 0;
             cbSticker.DataSource = standardLists.stickerTypes;
-            cbSticker.DisplayMember = "name";
+            cbSticker.DisplayMember = "visual_name";
             cbSticker.SelectedIndex = 0;
             dgv.DataSource = sleeveStickerRules;
             _dgvChangeDetector.TakeSnapshot();

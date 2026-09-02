@@ -251,6 +251,7 @@ namespace PostgreSQL_Editor.Global
     public class sticker_type
     {
         public string name { get; set; }
+        public string visual_name { get; set; }
         public bool has_sleeve_flange { get; set; }
         public decimal fw_height { get; set; }
         public bool has_sleeve { get; set; }

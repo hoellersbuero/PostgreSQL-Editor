@@ -626,7 +626,7 @@ namespace PostgreSQL_Editor.DBUtils
         public static void getStickerTypes(NpgsqlConnection npgsql)
         {
             stickerTypes.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM sticker_type", npgsql))
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM product, sticker_type WHERE product.id=sticker_type.id", npgsql))
             {
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
@@ -635,6 +635,7 @@ namespace PostgreSQL_Editor.DBUtils
                         sticker_type stickerType = new sticker_type();
                         stickerType.id = (Guid)reader["id"];
                         stickerType.name = products.Where(x => x.id.Equals(stickerType.id)).FirstOrDefault()?.name;
+                        stickerType.visual_name = (string)reader["article_number"] + " | " + stickerType.name;
                         stickerType.has_sleeve = (bool)reader["has_sleeve"];
                         stickerType.has_sleeve_flange = (bool)reader["has_sleeve_flange"];
                         stickerType.fw_height = (decimal)reader["fw_height"];
