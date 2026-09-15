@@ -51,7 +51,7 @@ namespace PostgreSQL_Editor.EditRules
             cbEntity.DataSource = filteredEntityNames.ToList();
             cbEntity.DisplayMember = "Key";
             cbEntity.ValueMember = "Value";
-            entityData = new BindingList<entity_metadata>(standardLists.entityMetaData);
+            entityData = new SortableBindingList<entity_metadata>();
             dgv.DataSource = null;
             dgv.DataSource = entityData;
             _dgvChangeDetector.TakeSnapshot();

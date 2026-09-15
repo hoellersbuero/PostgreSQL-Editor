@@ -94,6 +94,7 @@
             this.editSTFTMTModule = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEditSTFT = new System.Windows.Forms.ToolStripMenuItem();
             this.editSTFTMTWE = new System.Windows.Forms.ToolStripMenuItem();
+            this.editWedgeOptionRules = new System.Windows.Forms.ToolStripMenuItem();
             this.editFRSL = new System.Windows.Forms.ToolStripMenuItem();
             this.editFrameSleeveRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editFRST = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,6 +107,9 @@
             this.tsmiGetFrameFromID = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
+            this.tsmiSetAvailableSelectable = new System.Windows.Forms.ToolStripMenuItem();
+            this.tpInsert = new System.Windows.Forms.TabPage();
+            this.tbInsert = new System.Windows.Forms.RichTextBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -139,6 +143,7 @@
             this.tpGuidSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGuidSearch)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.tpInsert.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -449,6 +454,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tpSchema);
             this.tabControl1.Controls.Add(this.tpCreate);
+            this.tabControl1.Controls.Add(this.tpInsert);
             this.tabControl1.Controls.Add(this.tpClass);
             this.tabControl1.Controls.Add(this.tpGuidSearch);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -760,6 +766,7 @@
             this.dgvGuidSearch.RowHeadersWidth = 25;
             this.dgvGuidSearch.Size = new System.Drawing.Size(575, 259);
             this.dgvGuidSearch.TabIndex = 1;
+            this.dgvGuidSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGuidSearch_CellDoubleClick);
             // 
             // lbGuidSearch
             // 
@@ -821,6 +828,7 @@
             this.editSTFTMTModule,
             this.tsmiEditSTFT,
             this.editSTFTMTWE,
+            this.editWedgeOptionRules,
             this.editFRSL,
             this.editFrameSleeveRulesToolStripMenuItem,
             this.editFRST,
@@ -872,6 +880,13 @@
             this.editSTFTMTWE.Text = "Edit Systemtype - Wedge Rules";
             this.editSTFTMTWE.Click += new System.EventHandler(this.editSTFTMTWE_Click);
             // 
+            // editWedgeOptionRules
+            // 
+            this.editWedgeOptionRules.Name = "editWedgeOptionRules";
+            this.editWedgeOptionRules.Size = new System.Drawing.Size(411, 22);
+            this.editWedgeOptionRules.Text = "Edit Wedge - Option Rules";
+            this.editWedgeOptionRules.Click += new System.EventHandler(this.editWedgeOptionRules_Click);
+            // 
             // editFRSL
             // 
             this.editFRSL.Name = "editFRSL";
@@ -917,7 +932,8 @@
             this.functionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiShowTableColumnTree,
             this.tsmiGetModuleFromID,
-            this.tsmiGetFrameFromID});
+            this.tsmiGetFrameFromID,
+            this.tsmiSetAvailableSelectable});
             this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
             this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.functionsToolStripMenuItem.Text = "Functions";
@@ -951,6 +967,37 @@
             this.label1.Size = new System.Drawing.Size(49, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
+            // 
+            // tsmiSetAvailableSelectable
+            // 
+            this.tsmiSetAvailableSelectable.Name = "tsmiSetAvailableSelectable";
+            this.tsmiSetAvailableSelectable.Size = new System.Drawing.Size(203, 22);
+            this.tsmiSetAvailableSelectable.Text = "Set Available/Selectable";
+            this.tsmiSetAvailableSelectable.Click += new System.EventHandler(this.tsmiSetAvailableSelectable_Click);
+            // 
+            // tpInsert
+            // 
+            this.tpInsert.Controls.Add(this.tbInsert);
+            this.tpInsert.Location = new System.Drawing.Point(4, 24);
+            this.tpInsert.Name = "tpInsert";
+            this.tpInsert.Padding = new System.Windows.Forms.Padding(3);
+            this.tpInsert.Size = new System.Drawing.Size(575, 284);
+            this.tpInsert.TabIndex = 5;
+            this.tpInsert.Text = "Insert/Update statement";
+            this.tpInsert.UseVisualStyleBackColor = true;
+            // 
+            // tbInsert
+            // 
+            this.tbInsert.BackColor = System.Drawing.Color.White;
+            this.tbInsert.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbInsert.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbInsert.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbInsert.Location = new System.Drawing.Point(3, 3);
+            this.tbInsert.Name = "tbInsert";
+            this.tbInsert.ReadOnly = true;
+            this.tbInsert.Size = new System.Drawing.Size(569, 278);
+            this.tbInsert.TabIndex = 2;
+            this.tbInsert.Text = "";
             // 
             // Main
             // 
@@ -1004,6 +1051,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvGuidSearch)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tpInsert.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1087,6 +1135,10 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiShowTableColumnTree;
         private System.Windows.Forms.ToolStripButton tsbShowDataTree;
         private System.Windows.Forms.ToolStripMenuItem editFrameSleeveRulesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editWedgeOptionRules;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSetAvailableSelectable;
+        private System.Windows.Forms.TabPage tpInsert;
+        private System.Windows.Forms.RichTextBox tbInsert;
     }
 }
 

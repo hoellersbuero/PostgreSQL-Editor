@@ -34,6 +34,7 @@ namespace PostgreSQL_Editor
 
             // Hauptformular starten (Main). Form1_Load schließt später den Splash.
             Application.Run(new Main());
+            
         }
     }
 }

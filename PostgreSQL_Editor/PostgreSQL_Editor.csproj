@@ -176,6 +176,12 @@
     <Compile Include="EditRules\editSTFT_rule.Designer.cs">
       <DependentUpon>editSTFT_rule.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditRules\editWedgeOptionRule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditRules\editWedgeOptionRule.Designer.cs">
+      <DependentUpon>editWedgeOptionRule.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditRules\editWedge_rule.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +193,18 @@
     </Compile>
     <Compile Include="FunctionViews\columnList.Designer.cs">
       <DependentUpon>columnList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FunctionViews\setAvailableSelectable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FunctionViews\setAvailableSelectable.Designer.cs">
+      <DependentUpon>setAvailableSelectable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FunctionViews\UpdateDgvRow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FunctionViews\UpdateDgvRow.Designer.cs">
+      <DependentUpon>UpdateDgvRow.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\ExportHelpers.cs" />
     <Compile Include="Global\Extensions.cs" />
@@ -203,6 +221,7 @@
     <Compile Include="FunctionViews\showTabelColumnTree.Designer.cs">
       <DependentUpon>showTabelColumnTree.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\SortableBindingList.cs" />
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="FunctionViews\getModuleFromId.cs">
@@ -258,6 +277,9 @@
     <EmbeddedResource Include="EditRules\editSTFT_rule.resx">
       <DependentUpon>editSTFT_rule.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditRules\editWedgeOptionRule.resx">
+      <DependentUpon>editWedgeOptionRule.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditRules\editWedge_rule.resx">
       <DependentUpon>editWedge_rule.cs</DependentUpon>
     </EmbeddedResource>
@@ -270,8 +292,14 @@
     <EmbeddedResource Include="FunctionViews\getModuleFromId.resx">
       <DependentUpon>getModuleFromId.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FunctionViews\setAvailableSelectable.resx">
+      <DependentUpon>setAvailableSelectable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FunctionViews\showTabelColumnTree.resx">
       <DependentUpon>showTabelColumnTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FunctionViews\UpdateDgvRow.resx">
+      <DependentUpon>UpdateDgvRow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

@@ -34,18 +34,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
             this.dgv = new System.Windows.Forms.DataGridView();
-            this.cCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.cBaseMaterial = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cSystemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.cRuleVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cFill = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCreateSQL = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.cbActive = new System.Windows.Forms.CheckBox();
             this.nudVersion = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.lbInfo = new System.Windows.Forms.Label();
+            this.cCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cBaseMaterial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cSystemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cRuleVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cFill = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudVersion)).BeginInit();
             this.SuspendLayout();
@@ -119,57 +119,6 @@
             this.dgv.Size = new System.Drawing.Size(461, 349);
             this.dgv.TabIndex = 5;
             // 
-            // cCheck
-            // 
-            this.cCheck.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cCheck.DataPropertyName = "check";
-            this.cCheck.HeaderText = "";
-            this.cCheck.MinimumWidth = 25;
-            this.cCheck.Name = "cCheck";
-            this.cCheck.Width = 25;
-            // 
-            // cBaseMaterial
-            // 
-            this.cBaseMaterial.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cBaseMaterial.DataPropertyName = "base_material";
-            this.cBaseMaterial.HeaderText = "Basematerial";
-            this.cBaseMaterial.MinimumWidth = 135;
-            this.cBaseMaterial.Name = "cBaseMaterial";
-            this.cBaseMaterial.ReadOnly = true;
-            this.cBaseMaterial.Width = 135;
-            // 
-            // cSystemType
-            // 
-            this.cSystemType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cSystemType.DataPropertyName = "system_type";
-            this.cSystemType.HeaderText = "Systemtype";
-            this.cSystemType.MinimumWidth = 135;
-            this.cSystemType.Name = "cSystemType";
-            this.cSystemType.ReadOnly = true;
-            this.cSystemType.Width = 135;
-            // 
-            // cActive
-            // 
-            this.cActive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cActive.DataPropertyName = "is_active";
-            this.cActive.HeaderText = "Active";
-            this.cActive.Name = "cActive";
-            this.cActive.Width = 43;
-            // 
-            // cRuleVersion
-            // 
-            this.cRuleVersion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cRuleVersion.DataPropertyName = "rule_version";
-            this.cRuleVersion.HeaderText = "Rule version";
-            this.cRuleVersion.Name = "cRuleVersion";
-            this.cRuleVersion.Width = 91;
-            // 
-            // cFill
-            // 
-            this.cFill.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cFill.HeaderText = "";
-            this.cFill.Name = "cFill";
-            // 
             // btnCreateSQL
             // 
             this.btnCreateSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -235,6 +184,58 @@
             this.lbInfo.Size = new System.Drawing.Size(461, 21);
             this.lbInfo.TabIndex = 11;
             // 
+            // cCheck
+            // 
+            this.cCheck.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.cCheck.DataPropertyName = "check";
+            this.cCheck.HeaderText = "";
+            this.cCheck.MinimumWidth = 25;
+            this.cCheck.Name = "cCheck";
+            this.cCheck.Width = 25;
+            // 
+            // cBaseMaterial
+            // 
+            this.cBaseMaterial.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.cBaseMaterial.DataPropertyName = "base_material";
+            this.cBaseMaterial.HeaderText = "Basematerial";
+            this.cBaseMaterial.MinimumWidth = 135;
+            this.cBaseMaterial.Name = "cBaseMaterial";
+            this.cBaseMaterial.ReadOnly = true;
+            this.cBaseMaterial.Width = 135;
+            // 
+            // cSystemType
+            // 
+            this.cSystemType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.cSystemType.DataPropertyName = "system_type";
+            this.cSystemType.HeaderText = "Systemtype";
+            this.cSystemType.MinimumWidth = 135;
+            this.cSystemType.Name = "cSystemType";
+            this.cSystemType.ReadOnly = true;
+            this.cSystemType.Width = 135;
+            // 
+            // cActive
+            // 
+            this.cActive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.cActive.DataPropertyName = "is_active";
+            this.cActive.HeaderText = "Active";
+            this.cActive.Name = "cActive";
+            this.cActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.cActive.Width = 62;
+            // 
+            // cRuleVersion
+            // 
+            this.cRuleVersion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.cRuleVersion.DataPropertyName = "rule_version";
+            this.cRuleVersion.HeaderText = "Rule version";
+            this.cRuleVersion.Name = "cRuleVersion";
+            this.cRuleVersion.Width = 91;
+            // 
+            // cFill
+            // 
+            this.cFill.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cFill.HeaderText = "";
+            this.cFill.Name = "cFill";
+            // 
             // editBMST_rule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -279,12 +280,12 @@
         private System.Windows.Forms.CheckBox cbActive;
         private System.Windows.Forms.NumericUpDown nudVersion;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbInfo;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn cBaseMaterial;
         private System.Windows.Forms.DataGridViewTextBoxColumn cSystemType;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cActive;
         private System.Windows.Forms.DataGridViewTextBoxColumn cRuleVersion;
         private System.Windows.Forms.DataGridViewTextBoxColumn cFill;
-        private System.Windows.Forms.Label lbInfo;
     }
 }

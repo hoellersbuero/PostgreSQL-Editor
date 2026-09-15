@@ -31,6 +31,7 @@ namespace PostgreSQL_Editor
         private List<string> columnNames = new List<string>();
         private List<GuidSearchResult> guidSearchResults = new List<GuidSearchResult>();
         private BackgroundWorker _exportWorker;
+        private ContextMenuStrip contextMenuStrip1;
 
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
@@ -64,6 +65,46 @@ namespace PostgreSQL_Editor
                     cmd.CommandText = "SET schema 'public'";
                     cmd.ExecuteNonQuery();
                 }
+            }
+            contextMenuStrip1 = new ContextMenuStrip();
+            contextMenuStrip1.Items.Add("Update", null, updateRow_Click);
+            dgv.RowHeaderMouseClick += Dgv_RowHeaderMouseClick;
+        }
+
+        private void updateRow_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow selectedRow = dgv.Rows[_ctxRow];
+            if (selectedRow != null)
+            {
+                string tableName = _selectedNode.Text;
+                string primaryKeyColumn = "id"; // Assuming 'id' is the primary key column
+                object primaryKeyValue = selectedRow.Cells[primaryKeyColumn].Value;
+                UpdateDgvRow.Execute(this, tableName, selectedRow);
+                //List<string> setClauses = new List<string>();
+                //foreach (DataGridViewCell cell in selectedRow.Cells)
+                //{
+                //    if (cell.OwningColumn.Name != primaryKeyColumn)
+                //    {
+                //        string columnName = cell.OwningColumn.Name;
+                //        object value = cell.Value;
+                //        string formattedValue = value is string ? $"'{value}'" : value.ToString();
+                //        setClauses.Add($"{columnName} = {formattedValue}");
+                //    }
+                //}
+                //string updateQuery = $"UPDATE {Global.Global.schema}.{tableName} SET {string.Join(", ", setClauses)} WHERE {primaryKeyColumn} = '{primaryKeyValue}'";
+                //ExecuteSQL(0, updateQuery);
+            }
+        }
+
+        private void Dgv_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                _ctxRow = e.RowIndex;
+                _ctxCol = e.ColumnIndex;
+                dgv.ClearSelection();
+                dgv.Rows[e.RowIndex].Selected = true;
+                contextMenuStrip1.Show(Cursor.Position);
             }
         }
 
@@ -350,6 +391,11 @@ namespace PostgreSQL_Editor
                                     if (!TableColumnsByTable[tableName].Contains(columnName))
                                         TableColumnsByTable[tableName].Add(columnName);
                                 }
+                            }
+                            else if (dgrid == 5)
+                            {
+                                string txt = dataTable.Rows[0][1].ToString();
+                                // FillTbCreate(txt);
                             }
                         }
                     }
@@ -654,6 +700,76 @@ namespace PostgreSQL_Editor
                   "    END as not_null \r\n  FROM pg_class c,\r\n   pg_attribute a,\r\n   pg_type t\r\n   WHERE c.relname = '" + e.Node.Text + "'\r\n" +
                   "   AND a.attnum > 0\r\n   AND a.attrelid = c.oid\r\n   AND a.atttypid = t.oid\r\n ORDER BY a.attnum\r\n) as tabledefinition\r\ngroup by relname;";
             ExecuteSQL(3, sql, sqlsc);
+            createInsert(e);
+        }
+
+        private void createInsert(TreeViewEventArgs e)
+        {
+            string insertTemplateSql = @"
+SELECT
+  'INSERT INTO ' || quote_ident(n.nspname) || '.' || quote_ident(c.relname) || ' (' ||
+  string_agg(quote_ident(a.attname), ', ' ORDER BY a.attnum) || ') VALUES (' ||
+  string_agg('<' || a.attname || '_value>', ', ' ORDER BY a.attnum) || ');' AS insert_template
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+JOIN pg_attribute a ON a.attrelid = c.oid
+WHERE n.nspname = @schema
+  AND c.relname = @table
+  AND a.attnum > 0
+  AND NOT a.attisdropped
+GROUP BY n.nspname, c.relname;
+";
+
+            using (var cmd = new NpgsqlCommand(insertTemplateSql, npgsql))
+            {
+                cmd.Parameters.AddWithValue("schema", Global.Global.schema);
+                cmd.Parameters.AddWithValue("table", e.Node.Text);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var dt = new DataTable();
+                    dt.Load(reader);
+                    // Zeige Ergebnis z.B. in tbInsert oder setze dgrid==5-Handling so, dass es angezeigt wird
+                    if (dt.Rows.Count > 0)
+                        tbInsert.Text = dt.Rows[0]["insert_template"].ToString();
+                    else
+                        tbInsert.Text = $"No insert template for {Global.Global.schema}.{e.Node.Text}";
+                }
+            }
+            string updateTemplateSql = @"
+SELECT
+  'UPDATE ' || quote_ident(n.nspname) || '.' || quote_ident(c.relname) || ' SET ' ||
+  string_agg(quote_ident(a.attname) || ' = <value_for_'|| quote_ident(a.attname) || '>', ', ' ORDER BY a.attnum) ||
+  ' WHERE ' || COALESCE(quote_ident(pk.attname), '<no_pk>') || ' = <pk_value>;' AS update_template
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+JOIN pg_attribute a ON a.attrelid = c.oid
+LEFT JOIN (
+  SELECT conrelid, conkey[1] AS pk_attnum
+  FROM pg_constraint
+  WHERE contype = 'p'
+) pc ON pc.conrelid = c.oid
+LEFT JOIN pg_attribute pk ON pk.attrelid = pc.conrelid AND pk.attnum = pc.pk_attnum
+WHERE n.nspname = @schema
+  AND c.relname = @table
+  AND a.attnum > 0
+  AND NOT a.attisdropped
+GROUP BY n.nspname, c.relname, pk.attname;
+";
+
+            using (var cmd = new NpgsqlCommand(updateTemplateSql, npgsql))
+            {
+                cmd.Parameters.AddWithValue("schema", Global.Global.schema ?? "public");
+                cmd.Parameters.AddWithValue("table", e.Node.Text);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var dt = new DataTable();
+                    dt.Load(reader);
+                    if (dt.Rows.Count > 0)
+                        tbInsert.Text += "\n\n\n" + dt.Rows[0]["update_template"].ToString();
+                    else
+                        tbInsert.Text += $"\n\n\nNo update template for {Global.Global.schema}.{e.Node.Text}";
+                }
+            }
         }
 
         private void RestoreWindowState()
@@ -688,6 +804,8 @@ namespace PostgreSQL_Editor
 
                 // WindowState nachsetzen (maximized/minimized/normal). Setze nach Bounds.
                 this.WindowState = info.WindowState;
+                this.BringToFront();
+                Application.DoEvents();
             }
             catch
             {
@@ -1140,10 +1258,14 @@ namespace PostgreSQL_Editor
             }
             if (guidSearchResults.Count > 0)
             {
+                dgvGuidSearch.RowHeadersVisible = false;
                 dgvGuidSearch.DataSource = null;
                 dgvGuidSearch.DataSource = guidSearchResults;
                 dgvGuidSearch.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                 dgvGuidSearch.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                //dgvGuidSearch.Width = (from DataGridViewColumn column in dgvGuidSearch.Columns select column.Width).Sum() + 23;
+                //dgvGuidSearch.Height = (dgvGuidSearch.Rows.Count + 1) * dgvGuidSearch.Rows[0].Height;
+                //dgvGuidSearch.ScrollBars = ScrollBars.Vertical;
             }
             else
                 dgvGuidSearch.DataSource = null;
@@ -1438,6 +1560,34 @@ namespace PostgreSQL_Editor
         private void editFrameSleeveRulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditFrameSleeveRule.Execute(this, npgsql);
+        }
+
+        private void editWedgeOptionRules_Click(object sender, EventArgs e)
+        {
+            editWedgeOptionRule.Execute(this, npgsql);
+        }
+
+        private void dgvGuidSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                DataGridViewRow r = dgvGuidSearch.Rows[e.RowIndex];
+                GuidSearchResult result = r.DataBoundItem as GuidSearchResult;
+                if (result != null)
+                {
+                    string sql = $"SELECT * FROM {result.TableName} WHERE {result.ColumnName} = '{result.Value}';";
+                    DataTable dt = DbUtils.GetResultFromTable(npgsql, sql);
+                    if (dt != null)
+                    {
+                        MessageBox.Show($"Result from {result.TableName}: {dt.Rows.Count} rows returned.", $"Result from {result.TableName}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+
+        private void tsmiSetAvailableSelectable_Click(object sender, EventArgs e)
+        {
+            setAvailableSelectable.Execute(this, npgsql);
         }
     }
 

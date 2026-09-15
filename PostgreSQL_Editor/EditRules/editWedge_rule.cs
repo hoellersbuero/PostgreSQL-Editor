@@ -18,7 +18,7 @@ namespace PostgreSQL_Editor.EditRules
     {
         private NpgsqlConnection npgsql;
         private List<material_type_rule> filteredMaterialRules = new List<material_type_rule>();
-        private BindingList<wedge_rule> wedgeRules = new BindingList<wedge_rule>();
+        private SortableBindingList<wedge_rule> wedgeRules = new SortableBindingList<wedge_rule>();
         private List<wedge_rule> newWedgeRules = new List<wedge_rule>();
         private List<wedge_rule> changedWedgeRules = new List<wedge_rule>();
         private List<wedgeListItem> wedgeListItems = new List<wedgeListItem>();
@@ -52,7 +52,11 @@ namespace PostgreSQL_Editor.EditRules
             cbWedge.DataSource = wedgeListItems;
             cbWedge.DisplayMember = "visual_name";
             cbWedge.SelectedIndex = 0;
-            wedgeRules = new BindingList<wedge_rule>(standardLists.wedgeRules);
+            wedgeRules = new SortableBindingList<wedge_rule>();
+            foreach (var rule in standardLists.wedgeRules)
+            {
+                wedgeRules.Add(rule);
+            }
             dgv.DataSource = wedgeRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
@@ -188,6 +192,7 @@ namespace PostgreSQL_Editor.EditRules
             _dgvChangeDetector.TakeSnapshot();
             btnCreateSQL.Enabled = newWedgeRules.Count > 0 || changedWedgeRules.Count > 0;
         }
+
         private void cbSystemType_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
@@ -211,9 +216,11 @@ namespace PostgreSQL_Editor.EditRules
             this.modified_by = wedge.modified_by;
             this.modified_ts = wedge.modified_ts;
             this.visual_name = wedge.name + " | " + (wedge.is_compression_kit ? "Compression Kit" : "Single");
+            this.visual_name2 = wedge.article_number + " | " + wedge.name + " | " + (wedge.is_compression_kit ? "Compression Kit" : "Single");
         }
 
         public string visual_name { get; set; }
+        public string visual_name2 { get; set; }
 
         public override string ToString()
         {

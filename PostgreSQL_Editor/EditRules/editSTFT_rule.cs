@@ -17,7 +17,7 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editSTFT_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private BindingList<system_type_frame_type_rule> frameTypeRules = new BindingList<system_type_frame_type_rule>();
+        private SortableBindingList<system_type_frame_type_rule> frameTypeRules = new SortableBindingList<system_type_frame_type_rule>();
         private List<system_type_frame_type_rule> newFrameTypeRules = new List<system_type_frame_type_rule>();
         private List<system_type_frame_type_rule> changedFrameTypeRules = new List<system_type_frame_type_rule>();
         private DgvChangeDetector _dgvChangeDetector;
@@ -46,7 +46,11 @@ namespace PostgreSQL_Editor.EditRules
             cbFrameType.DataSource = standardLists.frameTypes;
             cbFrameType.DisplayMember = "name";
             cbFrameType.SelectedIndex = 0;
-            frameTypeRules = new BindingList<system_type_frame_type_rule>(standardLists.systemTypeFrameTypeRules);
+            frameTypeRules = new SortableBindingList<system_type_frame_type_rule>();
+            foreach (var rule in standardLists.systemTypeFrameTypeRules)
+            {
+                frameTypeRules.Add(rule);
+            }
             dgv.DataSource = frameTypeRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();

@@ -22,7 +22,7 @@ namespace PostgreSQL_Editor.EditRules
     {
         private NpgsqlConnection _npgsql;
         private DgvChangeDetector _dgvChangeDetector;
-        private BindingList<frame_sleeve_rule> frameSleeveRules = new BindingList<frame_sleeve_rule>();
+        private SortableBindingList<frame_sleeve_rule> frameSleeveRules = new SortableBindingList<frame_sleeve_rule>();
         private List<frame_sleeve_rule> newFrameSleeveRules = new List<frame_sleeve_rule>();
         private List<frame_sleeve_rule> changedFrameSleeveRules = new List<frame_sleeve_rule>();
         private BindingSource _bindingSource = new BindingSource();
@@ -70,7 +70,11 @@ namespace PostgreSQL_Editor.EditRules
                 rule_version = x.rule_version,
                 is_active = x.is_active,
             }).ToList();
-            frameSleeveRules = new BindingList<frame_sleeve_rule>(initial);
+            frameSleeveRules = new SortableBindingList<frame_sleeve_rule>();
+            foreach (var rule in initial)
+            {
+                frameSleeveRules.Add(rule);
+            }
             _bindingSource.DataSource = frameSleeveRules    ;
             dgv.DataSource = _bindingSource;
             _dgvChangeDetector.TakeSnapshot();

@@ -119,7 +119,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(608, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(78, 15);
+            this.label5.Size = new System.Drawing.Size(69, 13);
             this.label5.TabIndex = 42;
             this.label5.Text = "Rule version:";
             // 
@@ -142,7 +142,7 @@
             this.cbActive.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbActive.Location = new System.Drawing.Point(549, 28);
             this.cbActive.Name = "cbActive";
-            this.cbActive.Size = new System.Drawing.Size(60, 19);
+            this.cbActive.Size = new System.Drawing.Size(56, 17);
             this.cbActive.TabIndex = 40;
             this.cbActive.Text = "Active";
             this.cbActive.UseVisualStyleBackColor = true;
@@ -162,7 +162,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(201, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 15);
+            this.label3.Size = new System.Drawing.Size(59, 13);
             this.label3.TabIndex = 36;
             this.label3.Text = "Frametype:";
             // 
@@ -179,7 +179,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(105, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 15);
+            this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 34;
             this.label2.Text = "Systemtype:";
             // 
@@ -188,7 +188,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 15);
+            this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 33;
             this.label1.Text = "Basematerial:";
             // 
@@ -216,7 +216,7 @@
             this.cbMandatory.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbMandatory.Location = new System.Drawing.Point(411, 28);
             this.cbMandatory.Name = "cbMandatory";
-            this.cbMandatory.Size = new System.Drawing.Size(87, 19);
+            this.cbMandatory.Size = new System.Drawing.Size(76, 17);
             this.cbMandatory.TabIndex = 48;
             this.cbMandatory.Text = "Mandatory";
             this.cbMandatory.UseVisualStyleBackColor = true;
@@ -266,7 +266,8 @@
             this.cMandatory.HeaderText = "Mandatory";
             this.cMandatory.MinimumWidth = 6;
             this.cMandatory.Name = "cMandatory";
-            this.cMandatory.Width = 71;
+            this.cMandatory.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.cMandatory.Width = 82;
             // 
             // cActive
             // 
@@ -275,7 +276,8 @@
             this.cActive.HeaderText = "Active";
             this.cActive.MinimumWidth = 6;
             this.cActive.Name = "cActive";
-            this.cActive.Width = 44;
+            this.cActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.cActive.Width = 62;
             // 
             // cRuleVersion
             // 
@@ -284,7 +286,7 @@
             this.cRuleVersion.HeaderText = "Rule version";
             this.cRuleVersion.MinimumWidth = 6;
             this.cRuleVersion.Name = "cRuleVersion";
-            this.cRuleVersion.Width = 104;
+            this.cRuleVersion.Width = 91;
             // 
             // cFill
             // 
@@ -293,11 +295,11 @@
             this.cFill.MinimumWidth = 6;
             this.cFill.Name = "cFill";
             // 
-            // editFRSL_rule
+            // editSleeve_rule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(767, 461);
+            this.ClientSize = new System.Drawing.Size(769, 461);
             this.Controls.Add(this.cbMandatory);
             this.Controls.Add(this.lbInfo);
             this.Controls.Add(this.btnClose);
@@ -316,7 +318,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximumSize = new System.Drawing.Size(785, 9999);
             this.MinimumSize = new System.Drawing.Size(785, 500);
-            this.Name = "editFRSL_rule";
+            this.Name = "editSleeve_rule";
             this.Text = "Edit Frame-Sleeve Rules";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditSystemTypeFrameType_FormClosing);
             this.Load += new System.EventHandler(this.EditSleeveRule_Load);

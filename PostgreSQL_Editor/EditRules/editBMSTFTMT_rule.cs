@@ -17,7 +17,7 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editBMSTFTMT_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private BindingList<BMSTFTMT_rule> BMSTFTMT_rules = new BindingList<BMSTFTMT_rule>();
+        private SortableBindingList<BMSTFTMT_rule> BMSTFTMT_rules = new SortableBindingList<BMSTFTMT_rule>();
         private List<BMSTFTMT_rule> newBMSTFTMT_rules = new List<BMSTFTMT_rule>();
         private List<BMSTFTMT_rule> changedBMSTFTMT_rules = new List<BMSTFTMT_rule>();
         private List<system_type> filteredSystemTypes = new List<system_type>();
@@ -56,7 +56,11 @@ namespace PostgreSQL_Editor.EditRules
             cbMaterialType.DataSource = standardLists.materialTypes;
             cbMaterialType.DisplayMember = "name";
             cbMaterialType.SelectedIndex = 0;
-            BMSTFTMT_rules = new BindingList<BMSTFTMT_rule>(standardLists.BMSTFTMT_rules);
+            BMSTFTMT_rules = new SortableBindingList<BMSTFTMT_rule>();
+            foreach (var rule in standardLists.BMSTFTMT_rules)
+            {
+                BMSTFTMT_rules.Add(rule);
+            }
             dgv.DataSource = BMSTFTMT_rules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();

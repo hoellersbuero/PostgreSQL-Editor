@@ -41,6 +41,10 @@
             this.cbActive = new System.Windows.Forms.CheckBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.dgv = new System.Windows.Forms.DataGridView();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnCreateSQL = new System.Windows.Forms.Button();
+            this.cbSpecial = new System.Windows.Forms.CheckBox();
+            this.lbInfo = new System.Windows.Forms.Label();
             this.cCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cBaseMaterial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSystemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,10 +54,6 @@
             this.cSpecial = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cRuleVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cFill = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnCreateSQL = new System.Windows.Forms.Button();
-            this.cbSpecial = new System.Windows.Forms.CheckBox();
-            this.lbInfo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudVersion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
@@ -198,6 +198,48 @@
             this.dgv.Size = new System.Drawing.Size(784, 351);
             this.dgv.TabIndex = 26;
             // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Location = new System.Drawing.Point(721, 429);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 28;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnCreateSQL
+            // 
+            this.btnCreateSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCreateSQL.Enabled = false;
+            this.btnCreateSQL.Location = new System.Drawing.Point(12, 429);
+            this.btnCreateSQL.Name = "btnCreateSQL";
+            this.btnCreateSQL.Size = new System.Drawing.Size(75, 23);
+            this.btnCreateSQL.TabIndex = 27;
+            this.btnCreateSQL.Text = "Create SQL";
+            this.btnCreateSQL.UseVisualStyleBackColor = true;
+            this.btnCreateSQL.Click += new System.EventHandler(this.btnCreateSQL_Click);
+            // 
+            // cbSpecial
+            // 
+            this.cbSpecial.AutoSize = true;
+            this.cbSpecial.Location = new System.Drawing.Point(582, 27);
+            this.cbSpecial.Name = "cbSpecial";
+            this.cbSpecial.Size = new System.Drawing.Size(61, 17);
+            this.cbSpecial.TabIndex = 29;
+            this.cbSpecial.Text = "Special";
+            this.cbSpecial.UseVisualStyleBackColor = true;
+            // 
+            // lbInfo
+            // 
+            this.lbInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbInfo.Location = new System.Drawing.Point(12, 406);
+            this.lbInfo.Name = "lbInfo";
+            this.lbInfo.Size = new System.Drawing.Size(784, 20);
+            this.lbInfo.TabIndex = 30;
+            // 
             // cCheck
             // 
             this.cCheck.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -251,7 +293,8 @@
             this.cActive.DataPropertyName = "is_active";
             this.cActive.HeaderText = "Active";
             this.cActive.Name = "cActive";
-            this.cActive.Width = 43;
+            this.cActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.cActive.Width = 62;
             // 
             // cSpecial
             // 
@@ -276,48 +319,6 @@
             this.cFill.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.cFill.HeaderText = "";
             this.cFill.Name = "cFill";
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(721, 429);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 28;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // btnCreateSQL
-            // 
-            this.btnCreateSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreateSQL.Enabled = false;
-            this.btnCreateSQL.Location = new System.Drawing.Point(12, 429);
-            this.btnCreateSQL.Name = "btnCreateSQL";
-            this.btnCreateSQL.Size = new System.Drawing.Size(75, 23);
-            this.btnCreateSQL.TabIndex = 27;
-            this.btnCreateSQL.Text = "Create SQL";
-            this.btnCreateSQL.UseVisualStyleBackColor = true;
-            this.btnCreateSQL.Click += new System.EventHandler(this.btnCreateSQL_Click);
-            // 
-            // cbSpecial
-            // 
-            this.cbSpecial.AutoSize = true;
-            this.cbSpecial.Location = new System.Drawing.Point(582, 27);
-            this.cbSpecial.Name = "cbSpecial";
-            this.cbSpecial.Size = new System.Drawing.Size(61, 17);
-            this.cbSpecial.TabIndex = 29;
-            this.cbSpecial.Text = "Special";
-            this.cbSpecial.UseVisualStyleBackColor = true;
-            // 
-            // lbInfo
-            // 
-            this.lbInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbInfo.Location = new System.Drawing.Point(12, 406);
-            this.lbInfo.Name = "lbInfo";
-            this.lbInfo.Size = new System.Drawing.Size(784, 20);
-            this.lbInfo.TabIndex = 30;
             // 
             // editBMSTFTMT_rule
             // 
@@ -373,6 +374,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnCreateSQL;
         private System.Windows.Forms.CheckBox cbSpecial;
+        private System.Windows.Forms.Label lbInfo;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn cBaseMaterial;
         private System.Windows.Forms.DataGridViewTextBoxColumn cSystemType;
@@ -382,6 +384,5 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn cSpecial;
         private System.Windows.Forms.DataGridViewTextBoxColumn cRuleVersion;
         private System.Windows.Forms.DataGridViewTextBoxColumn cFill;
-        private System.Windows.Forms.Label lbInfo;
     }
 }

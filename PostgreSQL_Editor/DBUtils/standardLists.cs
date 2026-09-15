@@ -1,10 +1,12 @@
-﻿using Npgsql;
+﻿using DocumentFormat.OpenXml.InkML;
+using Npgsql;
 using PostgreSQL_Editor.Global;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace PostgreSQL_Editor.DBUtils
 {
@@ -44,6 +46,7 @@ namespace PostgreSQL_Editor.DBUtils
         public static List<frame_sticker_rule> frameStickerRules = new List<frame_sticker_rule>();
         public static List<sleeve_sticker_rule> sleeveStickerRules = new List<sleeve_sticker_rule>();
         public static List<wedge_rule> wedgeRules = new List<wedge_rule>();
+        public static List<wedge_option_rule> wedgeOptionRules = new List<wedge_option_rule>();
         public static List<string> SQLStatements = new List<string>();
 
         #region loading
@@ -84,6 +87,7 @@ namespace PostgreSQL_Editor.DBUtils
             getFrameStickerRules(npgsql);
             getSleeveStickerRules(npgsql);
             getWedgeRules(npgsql);
+            getWedgeOptionRules(npgsql);
         }
         #endregion
 
@@ -574,6 +578,7 @@ namespace PostgreSQL_Editor.DBUtils
                     {
                         wedge_type wedgeType = new wedge_type();
                         wedgeType.id = (Guid)reader["id"];
+                        wedgeType.article_number = products.Where(x => x.id.Equals(wedgeType.id)).FirstOrDefault()?.article_number;
                         wedgeType.material_type_id = (Guid)reader["material_type_id"];
                         wedgeType.name = products.Where(x => x.id.Equals(wedgeType.id)).FirstOrDefault()?.name;
                         wedgeType.width = (decimal)reader["width"];
@@ -590,6 +595,7 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
+            wedgeTypes.SortByName<wedge_type>();
         }
 
         public static void getSleeveTypes(NpgsqlConnection npgsql)
@@ -1064,12 +1070,13 @@ namespace PostgreSQL_Editor.DBUtils
                         rule.system_type_id = (Guid)reader["system_type_id"];
                         rule.system_type = getSystemTypeName(rule.system_type_id);
                         rule.frame_type_id = (Guid)reader["frame_type_id"];
-                        rule.frame_type = products.Where(x => x.id.Equals(rule.frame_type_id)).FirstOrDefault()?.name;
+                        rule.frame_type = standardLists.frameTypes.Where(x => x.id.Equals(rule.frame_type_id)).FirstOrDefault()?.name;
                         rule.fw_height = (decimal)reader["fw_height"];
                         rule.sticker_type_id = (Guid)reader["sticker_type_id"];
                         rule.sticker_type = products.Where(x => x.id.Equals(rule.sticker_type_id)).FirstOrDefault()?.name;
                         rule.rule_version = (int)reader["rule_version"];
                         rule.is_active = (bool)reader["is_active"];
+                        frameStickerRules.Add(rule);
                     }
                 }
             }
@@ -1078,29 +1085,37 @@ namespace PostgreSQL_Editor.DBUtils
 
         public static void getSleeveStickerRules(NpgsqlConnection npgsql)
         {
-            sleeveStickerRules.Clear();
-            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM sleeve_sticker_rule", npgsql))
+            try
             {
-                using (NpgsqlDataReader reader = command.ExecuteReader())
+                sleeveStickerRules.Clear();
+                using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM sleeve_sticker_rule", npgsql))
                 {
-                    while (reader.Read())
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
                     {
-                        sleeve_sticker_rule rule = new sleeve_sticker_rule();
-                        rule.id = (Guid)reader["id"];
-                        rule.system_type_id = (Guid)reader["system_type_id"];
-                        rule.system_type = getSystemTypeName(rule.system_type_id);
-                        rule.sleeve_type_id = (Guid)reader["sleeve_type_id"];
-                        rule.sleeve_type = products.Where(x => x.id.Equals(rule.sleeve_type_id)).FirstOrDefault()?.name;
-                        rule.sticker_type_id = (Guid)reader["frame_id"];
-                        rule.sticker_type = products.Where(x => x.id.Equals(rule.sticker_type_id    )).FirstOrDefault()?.name;
-                        rule.sleeve_type_id = (Guid)reader["sleeve_type_id"];
-                        rule.sleeve_type = products.Where(x => x.id.Equals(rule.sleeve_type_id)).FirstOrDefault()?.name;
-                        rule.rule_version = (int)reader["rule_version"];
-                        rule.is_active = (bool)reader["is_active"];
+                        while (reader.Read())
+                        {
+                            sleeve_sticker_rule rule = new sleeve_sticker_rule();
+                            rule.id = (Guid)reader["id"];
+                            rule.system_type_id = (Guid)reader["system_type_id"];
+                            rule.system_type = getSystemTypeName(rule.system_type_id);
+                            rule.sleeve_type_id = (Guid)reader["sleeve_type_id"];
+                            rule.sleeve_type = products.Where(x => x.id.Equals(rule.sleeve_type_id)).FirstOrDefault()?.name;
+                            rule.sticker_type_id = (Guid)reader["sticker_type_id"];
+                            rule.sticker_type = products.Where(x => x.id.Equals(rule.sticker_type_id)).FirstOrDefault()?.name;
+                            rule.sleeve_type_id = (Guid)reader["sleeve_type_id"];
+                            rule.sleeve_type = products.Where(x => x.id.Equals(rule.sleeve_type_id)).FirstOrDefault()?.name;
+                            rule.rule_version = (int)reader["rule_version"];
+                            rule.is_active = (bool)reader["is_active"];
+                            sleeveStickerRules.Add(rule);
+                        }
                     }
                 }
+                sleeveStickerRules = sleeveStickerRules.OrderBy(x => x.system_type).ThenBy(x => x.sleeve_type).ThenBy(x => x.sticker_type).ToList();
             }
-            sleeveStickerRules = sleeveStickerRules.OrderBy(x => x.system_type).ThenBy(x => x.sleeve_type).ThenBy(x => x.sticker_type).ToList();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception: " + ex.Message, "EXCEPTION", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public static void getWedgeRules(NpgsqlConnection npgsql)
@@ -1128,6 +1143,37 @@ namespace PostgreSQL_Editor.DBUtils
                 }
             }
             wedgeRules = wedgeRules.OrderBy(x => x.system_type).ThenBy(x => x.wedge_type).ToList();
+        }
+
+        public static void getWedgeOptionRules(NpgsqlConnection npgsql)
+        {
+            // Implementierung ähnlich zu den anderen Regeltypen, z.B.:
+            wedgeOptionRules.Clear();
+            using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT * FROM wedge_option_rule", npgsql))
+            {
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        wedge_option_rule rule = new wedge_option_rule();
+                        rule.id = (Guid)reader["id"];
+                        rule.system_type_id = (Guid)reader["system_type_id"];
+                        rule.system_type = getSystemTypeName(rule.system_type_id);
+                        rule.material_type_id = (Guid)reader["material_type_id"];
+                        rule.material_type = getMaterialTypeName(rule.material_type_id);
+                        rule.wedge_type_id = (Guid)reader["wedge_type_id"];
+                        rule.wedge_type = products.Where(x => x.id.Equals(rule.wedge_type_id)).FirstOrDefault()?.name;
+                        rule.article_number = products.Where(x => x.id.Equals(rule.wedge_type_id)).FirstOrDefault()?.article_number;
+                        rule.has_wedge_option = (bool)reader["has_wedge_option"];
+                        rule.has_material_option = (bool)reader["has_material_option"];
+                        rule.is_special = (bool)reader["is_special"];
+                        rule.rule_version = (int)reader["rule_version"];
+                        rule.is_active = (bool)reader["is_active"];
+                        wedgeOptionRules.Add(rule);
+                    }
+                }
+            }
+            wedgeOptionRules = wedgeOptionRules.OrderBy(x => x.system_type).ThenBy(x => x.wedge_type).ToList();
         }
         #endregion
     }

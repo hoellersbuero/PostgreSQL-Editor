@@ -10,6 +10,7 @@ namespace PostgreSQL_Editor.FunctionViews
     {
         private Dictionary<string, List<string>> TableColumnsByTable;
         private List<tableItem> treeNodes = new List<tableItem>();
+        private columnList listForm = null;
 
         public showTabelColumnTree()
         {
@@ -93,7 +94,16 @@ namespace PostgreSQL_Editor.FunctionViews
             {
                 foreach (TreeNode columnNode in tableNode.Nodes)
                 {
-                    if (string.Equals(columnNode.Text, tbSearch.Text, StringComparison.OrdinalIgnoreCase))
+                    bool found = false;
+                    if (tbSearch.Text.Contains("*")) // Compare with wildcard
+                    {
+                        found = columnNode.Text.IndexOf(tbSearch.Text.Replace("*", ""), StringComparison.OrdinalIgnoreCase) >= 0;
+                    }
+                    else
+                    {
+                        found = string.Equals(columnNode.Text, tbSearch.Text, StringComparison.OrdinalIgnoreCase);
+                    }
+                    if (found)
                     {
                         tv.SelectedNode = columnNode;
                         columnNode.EnsureVisible();
@@ -102,7 +112,31 @@ namespace PostgreSQL_Editor.FunctionViews
                     }
                 }
             }
-            columnList.Execute(this, treeNodes);
+            if (listForm != null)
+            {
+                listForm.loadList(treeNodes);
+                listForm.BringToFront();
+            }
+            else
+            {
+                listForm = columnList.Execute(this, treeNodes);
+                listForm.FormClosed += ListForm_FormClosed;
+            }
+        }
+
+        private void ListForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            listForm = null;
+        }
+
+        private void tbSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnFind.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
     }
 

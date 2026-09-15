@@ -17,7 +17,7 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editSleeveSticker_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private BindingList<sleeve_sticker_rule> sleeveStickerRules = new BindingList<sleeve_sticker_rule>();
+        private SortableBindingList<sleeve_sticker_rule> sleeveStickerRules = new SortableBindingList<sleeve_sticker_rule>();
         private List<sleeve_sticker_rule> newSleeveStickerRules = new List<sleeve_sticker_rule>();
         private List<sleeve_sticker_rule> changedSleeveStickerRules = new List<sleeve_sticker_rule>();
         private DgvChangeDetector _dgvChangeDetector;
@@ -49,6 +49,9 @@ namespace PostgreSQL_Editor.EditRules
             cbSticker.DataSource = standardLists.stickerTypes;
             cbSticker.DisplayMember = "visual_name";
             cbSticker.SelectedIndex = 0;
+            sleeveStickerRules.Clear();
+            foreach (var rule in standardLists.sleeveStickerRules)
+                sleeveStickerRules.Add(rule);
             dgv.DataSource = sleeveStickerRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();

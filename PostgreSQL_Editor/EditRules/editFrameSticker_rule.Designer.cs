@@ -43,6 +43,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCreateSQL = new System.Windows.Forms.Button();
             this.dgv = new System.Windows.Forms.DataGridView();
+            this.cbSystemType = new System.Windows.Forms.ComboBox();
             this.cCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cBaseMaterial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSystemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,7 +52,6 @@
             this.cActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cRuleVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cFill = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cbSystemType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudVersion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
@@ -217,6 +217,14 @@
             this.dgv.Size = new System.Drawing.Size(716, 353);
             this.dgv.TabIndex = 79;
             // 
+            // cbSystemType
+            // 
+            this.cbSystemType.FormattingEnabled = true;
+            this.cbSystemType.Location = new System.Drawing.Point(13, 25);
+            this.cbSystemType.Name = "cbSystemType";
+            this.cbSystemType.Size = new System.Drawing.Size(121, 21);
+            this.cbSystemType.TabIndex = 68;
+            // 
             // cCheck
             // 
             this.cCheck.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -270,7 +278,8 @@
             this.cActive.DataPropertyName = "is_active";
             this.cActive.HeaderText = "Active";
             this.cActive.Name = "cActive";
-            this.cActive.Width = 43;
+            this.cActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.cActive.Width = 62;
             // 
             // cRuleVersion
             // 
@@ -285,14 +294,6 @@
             this.cFill.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.cFill.HeaderText = "";
             this.cFill.Name = "cFill";
-            // 
-            // cbSystemType
-            // 
-            this.cbSystemType.FormattingEnabled = true;
-            this.cbSystemType.Location = new System.Drawing.Point(13, 25);
-            this.cbSystemType.Name = "cbSystemType";
-            this.cbSystemType.Size = new System.Drawing.Size(121, 21);
-            this.cbSystemType.TabIndex = 68;
             // 
             // editFrameSticker_rule
             // 

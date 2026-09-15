@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace PostgreSQL_Editor.Global
@@ -18,7 +19,7 @@ namespace PostgreSQL_Editor.Global
                                               "WHERE rel.relname = '{{table}}' " +
                                                 "AND nsp.nspname = '" + schema + "' " +
                                               "ORDER BY constraint_type DESC, constraint_name;";
-        public static string getIndexes = "SELECT tablename,indexname,indexdef FROM pg_indexes WHERE tablename = '{{table}}' AND schemaname = '" + schema +"';";
+        public static string getIndexes = "SELECT tablename,indexname,indexdef FROM pg_indexes WHERE tablename = '{{table}}' AND schemaname = '" + schema + "';";
         public static string allForeignKeys = "SELECT con.conname AS constraint_name, " +
                                                 "con.contype AS constraint_type, " +
                                                 "pg_get_constraintdef(con.oid) AS definition, " +
@@ -53,6 +54,9 @@ namespace PostgreSQL_Editor.Global
                                                 "add constraint {{fkey}} foreign key ({{column}}) " +
                                                 "references {{referenced_table}}({{referenced_column}}) " +
                                                 "on update no action on delete cascade not valid;";
+
+        public static List<string> SQLCommands = new List<string>();
+
     }
 
     #region base classes =========================================================================
@@ -96,7 +100,7 @@ namespace PostgreSQL_Editor.Global
         public override string ToString()
         {
             return name + " (" + system_type_hint + ")";
-        }   
+        }
     }
 
     public class frame_type
@@ -218,6 +222,7 @@ namespace PostgreSQL_Editor.Global
     public class wedge_type
     {
         public Guid id { get; set; }
+        public string article_number { get; set; } = string.Empty;
         public string name { get; set; }
         public decimal width { get; set; }
         public decimal height { get; set; }
@@ -524,6 +529,28 @@ namespace PostgreSQL_Editor.Global
         public string wedge_type { get; set; }
         public string article_number { get; set; }
         public bool is_wedge_kit { get; set; }
+        public int rule_version { get; set; }
+        public bool is_active { get; set; }
+        public DateTime created_ts { get; set; }
+        public DateTime modified_ts { get; set; }
+        public string modified_by { get; set; }
+        public string created_by { get; set; }
+    }
+
+    public class wedge_option_rule
+    {
+        public bool check { get; set; }
+        public Guid id { get; set; }
+        public Guid system_type_id { get; set; }
+        public string system_type { get; set; }
+        public Guid material_type_id { get; set; }
+        public string material_type { get; set; }
+        public Guid wedge_type_id { get; set; }
+        public string wedge_type { get; set; }
+        public string article_number { get; set; }
+        public bool has_wedge_option { get; set; }
+        public bool has_material_option { get; set; }
+        public bool is_special { get; set; }
         public int rule_version { get; set; }
         public bool is_active { get; set; }
         public DateTime created_ts { get; set; }

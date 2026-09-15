@@ -16,8 +16,8 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editModule_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private BindingList<material_type_rule> filteredMaterialRules = new BindingList<material_type_rule>();
-        private BindingList<module_rule> moduleRules = new BindingList<module_rule>();
+        private SortableBindingList<material_type_rule> filteredMaterialRules = new SortableBindingList<material_type_rule>();
+        private SortableBindingList<module_rule> moduleRules = new SortableBindingList<module_rule>();
         private List<module_rule> newModuleRules = new List<module_rule>();
         private List<module_rule> changedModuleRules = new List<module_rule>();
         private List<frame_type> filteredFrameTypes = new List<frame_type>();
@@ -62,7 +62,11 @@ namespace PostgreSQL_Editor.EditRules
             //    .ToList();
             // Falls kein Filterergebnis, fallback auf komplette Liste
             // cbModule.DataSource = (filteredModules.Count > 0) ? filteredModules : standardLists.modules;
-            moduleRules = new BindingList<module_rule>(standardLists.moduleRules);
+            moduleRules = new SortableBindingList<module_rule>();
+            foreach (var rule in standardLists.moduleRules)
+            {
+                moduleRules.Add(rule);
+            }
             dgv.DataSource =  moduleRules;
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
@@ -215,6 +219,11 @@ namespace PostgreSQL_Editor.EditRules
                                  .Select(x => new frame_type() { id = x.frame_type_id, name = x.frame_type }).Distinct().OrderBy(x => x.name).ToList();
             filteredFrameTypes = framelist.Count > 0 ? framelist : standardLists.frameTypes;
             cbFrameType.DataSource = filteredFrameTypes;
+        }
+
+        private void btnCreateSQL_Click_1(object sender, EventArgs e)
+        {
+            CreateSQLStatements();
         }
     }
 }

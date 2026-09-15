@@ -17,7 +17,7 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editSleeve_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private BindingList<sleeve_rule> sleeveRules = new BindingList<sleeve_rule>();
+        private SortableBindingList<sleeve_rule> sleeveRules = new SortableBindingList<sleeve_rule>();
         private List<sleeve_rule> newSleeveRules = new List<sleeve_rule>();
         private List<sleeve_rule> changedSleeveRules = new List<sleeve_rule>();
         private List<system_type> filteredSystemTypes = new List<system_type>();
@@ -67,7 +67,11 @@ namespace PostgreSQL_Editor.EditRules
                 is_active = x.is_active,
                 is_mandatory = x.is_mandatory
             }).ToList();
-            sleeveRules = new BindingList<sleeve_rule>(initial);
+            sleeveRules = new SortableBindingList<sleeve_rule>();
+            foreach (var rule in initial)
+            {
+                sleeveRules.Add(rule);
+            }
             _bindingSource.DataSource = sleeveRules;
             dgv.DataSource = _bindingSource; 
             _dgvChangeDetector.TakeSnapshot();

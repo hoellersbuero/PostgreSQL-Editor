@@ -17,7 +17,7 @@ namespace PostgreSQL_Editor.EditRules
     public partial class editFrameSticker_rule : Form
     {
         private NpgsqlConnection npgsql;
-        private BindingList<frame_sticker_rule> frameStickerRules = new BindingList<frame_sticker_rule>();
+        private SortableBindingList<frame_sticker_rule> frameStickerRules = new SortableBindingList<frame_sticker_rule>();
         private List<frame_sticker_rule> newFrameStickerRules = new List<frame_sticker_rule>();
         private List<frame_sticker_rule> changedFrameStickerRules = new List<frame_sticker_rule>();
         private DgvChangeDetector _dgvChangeDetector;
@@ -53,6 +53,10 @@ namespace PostgreSQL_Editor.EditRules
             cbSticker.DisplayMember = "name";
             cbSticker.SelectedIndex = 0;
             dgv.DataSource = frameStickerRules;
+            foreach (var rule in standardLists.frameStickerRules)
+            {
+                frameStickerRules.Add(rule);
+            }
             _dgvChangeDetector.TakeSnapshot();
             updateLbInfo();
         }

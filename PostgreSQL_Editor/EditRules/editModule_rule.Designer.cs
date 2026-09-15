@@ -41,9 +41,6 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCreateSQL = new System.Windows.Forms.Button();
             this.dgv = new System.Windows.Forms.DataGridView();
-            this.label6 = new System.Windows.Forms.Label();
-            this.nudPriority = new System.Windows.Forms.NumericUpDown();
-            this.lbInfo = new System.Windows.Forms.Label();
             this.cCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cBaseMaterial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSystemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,6 +49,9 @@
             this.cSpecial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cRuleVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cFill = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label6 = new System.Windows.Forms.Label();
+            this.nudPriority = new System.Windows.Forms.NumericUpDown();
+            this.lbInfo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudVersion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriority)).BeginInit();
@@ -173,6 +173,7 @@
             this.btnCreateSQL.TabIndex = 44;
             this.btnCreateSQL.Text = "Create SQL";
             this.btnCreateSQL.UseVisualStyleBackColor = true;
+            this.btnCreateSQL.Click += new System.EventHandler(this.btnCreateSQL_Click_1);
             // 
             // dgv
             // 
@@ -199,36 +200,6 @@
             this.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv.Size = new System.Drawing.Size(784, 353);
             this.dgv.TabIndex = 43;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(578, 9);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 13);
-            this.label6.TabIndex = 47;
-            this.label6.Text = "Priority:";
-            // 
-            // nudPriority
-            // 
-            this.nudPriority.Location = new System.Drawing.Point(581, 26);
-            this.nudPriority.Name = "nudPriority";
-            this.nudPriority.Size = new System.Drawing.Size(63, 20);
-            this.nudPriority.TabIndex = 46;
-            this.nudPriority.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // lbInfo
-            // 
-            this.lbInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbInfo.Location = new System.Drawing.Point(12, 408);
-            this.lbInfo.Name = "lbInfo";
-            this.lbInfo.Size = new System.Drawing.Size(784, 18);
-            this.lbInfo.TabIndex = 48;
             // 
             // cCheck
             // 
@@ -274,7 +245,8 @@
             this.cActive.DataPropertyName = "is_active";
             this.cActive.HeaderText = "Active";
             this.cActive.Name = "cActive";
-            this.cActive.Width = 43;
+            this.cActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.cActive.Width = 62;
             // 
             // cSpecial
             // 
@@ -298,6 +270,36 @@
             this.cFill.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.cFill.HeaderText = "";
             this.cFill.Name = "cFill";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(578, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(41, 13);
+            this.label6.TabIndex = 47;
+            this.label6.Text = "Priority:";
+            // 
+            // nudPriority
+            // 
+            this.nudPriority.Location = new System.Drawing.Point(581, 26);
+            this.nudPriority.Name = "nudPriority";
+            this.nudPriority.Size = new System.Drawing.Size(63, 20);
+            this.nudPriority.TabIndex = 46;
+            this.nudPriority.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // lbInfo
+            // 
+            this.lbInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbInfo.Location = new System.Drawing.Point(12, 408);
+            this.lbInfo.Name = "lbInfo";
+            this.lbInfo.Size = new System.Drawing.Size(784, 18);
+            this.lbInfo.TabIndex = 48;
             // 
             // editModule_rule
             // 

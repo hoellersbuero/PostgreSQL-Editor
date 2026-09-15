@@ -248,7 +248,8 @@
             this.cActive.DataPropertyName = "is_active";
             this.cActive.HeaderText = "Active";
             this.cActive.Name = "cActive";
-            this.cActive.Width = 43;
+            this.cActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.cActive.Width = 62;
             // 
             // cRuleVersion
             // 
