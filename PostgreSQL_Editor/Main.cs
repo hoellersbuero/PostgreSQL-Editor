@@ -26,7 +26,6 @@ namespace PostgreSQL_Editor
         private int _ctxRow = -1;
         private int _ctxCol = -1;
         private Dictionary<string, string> TableColumns = new Dictionary<string, string>();
-        private Dictionary<string, List<string>> TableColumnsByTable = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
         private List<string> tableNames = new List<string>();
         private List<string> columnNames = new List<string>();
         private List<GuidSearchResult> guidSearchResults = new List<GuidSearchResult>();
@@ -371,8 +370,8 @@ namespace PostgreSQL_Editor
                                     tableNames.Add(tableName);
 
                                 // Sicherstellen, dass für die Tabelle eine Liste existiert
-                                if (!TableColumnsByTable.ContainsKey(tableName))
-                                    TableColumnsByTable[tableName] = new List<string>();
+                                if (!Global.Global.TableColumnsByTable.ContainsKey(tableName))
+                                    Global.Global.TableColumnsByTable[tableName] = new List<string>();
 
                                 foreach (DataRow r in dataTable.Rows)
                                 {
@@ -388,8 +387,8 @@ namespace PostgreSQL_Editor
                                         TableColumns.Add(fullColumnKey, dataType);
 
                                     // Spalte zur tabellenspezifischen Liste hinzufügen (einmalig)
-                                    if (!TableColumnsByTable[tableName].Contains(columnName))
-                                        TableColumnsByTable[tableName].Add(columnName);
+                                    if (!Global.Global.TableColumnsByTable[tableName].Contains(columnName))
+                                        Global.Global.TableColumnsByTable[tableName].Add(columnName);
                                 }
                             }
                             else if (dgrid == 5)
@@ -512,7 +511,7 @@ namespace PostgreSQL_Editor
                         tokenscol.Remove("*");
                         foreach (string table in tables)
                         {
-                            var tn = TableColumnsByTable.Where(k => k.Key.Equals(table)).FirstOrDefault();
+                            var tn = Global.Global.TableColumnsByTable.Where(k => k.Key.Equals(table)).FirstOrDefault();
                             foreach (string s in tn.Value)
                             {
                                 columnsStar.Add(table + "." + s);
@@ -524,7 +523,7 @@ namespace PostgreSQL_Editor
                     {
                         if (query.Contains(table + ".*"))
                         {
-                            var tn = TableColumnsByTable.Where(k => k.Key.Equals(table)).FirstOrDefault();
+                            var tn = Global.Global.TableColumnsByTable.Where(k => k.Key.Equals(table)).FirstOrDefault();
                             foreach (string s in tn.Value)
                             {
                                 columnsStar.Add(table + "." + s);
@@ -770,6 +769,7 @@ GROUP BY n.nspname, c.relname, pk.attname;
                         tbInsert.Text += $"\n\n\nNo update template for {Global.Global.schema}.{e.Node.Text}";
                 }
             }
+            HighlightSqlWordsInTbQuery(tbInsert);
         }
 
         private void RestoreWindowState()
@@ -1130,24 +1130,24 @@ GROUP BY n.nspname, c.relname, pk.attname;
 
         private void tbQuery_TextChanged(object sender, EventArgs e)
         {
-            HighlightSqlWordsInTbQuery();
+            HighlightSqlWordsInTbQuery(tbQuery);
         }
 
-        private void HighlightSqlWordsInTbQuery()
+        private void HighlightSqlWordsInTbQuery(RichTextBox sqltext)
         {
             var keywords = standardLists.SQLStatements;
-            if (keywords == null || !keywords.Any() || string.IsNullOrEmpty(tbQuery.Text)) return;
+            if (keywords == null || !keywords.Any() || string.IsNullOrEmpty(sqltext.Text)) return;
 
             // Auswahl sichern
-            int selStart = tbQuery.SelectionStart;
-            int selLength = tbQuery.SelectionLength;
+            int selStart = sqltext.SelectionStart;
+            int selLength = sqltext.SelectionLength;
 
             // Text komplett auf Default zurücksetzen (zuerst Redraw aus)
-            SendMessage(tbQuery.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
+            SendMessage(sqltext.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
             try
             {
-                tbQuery.SelectAll();
-                tbQuery.SelectionColor = Color.Black;
+                sqltext.SelectAll();
+                sqltext.SelectionColor = Color.Black;
 
                 // Einfache Normalisierung: eindeutige Keywords, leere Einträge überspringen
                 var distinctKeys = keywords
@@ -1156,7 +1156,7 @@ GROUP BY n.nspname, c.relname, pk.attname;
                     .Distinct(StringComparer.OrdinalIgnoreCase)
                     .ToList();
 
-                string text = tbQuery.Text;
+                string text = sqltext.Text;
 
                 foreach (string key in distinctKeys)
                 {
@@ -1164,17 +1164,17 @@ GROUP BY n.nspname, c.relname, pk.attname;
                     string pattern = $@"\b{Regex.Escape(key)}\b";
                     foreach (Match m in Regex.Matches(text, pattern, RegexOptions.IgnoreCase))
                     {
-                        tbQuery.Select(m.Index, m.Length);
-                        tbQuery.SelectionColor = Color.Blue;
+                        sqltext.Select(m.Index, m.Length);
+                        sqltext.SelectionColor = Color.Blue;
                     }
                 }
             }
             finally
             {
                 // Auswahl wiederherstellen und Redraw aktivieren
-                tbQuery.Select(selStart, selLength);
-                SendMessage(tbQuery.Handle, WM_SETREDRAW, new IntPtr(1), IntPtr.Zero);
-                tbQuery.Invalidate();
+                sqltext.Select(selStart, selLength);
+                SendMessage(sqltext.Handle, WM_SETREDRAW, new IntPtr(1), IntPtr.Zero);
+                sqltext.Invalidate();
             }
         }
 
@@ -1549,12 +1549,12 @@ GROUP BY n.nspname, c.relname, pk.attname;
 
         private void tsmiShowTableColumnTree_Click(object sender, EventArgs e)
         {
-            showTabelColumnTree.Execute(this, TableColumnsByTable);
+            showTabelColumnTree.Execute(this, Global.Global.TableColumnsByTable);
         }
 
         private void tsbShowDataTree_Click(object sender, EventArgs e)
         {
-            showTabelColumnTree.Execute(this, TableColumnsByTable);
+            showTabelColumnTree.Execute(this, Global.Global.TableColumnsByTable);
         }
 
         private void editFrameSleeveRulesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1588,6 +1588,11 @@ GROUP BY n.nspname, c.relname, pk.attname;
         private void tsmiSetAvailableSelectable_Click(object sender, EventArgs e)
         {
             setAvailableSelectable.Execute(this, npgsql);
+        }
+
+        private void tsmiAddNewFrames_Click(object sender, EventArgs e)
+        {
+            addNewFrames.Execute(this);
         }
     }
 

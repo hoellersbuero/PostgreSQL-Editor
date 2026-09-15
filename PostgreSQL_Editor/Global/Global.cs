@@ -56,6 +56,7 @@ namespace PostgreSQL_Editor.Global
                                                 "on update no action on delete cascade not valid;";
 
         public static List<string> SQLCommands = new List<string>();
+        public static Dictionary<string, List<string>> TableColumnsByTable = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
     }
 
@@ -173,6 +174,29 @@ namespace PostgreSQL_Editor.Global
         public int? hole_schema_id { get; set; }
         public int rows { get; set; }
         public int columns { get; set; }
+    }
+
+    public class frame_alone
+    {
+        public Guid id { get; set; }
+        public Guid frame_type_id { get; set; }
+        public Guid material_type_id { get; set; }
+        public Guid geometry_id { get; set; }
+        public int wedge_quantity { get; set; }
+        public int holes_horizontal { get; set; }
+        public int holes_vertical { get; set; }
+        public decimal offset_horizontal { get; set; }
+        public decimal offset_vertical { get; set; }
+        public decimal drill_diameter { get; set; }
+        public bool has_drilled_holes { get; set; }
+        public int? drilling_schema_id { get; set; }
+        public int? hole_schema_id { get; set; }
+        public int rows { get; set; }
+        public int columns { get; set; }
+        public DateTime created_ts { get; set; }
+        public DateTime modified_ts { get; set; }
+        public string modified_by { get; set; }
+        public string created_by { get; set; }
     }
 
     public class frame_geometry

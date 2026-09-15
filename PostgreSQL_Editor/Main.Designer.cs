@@ -77,6 +77,8 @@
             this.lbTableName = new System.Windows.Forms.Label();
             this.tpCreate = new System.Windows.Forms.TabPage();
             this.tbCreate = new System.Windows.Forms.RichTextBox();
+            this.tpInsert = new System.Windows.Forms.TabPage();
+            this.tbInsert = new System.Windows.Forms.RichTextBox();
             this.tpClass = new System.Windows.Forms.TabPage();
             this.TakeIt = new System.Windows.Forms.PictureBox();
             this.tbClassField = new System.Windows.Forms.RichTextBox();
@@ -105,11 +107,10 @@
             this.tsmiShowTableColumnTree = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiGetModuleFromID = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiGetFrameFromID = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSetAvailableSelectable = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.tsmiSetAvailableSelectable = new System.Windows.Forms.ToolStripMenuItem();
-            this.tpInsert = new System.Windows.Forms.TabPage();
-            this.tbInsert = new System.Windows.Forms.RichTextBox();
+            this.tsmiAddNewFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -138,12 +139,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvsc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvidx)).BeginInit();
             this.tpCreate.SuspendLayout();
+            this.tpInsert.SuspendLayout();
             this.tpClass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TakeIt)).BeginInit();
             this.tpGuidSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGuidSearch)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.tpInsert.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -706,6 +707,30 @@
             this.tbCreate.TabIndex = 0;
             this.tbCreate.Text = "";
             // 
+            // tpInsert
+            // 
+            this.tpInsert.Controls.Add(this.tbInsert);
+            this.tpInsert.Location = new System.Drawing.Point(4, 24);
+            this.tpInsert.Name = "tpInsert";
+            this.tpInsert.Padding = new System.Windows.Forms.Padding(3);
+            this.tpInsert.Size = new System.Drawing.Size(575, 284);
+            this.tpInsert.TabIndex = 5;
+            this.tpInsert.Text = "Insert/Update statement";
+            this.tpInsert.UseVisualStyleBackColor = true;
+            // 
+            // tbInsert
+            // 
+            this.tbInsert.BackColor = System.Drawing.Color.White;
+            this.tbInsert.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbInsert.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbInsert.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbInsert.Location = new System.Drawing.Point(3, 3);
+            this.tbInsert.Name = "tbInsert";
+            this.tbInsert.ReadOnly = true;
+            this.tbInsert.Size = new System.Drawing.Size(569, 278);
+            this.tbInsert.TabIndex = 2;
+            this.tbInsert.Text = "";
+            // 
             // tpClass
             // 
             this.tpClass.Controls.Add(this.TakeIt);
@@ -933,7 +958,8 @@
             this.tsmiShowTableColumnTree,
             this.tsmiGetModuleFromID,
             this.tsmiGetFrameFromID,
-            this.tsmiSetAvailableSelectable});
+            this.tsmiSetAvailableSelectable,
+            this.tsmiAddNewFrames});
             this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
             this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.functionsToolStripMenuItem.Text = "Functions";
@@ -959,6 +985,13 @@
             this.tsmiGetFrameFromID.Text = "Get Frame from ID";
             this.tsmiGetFrameFromID.Click += new System.EventHandler(this.tsmiGetFrameFromID_Click);
             // 
+            // tsmiSetAvailableSelectable
+            // 
+            this.tsmiSetAvailableSelectable.Name = "tsmiSetAvailableSelectable";
+            this.tsmiSetAvailableSelectable.Size = new System.Drawing.Size(203, 22);
+            this.tsmiSetAvailableSelectable.Text = "Set Available/Selectable";
+            this.tsmiSetAvailableSelectable.Click += new System.EventHandler(this.tsmiSetAvailableSelectable_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -968,36 +1001,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
             // 
-            // tsmiSetAvailableSelectable
+            // tsmiAddNewFrames
             // 
-            this.tsmiSetAvailableSelectable.Name = "tsmiSetAvailableSelectable";
-            this.tsmiSetAvailableSelectable.Size = new System.Drawing.Size(203, 22);
-            this.tsmiSetAvailableSelectable.Text = "Set Available/Selectable";
-            this.tsmiSetAvailableSelectable.Click += new System.EventHandler(this.tsmiSetAvailableSelectable_Click);
-            // 
-            // tpInsert
-            // 
-            this.tpInsert.Controls.Add(this.tbInsert);
-            this.tpInsert.Location = new System.Drawing.Point(4, 24);
-            this.tpInsert.Name = "tpInsert";
-            this.tpInsert.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInsert.Size = new System.Drawing.Size(575, 284);
-            this.tpInsert.TabIndex = 5;
-            this.tpInsert.Text = "Insert/Update statement";
-            this.tpInsert.UseVisualStyleBackColor = true;
-            // 
-            // tbInsert
-            // 
-            this.tbInsert.BackColor = System.Drawing.Color.White;
-            this.tbInsert.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbInsert.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbInsert.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbInsert.Location = new System.Drawing.Point(3, 3);
-            this.tbInsert.Name = "tbInsert";
-            this.tbInsert.ReadOnly = true;
-            this.tbInsert.Size = new System.Drawing.Size(569, 278);
-            this.tbInsert.TabIndex = 2;
-            this.tbInsert.Text = "";
+            this.tsmiAddNewFrames.Name = "tsmiAddNewFrames";
+            this.tsmiAddNewFrames.Size = new System.Drawing.Size(203, 22);
+            this.tsmiAddNewFrames.Text = "Add new frames";
+            this.tsmiAddNewFrames.Click += new System.EventHandler(this.tsmiAddNewFrames_Click);
             // 
             // Main
             // 
@@ -1045,13 +1054,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvsc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvidx)).EndInit();
             this.tpCreate.ResumeLayout(false);
+            this.tpInsert.ResumeLayout(false);
             this.tpClass.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TakeIt)).EndInit();
             this.tpGuidSearch.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvGuidSearch)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tpInsert.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1139,6 +1148,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiSetAvailableSelectable;
         private System.Windows.Forms.TabPage tpInsert;
         private System.Windows.Forms.RichTextBox tbInsert;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAddNewFrames;
     }
 }
 

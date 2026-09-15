@@ -118,5 +118,16 @@ namespace PostgreSQL_Editor.Global
                 return "CFS-T S ";
             return sysname;
         }
+
+        public static int CountCharFast(this string s, char ch)
+        {
+            if (string.IsNullOrEmpty(s)) return 0;
+            int count = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == ch) count++;
+            }
+            return count;
+        }
     }
 }

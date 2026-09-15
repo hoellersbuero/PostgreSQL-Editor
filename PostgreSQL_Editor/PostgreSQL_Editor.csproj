@@ -37,6 +37,12 @@
     <ApplicationIcon>pgEditor2.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.105.1.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.105.1\lib\netstandard2.0\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML.Parser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d5f7376574c51ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.Parser.2.0.0\lib\netstandard2.0\ClosedXML.Parser.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.3.1.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
@@ -188,6 +194,12 @@
     <Compile Include="EditRules\editWedge_rule.Designer.cs">
       <DependentUpon>editWedge_rule.cs</DependentUpon>
     </Compile>
+    <Compile Include="FunctionViews\addNewFrames.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FunctionViews\addNewFrames.Designer.cs">
+      <DependentUpon>addNewFrames.cs</DependentUpon>
+    </Compile>
     <Compile Include="FunctionViews\columnList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,6 +218,7 @@
     <Compile Include="FunctionViews\UpdateDgvRow.Designer.cs">
       <DependentUpon>UpdateDgvRow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ExcelReader.cs" />
     <Compile Include="Helper\ExportHelpers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Functions\GetElements.cs" />
@@ -282,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditRules\editWedge_rule.resx">
       <DependentUpon>editWedge_rule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FunctionViews\addNewFrames.resx">
+      <DependentUpon>addNewFrames.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FunctionViews\columnList.resx">
       <DependentUpon>columnList.cs</DependentUpon>
