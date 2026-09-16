@@ -1,8 +1,10 @@
-﻿using System;
+﻿using PostgreSQL_Editor.DBUtils;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -11,6 +13,10 @@ namespace PostgreSQL_Editor.Global
 {
     public static class GlobalExtensions
     {
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+        private const int WM_SETREDRAW = 0x000B;
+
         public static void AppendTextColor(this RichTextBox box, string text, Color color)
         {
             box.SelectionStart = box.TextLength;
@@ -128,6 +134,51 @@ namespace PostgreSQL_Editor.Global
                 if (s[i] == ch) count++;
             }
             return count;
+        }
+
+        public static void HighlightSqlWords(this RichTextBox sqltext)
+        {
+            var keywords = standardLists.SQLStatements;
+            if (keywords == null || !keywords.Any() || string.IsNullOrEmpty(sqltext.Text)) return;
+
+            // Auswahl sichern
+            int selStart = sqltext.SelectionStart;
+            int selLength = sqltext.SelectionLength;
+
+            // Text komplett auf Default zurücksetzen (zuerst Redraw aus)
+            SendMessage(sqltext.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
+            try
+            {
+                sqltext.SelectAll();
+                sqltext.SelectionColor = Color.Black;
+
+                // Einfache Normalisierung: eindeutige Keywords, leere Einträge überspringen
+                var distinctKeys = keywords
+                    .Where(k => !string.IsNullOrWhiteSpace(k))
+                    .Select(k => k.Trim())
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                string text = sqltext.Text;
+
+                foreach (string key in distinctKeys)
+                {
+                    // whole-word Match; Escape für Sonderzeichen
+                    string pattern = $@"\b{Regex.Escape(key)}\b";
+                    foreach (Match m in Regex.Matches(text, pattern, RegexOptions.IgnoreCase))
+                    {
+                        sqltext.Select(m.Index, m.Length);
+                        sqltext.SelectionColor = Color.Blue;
+                    }
+                }
+            }
+            finally
+            {
+                // Auswahl wiederherstellen und Redraw aktivieren
+                sqltext.Select(selStart, selLength);
+                SendMessage(sqltext.Handle, WM_SETREDRAW, new IntPtr(1), IntPtr.Zero);
+                sqltext.Invalidate();
+            }
         }
     }
 }

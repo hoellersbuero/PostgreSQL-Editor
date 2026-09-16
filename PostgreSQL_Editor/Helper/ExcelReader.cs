@@ -24,14 +24,14 @@ namespace PostgreSQL_Editor.Helper
                 if (range == null) return dt;
 
                 var usedRows = range.RowsUsed().ToList();
-                if (usedRows.Count < 2)
+                if (usedRows.Count < 1)
                 {
-                    // Weniger als zwei benutzte Zeilen: keine Header-Zeile in Zeile 2 vorhanden
+                    // Weniger als eine benutzte Zeile: keine Header-Zeile in Zeile 1 vorhanden
                     return dt;
                 }
 
-                // Header in der zweiten benutzten Zeile
-                var headerRow = usedRows[1];
+                // Header in der ersten benutzten Zeile
+                var headerRow = usedRows[0];
 
                 // Erzeuge Spalten anhand der Header-Zeile
                 foreach (var cell in headerRow.Cells())
@@ -47,8 +47,8 @@ namespace PostgreSQL_Editor.Helper
                     dt.Columns.Add(safeName, typeof(string));
                 }
 
-                // Fülle Daten ab der dritten benutzten Zeile (nach headerRow)
-                var dataRows = usedRows.Skip(2);
+                // Fülle Daten ab der zweiten benutzten Zeile (nach headerRow)
+                var dataRows = usedRows.Skip(1);
                 foreach (var row in dataRows)
                 {
                     var dr = dt.NewRow();

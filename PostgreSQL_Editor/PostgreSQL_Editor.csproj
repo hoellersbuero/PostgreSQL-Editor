@@ -234,6 +234,9 @@
     <Compile Include="FunctionViews\showTabelColumnTree.Designer.cs">
       <DependentUpon>showTabelColumnTree.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\PleaseWaitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Helper\SortableBindingList.cs" />
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\Module.cs" />

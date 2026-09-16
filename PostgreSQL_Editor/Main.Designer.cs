@@ -108,9 +108,9 @@
             this.tsmiGetModuleFromID = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiGetFrameFromID = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSetAvailableSelectable = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAddNewFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.tsmiAddNewFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -992,6 +992,13 @@
             this.tsmiSetAvailableSelectable.Text = "Set Available/Selectable";
             this.tsmiSetAvailableSelectable.Click += new System.EventHandler(this.tsmiSetAvailableSelectable_Click);
             // 
+            // tsmiAddNewFrames
+            // 
+            this.tsmiAddNewFrames.Name = "tsmiAddNewFrames";
+            this.tsmiAddNewFrames.Size = new System.Drawing.Size(203, 22);
+            this.tsmiAddNewFrames.Text = "Add new frames";
+            this.tsmiAddNewFrames.Click += new System.EventHandler(this.tsmiAddNewFrames_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -1000,13 +1007,6 @@
             this.label1.Size = new System.Drawing.Size(49, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
-            // 
-            // tsmiAddNewFrames
-            // 
-            this.tsmiAddNewFrames.Name = "tsmiAddNewFrames";
-            this.tsmiAddNewFrames.Size = new System.Drawing.Size(203, 22);
-            this.tsmiAddNewFrames.Text = "Add new frames";
-            this.tsmiAddNewFrames.Click += new System.EventHandler(this.tsmiAddNewFrames_Click);
             // 
             // Main
             // 

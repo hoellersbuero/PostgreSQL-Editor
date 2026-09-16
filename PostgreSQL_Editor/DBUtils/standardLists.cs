@@ -480,11 +480,19 @@ namespace PostgreSQL_Editor.DBUtils
                     }
                 }
             }
-            frames = frames.OrderBy(x => x.name.Substring(6, x.name.IndexOf('-'))).
-                            ThenBy(x => standardLists.frameGeometries.Where(y => y.id == x.id).First().h1).
-                            ThenBy(x => standardLists.frameWindows.Where(y => y.frame_id == x.id).First().frame_window_height).
-                            ThenBy(x => x.rows).ThenBy(x => x.columns).
-                            ThenBy(x => standardLists.materialTypes.Where(y => y.id == x.material_type_id).First().name).ToList();
+            frames = frames
+                .OrderBy(x => {
+                    var name = x?.name ?? string.Empty;
+                    int dash = name.IndexOf('-');
+                    int start = Math.Min(6, name.Length);
+                    int length = (dash > start) ? dash - start : 0;
+                    return name.Substring(start, length);
+                })
+                .ThenBy(x => standardLists.frameGeometries.FirstOrDefault(y => y.id == x.geometry_id)?.h1 ?? 0m)
+                .ThenBy(x => standardLists.frameWindows.FirstOrDefault(y => y.frame_id == x.id)?.frame_window_height ?? 0m)
+                .ThenBy(x => x.rows).ThenBy(x => x.columns)
+                .ThenBy(x => standardLists.materialTypes.FirstOrDefault(y => y.id == x.material_type_id)?.name ?? string.Empty)
+                .ToList();
         }
 
         public static void getFrameGeometries(NpgsqlConnection npgsql)

@@ -769,7 +769,7 @@ GROUP BY n.nspname, c.relname, pk.attname;
                         tbInsert.Text += $"\n\n\nNo update template for {Global.Global.schema}.{e.Node.Text}";
                 }
             }
-            HighlightSqlWordsInTbQuery(tbInsert);
+            tbInsert.HighlightSqlWords();
         }
 
         private void RestoreWindowState()
@@ -1005,14 +1005,13 @@ GROUP BY n.nspname, c.relname, pk.attname;
                 var rowValues = cols.Select(colIndex =>
                 {
                     var cell = grp.FirstOrDefault(c => c.ColumnIndex == colIndex);
-                    // Zeilenumbrüche/Tabs in Zellen ersetzen, Nulls zu leerer Zeichenkette
                     return (cell?.Value?.ToString() ?? string.Empty)
                         .Replace("\r", " ")
                         .Replace("\n", " ")
-                        .Replace("\t", " ");
-                });
-                sb.Append(string.Join("\t", rowValues));
-                sb.Append("\t"); // expliziter TAB als Separator
+                        .Replace("\t", " "); // entferne Tabs in Zellen
+                }).ToList(); // sofort evaluieren
+
+                sb.AppendLine(string.Join("\t", rowValues)); // Zeile mit Tab-Separierung + Newline
             }
 
             try
@@ -1130,52 +1129,7 @@ GROUP BY n.nspname, c.relname, pk.attname;
 
         private void tbQuery_TextChanged(object sender, EventArgs e)
         {
-            HighlightSqlWordsInTbQuery(tbQuery);
-        }
-
-        private void HighlightSqlWordsInTbQuery(RichTextBox sqltext)
-        {
-            var keywords = standardLists.SQLStatements;
-            if (keywords == null || !keywords.Any() || string.IsNullOrEmpty(sqltext.Text)) return;
-
-            // Auswahl sichern
-            int selStart = sqltext.SelectionStart;
-            int selLength = sqltext.SelectionLength;
-
-            // Text komplett auf Default zurücksetzen (zuerst Redraw aus)
-            SendMessage(sqltext.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
-            try
-            {
-                sqltext.SelectAll();
-                sqltext.SelectionColor = Color.Black;
-
-                // Einfache Normalisierung: eindeutige Keywords, leere Einträge überspringen
-                var distinctKeys = keywords
-                    .Where(k => !string.IsNullOrWhiteSpace(k))
-                    .Select(k => k.Trim())
-                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                    .ToList();
-
-                string text = sqltext.Text;
-
-                foreach (string key in distinctKeys)
-                {
-                    // whole-word Match; Escape für Sonderzeichen
-                    string pattern = $@"\b{Regex.Escape(key)}\b";
-                    foreach (Match m in Regex.Matches(text, pattern, RegexOptions.IgnoreCase))
-                    {
-                        sqltext.Select(m.Index, m.Length);
-                        sqltext.SelectionColor = Color.Blue;
-                    }
-                }
-            }
-            finally
-            {
-                // Auswahl wiederherstellen und Redraw aktivieren
-                sqltext.Select(selStart, selLength);
-                SendMessage(sqltext.Handle, WM_SETREDRAW, new IntPtr(1), IntPtr.Zero);
-                sqltext.Invalidate();
-            }
+            tbQuery.HighlightSqlWords();
         }
 
         private void tsmiEditSTFT_Click(object sender, EventArgs e)
