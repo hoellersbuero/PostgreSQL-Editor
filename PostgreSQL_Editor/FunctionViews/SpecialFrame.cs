@@ -125,6 +125,12 @@ namespace PostgreSQL_Editor.FunctionViews
 
             grid.AutoResizeColumns();
         }
+
+        private void dgvComplete_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            var prop = dgvComplete.Columns[e.ColumnIndex].DataPropertyName;
+            if (prop == "Base Material" && e.Value is string bm) { e.Value = (e.Value.ToString()).BaseMaterialName(); }
+        }
     }
 
     public class SpecialFrameConfigurationDto

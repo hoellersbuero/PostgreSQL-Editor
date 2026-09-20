@@ -148,6 +148,7 @@
             this.dgvComplete.Name = "dgvComplete";
             this.dgvComplete.Size = new System.Drawing.Size(759, 365);
             this.dgvComplete.TabIndex = 0;
+            this.dgvComplete.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvComplete_CellFormatting);
             // 
             // tabPage2
             // 
