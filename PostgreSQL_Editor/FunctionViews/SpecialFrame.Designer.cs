@@ -141,6 +141,9 @@
             // 
             // dgvComplete
             // 
+            this.dgvComplete.AllowUserToAddRows = false;
+            this.dgvComplete.AllowUserToDeleteRows = false;
+            this.dgvComplete.AllowUserToResizeRows = false;
             this.dgvComplete.BackgroundColor = System.Drawing.Color.White;
             this.dgvComplete.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvComplete.Dock = System.Windows.Forms.DockStyle.Fill;
