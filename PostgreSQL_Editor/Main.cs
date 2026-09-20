@@ -1548,6 +1548,26 @@ GROUP BY n.nspname, c.relname, pk.attname;
         {
             addNewFrames.Execute(this);
         }
+
+        private void tsmiSpecialFrame_Click(object sender, EventArgs e)
+        {
+            SpecialFrame.Execute(this, npgsql);
+        }
+
+        private void tbClassField_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.C && e.Control)
+            {
+                TakeIt_Click(sender, EventArgs.Empty);
+                e.IsInputKey = true; // Verhindert, dass das KeyDown-Ereignis erneut ausgelöst wird
+            }
+        }
+
+        private void tsmiGetStoredFunctions_Click(object sender, EventArgs e)
+        {
+            string sql = "SELECT quote_ident(n.nspname) as schema , quote_ident(p.proname) as function FROM   pg_catalog.pg_proc p JOIN   pg_catalog.pg_namespace n ON n.oid = p.pronamespace WHERE  n.nspname not like 'pg_%' AND p.proname not like '_pg_%'";
+            this.ExecuteSQL(1, sql);
+        }
     }
 
 

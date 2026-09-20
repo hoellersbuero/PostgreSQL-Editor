@@ -109,8 +109,10 @@
             this.tsmiGetFrameFromID = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSetAvailableSelectable = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddNewFrames = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSpecialFrame = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
+            this.tsmiGetStoredFunctions = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -769,6 +771,7 @@
             this.tbClassField.Size = new System.Drawing.Size(569, 278);
             this.tbClassField.TabIndex = 0;
             this.tbClassField.Text = "";
+            this.tbClassField.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.tbClassField_PreviewKeyDown);
             // 
             // tpGuidSearch
             // 
@@ -959,7 +962,9 @@
             this.tsmiGetModuleFromID,
             this.tsmiGetFrameFromID,
             this.tsmiSetAvailableSelectable,
-            this.tsmiAddNewFrames});
+            this.tsmiAddNewFrames,
+            this.tsmiSpecialFrame,
+            this.tsmiGetStoredFunctions});
             this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
             this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.functionsToolStripMenuItem.Text = "Functions";
@@ -999,6 +1004,13 @@
             this.tsmiAddNewFrames.Text = "Add new frames";
             this.tsmiAddNewFrames.Click += new System.EventHandler(this.tsmiAddNewFrames_Click);
             // 
+            // tsmiSpecialFrame
+            // 
+            this.tsmiSpecialFrame.Name = "tsmiSpecialFrame";
+            this.tsmiSpecialFrame.Size = new System.Drawing.Size(203, 22);
+            this.tsmiSpecialFrame.Text = "Special Frame";
+            this.tsmiSpecialFrame.Click += new System.EventHandler(this.tsmiSpecialFrame_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -1007,6 +1019,13 @@
             this.label1.Size = new System.Drawing.Size(49, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
+            // 
+            // tsmiGetStoredFunctions
+            // 
+            this.tsmiGetStoredFunctions.Name = "tsmiGetStoredFunctions";
+            this.tsmiGetStoredFunctions.Size = new System.Drawing.Size(203, 22);
+            this.tsmiGetStoredFunctions.Text = "Get stored functions";
+            this.tsmiGetStoredFunctions.Click += new System.EventHandler(this.tsmiGetStoredFunctions_Click);
             // 
             // Main
             // 
@@ -1149,6 +1168,8 @@
         private System.Windows.Forms.TabPage tpInsert;
         private System.Windows.Forms.RichTextBox tbInsert;
         private System.Windows.Forms.ToolStripMenuItem tsmiAddNewFrames;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSpecialFrame;
+        private System.Windows.Forms.ToolStripMenuItem tsmiGetStoredFunctions;
     }
 }
 

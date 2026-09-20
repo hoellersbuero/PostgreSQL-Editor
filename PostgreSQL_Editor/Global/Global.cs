@@ -583,4 +583,33 @@ namespace PostgreSQL_Editor.Global
         public string created_by { get; set; }
     }
     #endregion =================================================================================
+
+    public class SF_FrameMaterial
+    {
+        public List<int> fw_sizes { get; set; }
+        public List<SF_FwSizeRule> fw_size_rules { get; set; }
+        public List<string> flange_options { get; set; }
+        public string frame_material { get; set; }
+        public bool special_coating { get; set; }
+        public List<string> wedge_ap_materials { get; set; }
+        public bool kit_single_selectable { get; set; }
+    }
+
+    public class SF_FwSizeRule
+    {
+        public List<int> rows { get; set; }
+        public List<int> columns { get; set; }
+        public int fw_size { get; set; }
+    }
+
+    public class SpecialFrameRoot
+    {
+        public string frame_type { get; set; }
+        public string system_type { get; set; }
+        public string base_material { get; set; }
+        public string frame_type_id { get; set; }
+        public string system_type_id { get; set; }
+        public List<SF_FrameMaterial> frame_materials { get; set; }
+        public string base_material_id { get; set; }
+    }
 }

@@ -39,6 +39,18 @@ namespace PostgreSQL_Editor.Global
                 return baseMaterial.name;
         }
 
+        public static string BaseMaterialName(this string name)
+        {
+            if (name.EndsWith("concrete"))
+                return "Concrete";
+            else if (name.EndsWith("steel"))
+                return "Steel";
+            else if (name.EndsWith("cabinet"))
+                return "Cabinet seal";
+            else
+                return name;
+        }
+
         /// <summary>
         /// Deep clone mittels DataContractSerializer. TKey/TValue und alle verschachtelten Typen müssen serialisierbar sein.
         /// Bei komplexen oder großen Objekten ggf. Performance/Kompatibilität prüfen.

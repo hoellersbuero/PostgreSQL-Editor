@@ -212,6 +212,12 @@
     <Compile Include="FunctionViews\setAvailableSelectable.Designer.cs">
       <DependentUpon>setAvailableSelectable.cs</DependentUpon>
     </Compile>
+    <Compile Include="FunctionViews\SpecialFrame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FunctionViews\SpecialFrame.Designer.cs">
+      <DependentUpon>SpecialFrame.cs</DependentUpon>
+    </Compile>
     <Compile Include="FunctionViews\UpdateDgvRow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -316,6 +322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FunctionViews\showTabelColumnTree.resx">
       <DependentUpon>showTabelColumnTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FunctionViews\SpecialFrame.resx">
+      <DependentUpon>SpecialFrame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FunctionViews\UpdateDgvRow.resx">
       <DependentUpon>UpdateDgvRow.cs</DependentUpon>
