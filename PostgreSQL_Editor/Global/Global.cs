@@ -612,4 +612,20 @@ namespace PostgreSQL_Editor.Global
         public List<SF_FrameMaterial> frame_materials { get; set; }
         public string base_material_id { get; set; }
     }
+
+    public class KitSingleSelect
+        {
+        public long id { get; set; }
+        public Guid base_material_id { get; set; }
+        public string base_material { get; set; }
+        public Guid system_type_id { get; set; }
+        public string system_type { get; set; }
+        public Guid frame_type_id { get; set; }
+        public string frame_type { get; set; }
+        public string frame_material_code { get; set; }
+        public bool is_available { get; set; }
+        public bool kit_single_selectable { get; set; }
+        public bool name_editable { get; set; }
+        public bool special_coating_editable { get; set; }
+    }
 }

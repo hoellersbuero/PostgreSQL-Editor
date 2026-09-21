@@ -109,10 +109,13 @@
             this.tsmiGetFrameFromID = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSetAvailableSelectable = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddNewFrames = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiSpecialFrame = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiShowFullInfos = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiEditKitSingleSelection = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiGetStoredFunctions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.tsmiGetStoredFunctions = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -863,8 +866,8 @@
             this.editSLST,
             this.editEntityMetadata});
             this.tsmiTools.Name = "tsmiTools";
-            this.tsmiTools.Size = new System.Drawing.Size(46, 20);
-            this.tsmiTools.Text = "Tools";
+            this.tsmiTools.Size = new System.Drawing.Size(67, 20);
+            this.tsmiTools.Text = "Edit rules";
             // 
             // tsmiEditBMST
             // 
@@ -963,11 +966,12 @@
             this.tsmiGetFrameFromID,
             this.tsmiSetAvailableSelectable,
             this.tsmiAddNewFrames,
+            this.toolStripMenuItem2,
             this.tsmiSpecialFrame,
             this.tsmiGetStoredFunctions});
             this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
-            this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.functionsToolStripMenuItem.Text = "Functions";
+            this.functionsToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
+            this.functionsToolStripMenuItem.Text = "Functions & Tools";
             // 
             // tsmiShowTableColumnTree
             // 
@@ -1004,12 +1008,40 @@
             this.tsmiAddNewFrames.Text = "Add new frames";
             this.tsmiAddNewFrames.Click += new System.EventHandler(this.tsmiAddNewFrames_Click);
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(200, 6);
+            // 
             // tsmiSpecialFrame
             // 
+            this.tsmiSpecialFrame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiShowFullInfos,
+            this.tsmiEditKitSingleSelection});
             this.tsmiSpecialFrame.Name = "tsmiSpecialFrame";
             this.tsmiSpecialFrame.Size = new System.Drawing.Size(203, 22);
             this.tsmiSpecialFrame.Text = "Special Frame";
-            this.tsmiSpecialFrame.Click += new System.EventHandler(this.tsmiSpecialFrame_Click);
+            // 
+            // tsmiShowFullInfos
+            // 
+            this.tsmiShowFullInfos.Name = "tsmiShowFullInfos";
+            this.tsmiShowFullInfos.Size = new System.Drawing.Size(180, 22);
+            this.tsmiShowFullInfos.Text = "Show Full Infos";
+            this.tsmiShowFullInfos.Click += new System.EventHandler(this.tsmiSpecialFrame_Click);
+            // 
+            // tsmiEditKitSingleSelection
+            // 
+            this.tsmiEditKitSingleSelection.Name = "tsmiEditKitSingleSelection";
+            this.tsmiEditKitSingleSelection.Size = new System.Drawing.Size(180, 22);
+            this.tsmiEditKitSingleSelection.Text = "Edit boolean values";
+            this.tsmiEditKitSingleSelection.Click += new System.EventHandler(this.tsmiEditKitSingleSelection_Click);
+            // 
+            // tsmiGetStoredFunctions
+            // 
+            this.tsmiGetStoredFunctions.Name = "tsmiGetStoredFunctions";
+            this.tsmiGetStoredFunctions.Size = new System.Drawing.Size(203, 22);
+            this.tsmiGetStoredFunctions.Text = "Get stored functions";
+            this.tsmiGetStoredFunctions.Click += new System.EventHandler(this.tsmiGetStoredFunctions_Click);
             // 
             // label1
             // 
@@ -1019,13 +1051,6 @@
             this.label1.Size = new System.Drawing.Size(49, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
-            // 
-            // tsmiGetStoredFunctions
-            // 
-            this.tsmiGetStoredFunctions.Name = "tsmiGetStoredFunctions";
-            this.tsmiGetStoredFunctions.Size = new System.Drawing.Size(203, 22);
-            this.tsmiGetStoredFunctions.Text = "Get stored functions";
-            this.tsmiGetStoredFunctions.Click += new System.EventHandler(this.tsmiGetStoredFunctions_Click);
             // 
             // Main
             // 
@@ -1170,6 +1195,9 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiAddNewFrames;
         private System.Windows.Forms.ToolStripMenuItem tsmiSpecialFrame;
         private System.Windows.Forms.ToolStripMenuItem tsmiGetStoredFunctions;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem tsmiShowFullInfos;
+        private System.Windows.Forms.ToolStripMenuItem tsmiEditKitSingleSelection;
     }
 }
 

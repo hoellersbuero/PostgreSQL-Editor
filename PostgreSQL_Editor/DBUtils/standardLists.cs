@@ -48,6 +48,7 @@ namespace PostgreSQL_Editor.DBUtils
         public static List<wedge_rule> wedgeRules = new List<wedge_rule>();
         public static List<wedge_option_rule> wedgeOptionRules = new List<wedge_option_rule>();
         public static List<string> SQLStatements = new List<string>();
+        public static List<KitSingleSelect> kitSingleSelections = new List<KitSingleSelect>();
 
         #region loading
 
@@ -1184,5 +1185,44 @@ namespace PostgreSQL_Editor.DBUtils
             wedgeOptionRules = wedgeOptionRules.OrderBy(x => x.system_type).ThenBy(x => x.wedge_type).ToList();
         }
         #endregion
+
+        public static List<KitSingleSelect> GetKitSingleSelects(NpgsqlConnection npgsql)
+        {
+            try
+            {
+                List<KitSingleSelect> kitSingleSelects = new List<KitSingleSelect>();
+                using (NpgsqlCommand command = new NpgsqlCommand("set schema '" + Global.Global.schema + "'; SELECT DISTINCT special_frame_configuration.id, configuration_id, base_material_id, system_type_id, frame_type_id, frame_material_code, is_available, kit_single_selectable, name_editable, special_coating_editable FROM special_frame_configuration, special_frame_variant where special_frame_configuration.id = special_frame_variant.configuration_id", npgsql))
+                {
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            KitSingleSelect kitSingleSelect = new KitSingleSelect();
+                            kitSingleSelect.id = (long)reader["id"];
+                            kitSingleSelect.base_material_id = (Guid)reader["base_material_id"];
+                            kitSingleSelect.base_material = standardLists.baseMaterials.FirstOrDefault(x => x.id.Equals(kitSingleSelect.base_material_id))?.name.BaseMaterialName();
+                            kitSingleSelect.system_type_id = (Guid)reader["system_type_id"];
+                            kitSingleSelect.system_type = standardLists.systemTypes.FirstOrDefault(x => x.id.Equals(kitSingleSelect.system_type_id))?.name;
+                            kitSingleSelect.frame_type_id = (Guid)reader["frame_type_id"];
+                            kitSingleSelect.frame_type = standardLists.frameTypes.FirstOrDefault(x => x.id.Equals(kitSingleSelect.frame_type_id))?.name;
+                            kitSingleSelect.frame_material_code = (string)reader["frame_material_code"];
+                            ;
+                            kitSingleSelect.is_available = (bool)reader["is_available"];
+                            kitSingleSelect.kit_single_selectable = (bool)reader["kit_single_selectable"];
+                            kitSingleSelect.name_editable = (bool)reader["name_editable"];
+                            kitSingleSelect.special_coating_editable = (bool)reader["special_coating_editable"];
+                            kitSingleSelects.Add(kitSingleSelect);
+                        }
+                    }
+                }
+                kitSingleSelects = kitSingleSelects.OrderBy(x => x.base_material).ThenBy(x => x.system_type).ThenBy(x => x.frame_type).ToList();
+                return kitSingleSelects;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "EXCEPTION", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
     }
 }

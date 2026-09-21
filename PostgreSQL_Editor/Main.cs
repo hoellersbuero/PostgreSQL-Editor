@@ -1568,6 +1568,11 @@ GROUP BY n.nspname, c.relname, pk.attname;
             string sql = "SELECT quote_ident(n.nspname) as schema , quote_ident(p.proname) as function FROM   pg_catalog.pg_proc p JOIN   pg_catalog.pg_namespace n ON n.oid = p.pronamespace WHERE  n.nspname not like 'pg_%' AND p.proname not like '_pg_%'";
             this.ExecuteSQL(1, sql);
         }
+
+        private void tsmiEditKitSingleSelection_Click(object sender, EventArgs e)
+        {
+            EditKitSingleSelection.Execute(this, npgsql);
+        }
     }
 
 
